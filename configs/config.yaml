@@ -1,0 +1,9 @@
+seed: 42
+data_dir: data/bisindo
+split_path: splits/split_v1.csv
+label_map_path: splits/label_map.json
+results_dir: results
+img_size: 224
+val_frac: 0.15
+test_frac: 0.15
+group_regex: null   # isi jika nama file/folder memuat info penanda atau latar
