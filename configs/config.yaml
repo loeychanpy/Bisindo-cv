@@ -1,5 +1,5 @@
 seed: 42
-data_dir: data/bisindo
+data_dir: "data/bisindo/BISINDO Indonesian Sign Language Alphabet Image Data/01. Original Images"
 split_path: splits/split_v1.csv
 label_map_path: splits/label_map.json
 results_dir: results
