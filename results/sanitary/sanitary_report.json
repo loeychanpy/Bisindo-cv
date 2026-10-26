@@ -1,0 +1,126 @@
+{
+  "total_files": 16922,
+  "extensions": {
+    ".txt": 3842,
+    ".jpg": 12446,
+    ".jpeg": 624,
+    ".heic": 10
+  },
+  "non_image_files": 3852,
+  "unlabeled_images": 0,
+  "corrupt_or_invalid": 327,
+  "issue_breakdown": {
+    "bukan_gambar": 3852,
+    "rusak": 297,
+    "gambar_kosong/seragam": 30
+  },
+  "missing_classes": [],
+  "class_min": {
+    "label": "A",
+    "n": 471
+  },
+  "class_max": {
+    "label": "X",
+    "n": 497
+  },
+  "imbalance_ratio_max_min": 1.06,
+  "per_variant": {
+    "resized": 4466,
+    "original": 4465,
+    "binary": 3812
+  },
+  "image_modes": {
+    "RGB": 8931,
+    "L": 3812
+  },
+  "formats": {
+    "JPEG": 12639,
+    "MPO": 104
+  },
+  "resolution": {
+    "width": {
+      "count": 12743.0,
+      "mean": 1060.7,
+      "std": 1262.3,
+      "min": 224.0,
+      "25%": 224.0,
+      "50%": 224.0,
+      "75%": 2316.0,
+      "max": 4284.0
+    },
+    "height": {
+      "count": 12743.0,
+      "mean": 1060.8,
+      "std": 1262.2,
+      "min": 224.0,
+      "25%": 224.0,
+      "50%": 224.0,
+      "75%": 2316.0,
+      "max": 4284.0
+    },
+    "unique_sizes_top5": [
+      [
+        [
+          224.0,
+          224.0
+        ],
+        8278
+      ],
+      [
+        [
+          3024.0,
+          3024.0
+        ],
+        513
+      ],
+      [
+        [
+          3456.0,
+          3456.0
+        ],
+        331
+      ],
+      [
+        [
+          3072.0,
+          3072.0
+        ],
+        314
+      ],
+      [
+        [
+          2992.0,
+          2992.0
+        ],
+        312
+      ]
+    ]
+  },
+  "exact_duplicate_groups": 5,
+  "exact_duplicate_groups_cross_class": 5,
+  "near_duplicate_pairs": 99,
+  "near_duplicate_pairs_cross_class": 98,
+  "subject_detected_ratio": 0.0,
+  "n_subjects_detected": 0,
+  "n_source_ids": 4360,
+  "subject_note": "Subject/session tidak terdeteksi dari path. Cek struktur folder/nama file, lalu jalankan ulang dengan --group-regex. Tanpa itu split hanya mencegah kebocoran antar varian foto yang sama, bukan antar orang.",
+  "sample_paths": {
+    "binary": [
+      "03. Binary Images/A/20240509_182656.jpg",
+      "03. Binary Images/A/20240509_182720.jpg",
+      "03. Binary Images/A/20240509_182802.jpg"
+    ],
+    "original": [
+      "01. Original Images/A/20240509_182656.jpg",
+      "01. Original Images/A/20240509_182720.jpg",
+      "01. Original Images/A/20240509_182802.jpg"
+    ],
+    "resized": [
+      "02. Resized Images/A/20240509_182656.jpg",
+      "02. Resized Images/A/20240509_182720.jpg",
+      "02. Resized Images/A/20240509_182802.jpg"
+    ]
+  },
+  "excluded_total": 337,
+  "usable_images": 12733
+}
