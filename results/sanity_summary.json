@@ -1,0 +1,27 @@
+{
+  "seed": 42,
+  "split_file": "splits\\splits.csv",
+  "n_images": 4461,
+  "split_counts": {
+    "train": 3131,
+    "val": 667,
+    "test": 663
+  },
+  "split_fraction": {
+    "train": 0.7019,
+    "val": 0.1495,
+    "test": 0.1486
+  },
+  "checks": {
+    "path_unik": true,
+    "grup_tidak_lintas_split": true,
+    "26_huruf_per_split": true,
+    "md5_tidak_lintas_split": true,
+    "subject_terdeteksi": false
+  },
+  "md5_groups_across_splits": 0,
+  "leakage_free": true,
+  "batch": null,
+  "corrupt_or_invalid": 327,
+  "note": "group = source_id; orang/latar yang sama masih bisa lintas split"
+}
