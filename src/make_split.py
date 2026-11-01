@@ -70,7 +70,16 @@ def infer_label(parts, label_regex):
     return None
 
 
-def scan_images(data_dir, exts, label_regex, group_regex):
+def load_exclusions(exclude_file, data_dir):
+    """Daftar file buangan dari sanitary_check.py -> set path relatif ke data_dir."""
+    if not exclude_file or not Path(exclude_file).exists():
+        return set()
+    prefix = Path(data_dir).name + "/"  # excluded_files.txt memakai path relatif ke folder induk varian
+    lines = Path(exclude_file).read_text(encoding="utf-8").splitlines()
+    return {l.strip()[len(prefix):] for l in lines if l.strip().startswith(prefix)}
+
+
+def scan_images(data_dir, exts, label_regex, group_regex, exclude=frozenset()):
     recs, skipped = [], []
     for root, dirs, files in os.walk(data_dir):
         dirs.sort()  # urutan tetap -> hasil deterministik
@@ -78,6 +87,8 @@ def scan_images(data_dir, exts, label_regex, group_regex):
             if Path(f).suffix.lower() not in exts:
                 continue
             rel = (Path(root) / f).relative_to(data_dir).as_posix()
+            if rel in exclude or f.startswith("._"):  # buangan sanitary_check + file sampah macOS
+                continue
             label = infer_label(rel.split("/"), label_regex)
             if label is None:
                 skipped.append(rel)
@@ -382,7 +393,9 @@ def main():
         sys.exit(f"{out} sudah ada & dibekukan. Kalau perlu split baru: --version v2 (catat alasannya).")
 
     set_seed(seed)
-    recs, skipped = scan_images(data_dir, exts, label_regex, group_regex)
+    exclude = load_exclusions(cfg.get("exclude_file"), data_dir)
+    print(f"[INFO] {len(exclude)} file dibuang berdasarkan {cfg.get('exclude_file')}")
+    recs, skipped = scan_images(data_dir, exts, label_regex, group_regex, exclude)
     if not recs:
         sys.exit("Nggak ada gambar berlabel. Jalankan --inspect dulu.")
     print(f"[INFO] {len(recs)} gambar, {len({r['label'] for r in recs})} kelas, {len(skipped)} di-skip")

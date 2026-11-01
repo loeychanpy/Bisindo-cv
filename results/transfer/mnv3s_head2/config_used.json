@@ -1,0 +1,38 @@
+{
+  "run_name": "mnv3s_head2",
+  "mode": "head",
+  "unfreeze_blocks": 2,
+  "pretrained": true,
+  "batch_size": 32,
+  "epochs": 20,
+  "lr_head": 0.001,
+  "lr_backbone": 0.0001,
+  "weight_decay": 0.0001,
+  "class_weights": false,
+  "augment": true,
+  "patience": 6,
+  "num_workers": 0,
+  "draft_size": 448,
+  "device": "auto",
+  "overwrite": false,
+  "seed": 42,
+  "img_size": 224,
+  "data_dir": "data/BISINDO Indonesian Sign Language Alphabet Image Data/01. Original Images",
+  "split_path": "splits/split_v2.csv",
+  "label_map_path": "splits/label_map.json",
+  "split_md5": "f71002d1f8d4352298de4e0d6cddc236",
+  "n": {
+    "train": 3114,
+    "val": 675,
+    "test": 673
+  },
+  "params_total": 1544506,
+  "params_trainable": 26650,
+  "torch": "2.15.0+cpu",
+  "python": "3.13.2",
+  "git": {
+    "commit": "0daca08",
+    "branch": "feat/model",
+    "dirty": true
+  }
+}

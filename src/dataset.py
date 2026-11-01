@@ -10,12 +10,12 @@ Isi:
   6. get_dataloaders()  : DataLoader + class weights
 
 Contoh pemakaian CLI:
-  python dataset.py --root data/raw --out data/splits.csv
-  python dataset.py --root data/raw --variants background --group-regex "(subject_\\d+)"
+  python src/dataset.py --root "data/BISINDO Indonesian Sign Language Alphabet Image Data" --variants original
 """
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import warnings
 from pathlib import Path
@@ -143,7 +143,7 @@ def build_manifest(
     root: str | Path,
     variants: list[str] | None = None,
     group_regex: str | None = None,
-    exclude_file: str | Path | None = "reports/excluded_files.txt",
+    exclude_file: str | Path | None = "results/sanitary/excluded_files.txt",
 ) -> pd.DataFrame:
     """Manifest siap split. File di exclude_file (hasil sanitary_check) dibuang."""
     df = scan_images(root, group_regex)
@@ -266,16 +266,16 @@ def get_dataloaders(
     splits_csv: str | Path | None = None,
     num_workers: int = 2,
     seed: int = 42,
-    exclude_file: str | Path | None = "reports/excluded_files.txt",
+    exclude_file: str | Path | None = "results/sanitary/excluded_files.txt",
+    label_map_path: str | Path = "splits/label_map.json",
 ):
     """Return (loaders: dict, class_weights: Tensor, df: DataFrame)."""
-    if splits_csv and Path(splits_csv).exists():
-        df = pd.read_csv(splits_csv)                                  # pakai split yang sudah tersimpan
-    else:
-        df = make_splits(build_manifest(root, variants, group_regex, exclude_file), seed=seed)
-        if splits_csv:
-            Path(splits_csv).parent.mkdir(parents=True, exist_ok=True)
-            df.to_csv(splits_csv, index=False)
+    if not splits_csv or not Path(splits_csv).exists():
+        raise FileNotFoundError(f"Split tidak ditemukan: {splits_csv}. Buat dulu dengan src/make_split.py")
+    df = pd.read_csv(splits_csv)                                      # loader hanya membaca split beku
+    if "label_idx" not in df.columns:                                 # make_split.py tidak menulis label_idx
+        label_map = json.loads(Path(label_map_path).read_text(encoding="utf-8"))
+        df["label_idx"] = df["label"].map(label_map)
 
     pin = torch.cuda.is_available()
     loaders = {}
@@ -295,11 +295,11 @@ def get_dataloaders(
 def main():
     ap = argparse.ArgumentParser(description="Bangun manifest & split dataset BISINDO")
     ap.add_argument("--root", required=True, help="folder dataset hasil ekstrak")
-    ap.add_argument("--out", default="data/splits.csv")
+    ap.add_argument("--out", default="splits/split_v2.csv")
     ap.add_argument("--variants", nargs="*", default=None,
                     help="pilih varian: background background_removed binary (default: semua)")
     ap.add_argument("--group-regex", default=None, help="regex (1 capture group) untuk subject/session")
-    ap.add_argument("--exclude-file", default="reports/excluded_files.txt")
+    ap.add_argument("--exclude-file", default="results/sanitary/excluded_files.txt")
     ap.add_argument("--val-size", type=float, default=0.15)
     ap.add_argument("--test-size", type=float, default=0.15)
     ap.add_argument("--seed", type=int, default=42)
