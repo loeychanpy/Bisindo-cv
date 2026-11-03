@@ -65,6 +65,7 @@ DEFAULTS = dict(
     batch_size=32, epochs=20, lr_head=1e-3, lr_backbone=1e-4, weight_decay=1e-4,
     class_weights=False, augment=True, patience=6, num_workers=0, draft_size=448,
     device="auto", overwrite=False,
+    amp=True, fast_cudnn=True, cache_images=False, cache_size=448,
 )
 
 
@@ -109,13 +110,14 @@ def build_cfg(overrides: dict | None = None, config: str = "configs/config.yaml"
     return cfg
 
 
-def set_seed(seed: int) -> None:
+def set_seed(seed: int, fast_cudnn: bool = False) -> None:
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
+    # fast_cudnn: benchmark=True lebih cepat di GPU, tetapi hasil antar-run tidak persis identik
+    torch.backends.cudnn.deterministic = not fast_cudnn
+    torch.backends.cudnn.benchmark = fast_cudnn
 
 
 # --------------------------------------------------------------------------- #
@@ -146,6 +148,23 @@ class FastBisindoDataset(BisindoDataset):
         return img, self.labels[i]
 
 
+def build_image_cache(df: pd.DataFrame, root: Path, cache_dir: Path, size: int) -> None:
+    """Simpan salinan JPEG dengan sisi pendek <= size (hanya diperkecil) sekali saja.
+    Epoch berikutnya tidak perlu mendekode foto 3000+ px lagi. Salinan yang sudah ada dilewati."""
+    todo = [p for p in df["path"] if not (cache_dir / Path(p).with_suffix(".jpg")).is_file()]
+    if not todo:
+        return
+    print(f"[cache] membuat {len(todo)} gambar ter-resize di {_rel(cache_dir)} (sekali saja)...")
+    for p in todo:
+        dst = cache_dir / Path(p).with_suffix(".jpg")
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        img = load_rgb(root / p, size * 2)
+        scale = size / min(img.size)
+        if scale < 1:
+            img = img.resize((round(img.width * scale), round(img.height * scale)), Image.BILINEAR)
+        img.save(dst, quality=95)
+
+
 def _check_files(df: pd.DataFrame, root: Path, per_split: int = 15) -> None:
     missing = [p for _, sub in df.groupby("split") for p in sub["path"].head(per_split) if not (root / p).is_file()]
     if missing:
@@ -171,6 +190,13 @@ def make_loaders(cfg: dict):
 
     root = Path(cfg["data_dir"])
     _check_files(df, root)
+    if cfg.get("cache_images"):
+        cache_dir = root.parent / "_cache" / f"s{cfg['cache_size']}"   # di bawah data/ (ter-.gitignore)
+        build_image_cache(df, root, cache_dir, int(cfg["cache_size"]))
+        root = cache_dir
+        ds_df = df.assign(path=df["path"].map(lambda p: Path(p).with_suffix(".jpg").as_posix()))
+    else:
+        ds_df = df
 
     gen = torch.Generator()
     gen.manual_seed(cfg["seed"])
@@ -179,7 +205,7 @@ def make_loaders(cfg: dict):
     for s in SPLITS:
         train = s == "train"
         tf = get_transforms(train=(train and cfg["augment"]), img_size=cfg["img_size"])
-        ds = FastBisindoDataset(df[df["split"] == s], root, tf, cfg["draft_size"])
+        ds = FastBisindoDataset(ds_df[ds_df["split"] == s], root, tf, cfg["draft_size"])
         loaders[s] = DataLoader(
             ds, batch_size=cfg["batch_size"], shuffle=train, num_workers=nw,
             generator=gen if train else None, pin_memory=torch.cuda.is_available(),
@@ -233,16 +259,30 @@ def count_params(model: nn.Module) -> tuple[int, int]:
 # --------------------------------------------------------------------------- #
 # Train / eval
 # --------------------------------------------------------------------------- #
-def train_one_epoch(model, loader, criterion, optimizer, device):
+def _to_device(x, device):
+    x = x.to(device, non_blocking=True)
+    if device.type == "cuda":
+        x = x.contiguous(memory_format=torch.channels_last)
+    return x
+
+
+def train_one_epoch(model, loader, criterion, optimizer, device, scaler=None):
     set_train(model)
+    use_amp = scaler is not None and scaler.is_enabled()
     loss_sum, correct, total = 0.0, 0, 0
     for x, y in loader:
-        x, y = x.to(device), y.to(device)
+        x, y = _to_device(x, device), y.to(device, non_blocking=True)
         optimizer.zero_grad(set_to_none=True)
-        logits = model(x)
-        loss = criterion(logits, y)
-        loss.backward()
-        optimizer.step()
+        with torch.autocast(device.type, dtype=torch.float16, enabled=use_amp):
+            logits = model(x)
+            loss = criterion(logits.float(), y)
+        if use_amp:
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
+        else:
+            loss.backward()
+            optimizer.step()
         loss_sum += loss.item() * x.size(0)
         correct += (logits.argmax(1) == y).sum().item()
         total += y.size(0)
@@ -250,11 +290,13 @@ def train_one_epoch(model, loader, criterion, optimizer, device):
 
 
 @torch.no_grad()
-def predict(model, loader, device) -> dict:
+def predict(model, loader, device, amp: bool = False) -> dict:
     model.eval()
     logits, labels = [], []
     for x, y in loader:
-        logits.append(model(x.to(device)).cpu())
+        with torch.autocast(device.type, dtype=torch.float16, enabled=amp):
+            out = model(_to_device(x, device))
+        logits.append(out.float().cpu())
         labels.append(y)
     logits, labels = torch.cat(logits), torch.cat(labels)
     loss = nn.functional.cross_entropy(logits, labels).item()
@@ -394,8 +436,10 @@ def _report(split: str, res: dict, df_split: pd.DataFrame, out: Path) -> dict:
 
 def run(cfg: dict, evaluate_test: bool = True) -> dict:
     """Latih satu run. Return dict ringkas (termasuk 'out_dir' dan 'metrics')."""
-    set_seed(cfg["seed"])
     device = _pick_device(cfg["device"])
+    set_seed(cfg["seed"], fast_cudnn=bool(cfg["fast_cudnn"]) and device.type == "cuda")
+    use_amp = bool(cfg["amp"]) and device.type == "cuda"
+    scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
     out = Path(cfg["results_dir"]) / "transfer" / cfg["run_name"]
     if out.exists() and any(out.iterdir()) and not cfg.get("overwrite"):
         raise FileExistsError(f"{out} sudah berisi hasil. Ganti run_name atau pakai overwrite=True / --overwrite.")
@@ -403,10 +447,12 @@ def run(cfg: dict, evaluate_test: bool = True) -> dict:
 
     loaders, df = make_loaders(cfg)
     model = build_model(cfg["mode"], cfg["unfreeze_blocks"], cfg["pretrained"]).to(device)
+    if device.type == "cuda":
+        model = model.to(memory_format=torch.channels_last)
     total_p, train_p = count_params(model)
     n = {s: int((df["split"] == s).sum()) for s in SPLITS}
     split_md5 = hashlib.md5(Path(cfg["split_path"]).read_bytes()).hexdigest()
-    print(f"Run: {cfg['run_name']} | mode={cfg['mode']} | device={device} | torch {torch.__version__}")
+    print(f"Run: {cfg['run_name']} | mode={cfg['mode']} | device={device} | amp={use_amp} | torch {torch.__version__}")
     print(f"Split: {_rel(cfg['split_path'])} (md5 {split_md5[:8]}) | {n}")
     print(f"Parameter: total {total_p:,} | dilatih {train_p:,} ({100 * train_p / total_p:.2f}%)")
 
@@ -433,8 +479,8 @@ def run(cfg: dict, evaluate_test: bool = True) -> dict:
     try:
         for ep in range(1, cfg["epochs"] + 1):
             t0 = time.perf_counter()
-            tr_loss, tr_acc = train_one_epoch(model, loaders["train"], crit_train, optimizer, device)
-            va = predict(model, loaders["val"], device)
+            tr_loss, tr_acc = train_one_epoch(model, loaders["train"], crit_train, optimizer, device, scaler)
+            va = predict(model, loaders["val"], device, use_amp)
             rows.append(dict(epoch=ep, train_loss=tr_loss, train_acc=tr_acc, val_loss=va["loss"],
                              val_acc=va["acc"], val_f1=va["f1"], seconds=time.perf_counter() - t0))
             pd.DataFrame(rows).to_csv(out / "log.csv", index=False)
@@ -462,7 +508,7 @@ def run(cfg: dict, evaluate_test: bool = True) -> dict:
 
     root = Path(cfg["data_dir"])
     split_name = "test" if evaluate_test else "val"
-    res = predict(model, loaders[split_name], device) if evaluate_test else best_val
+    res = predict(model, loaders[split_name], device, use_amp) if evaluate_test else best_val
     df_s = df[df["split"] == split_name].reset_index(drop=True)
     summary = _report(split_name, res, df_s, out)
     _save_samples(df_s, res, root, cfg["draft_size"], cfg["seed"], out / f"sample_predictions_{split_name}.png")
@@ -533,6 +579,8 @@ def main():
     ap.add_argument("--no-augment", action="store_true", help="train tanpa augmentasi")
     ap.add_argument("--class-weights", action="store_true", help="CrossEntropy berbobot")
     ap.add_argument("--no-pretrained", action="store_true", help="tanpa bobot ImageNet (hanya untuk uji kode)")
+    ap.add_argument("--no-amp", action="store_true", help="matikan mixed precision")
+    ap.add_argument("--cache-images", action="store_true", help="cache gambar ter-resize (lebih cepat)")
     ap.add_argument("--no-test", action="store_true", help="jangan evaluasi test (untuk tuning)")
     ap.add_argument("--overwrite", action="store_true")
     ap.add_argument("--compare", action="store_true", help="tampilkan tabel semua run lalu keluar")
@@ -553,6 +601,10 @@ def main():
         ov["class_weights"] = True
     if a.no_pretrained:
         ov["pretrained"] = False
+    if a.no_amp:
+        ov["amp"] = False
+    if a.cache_images:
+        ov["cache_images"] = True
     if a.overwrite:
         ov["overwrite"] = True
     try:
