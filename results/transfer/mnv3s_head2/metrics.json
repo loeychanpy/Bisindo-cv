@@ -1,0 +1,44 @@
+{
+  "run_name": "mnv3s_head2",
+  "mode": "head",
+  "best_epoch": 18,
+  "epochs_run": 20,
+  "best_val_macro_f1": 0.47990829438890725,
+  "best_val_accuracy": 0.48148148148148145,
+  "report_split": "test",
+  "test": {
+    "accuracy": 0.5274888558692422,
+    "macro_f1": 0.5247597012249983,
+    "weighted_f1": 0.5243417570171519
+  },
+  "val": null,
+  "latency_ms": {
+    "total_ms_median": 28.55355000065174,
+    "forward_ms_median": 7.039799995254725,
+    "n": 50
+  },
+  "device": "cpu",
+  "train_seconds": 2716.5,
+  "params_total": 1544506,
+  "params_trainable": 26650,
+  "split_md5": "f71002d1f8d4352298de4e0d6cddc236",
+  "n": {
+    "train": 3114,
+    "val": 675,
+    "test": 673
+  },
+  "hparams": {
+    "unfreeze_blocks": 2,
+    "lr_head": 0.001,
+    "lr_backbone": 0.0001,
+    "weight_decay": 0.0001,
+    "batch_size": 32,
+    "augment": true,
+    "class_weights": false,
+    "pretrained": true,
+    "seed": 42,
+    "epochs": 20,
+    "patience": 6
+  },
+  "catatan": "Split tanpa grup perangkat/latar: gambar dengan kondisi sama bisa ada di train dan test, jadi skor bisa lebih optimis daripada kondisi nyata."
+}
