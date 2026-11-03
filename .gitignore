@@ -3,6 +3,5 @@ data/*
 __pycache__/
 .ipynb_checkpoints/
 *.pt
-*.pth
 .venv/
 data/BISINDO*/

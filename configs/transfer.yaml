@@ -5,14 +5,15 @@ run_name: mnv3s_head        # hasil disimpan di results/transfer/<run_name>/
 mode: head                  # head | partial | full
 unfreeze_blocks: 2          # hanya mode partial: jumlah blok `features` terakhir yang dibuka (maks 13)
 pretrained: true            # bobot ImageNet; unduhan pertama butuh internet
-batch_size: 32
-epochs: 20
+batch_size: 64              # 64 lebih cepat di multi-core CPU / GPU
+epochs: 12                  # dengan pretrained ImageNet, 10-12 epoch sudah konvergen
 lr_head: 0.001              # kepala baru (Linear terakhir)
 lr_backbone: 0.0001         # layer pretrained yang dibuka (mode partial/full)
 weight_decay: 0.0001
 class_weights: false        # true = CrossEntropy berbobot untuk kelas tidak seimbang
 augment: true               # false = train memakai transform evaluasi (eksperimen terkontrol)
-patience: 6                 # early stopping pada val macro-F1; 0 = mati
-num_workers: 0              # Windows: 0 paling aman; coba 2-4 jika CPU banyak
-draft_size: 448             # JPEG didekode langsung ke >=448 px (jauh lebih cepat untuk foto 3000+ px)
+patience: 4                 # early stopping pada val macro-F1; 0 = mati
+num_workers: 0              # 0 otomatis paling cepat bila cache_ram=true
+draft_size: 256             # ukuran decode & cache RAM (256px jauh lebih cepat dari 448px, input model 224px)
+cache_ram: true             # preload & cache semua gambar di RAM dengan multi-thread (0 detik disk I/O per epoch)
 device: auto                # auto | cpu | cuda

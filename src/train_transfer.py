@@ -32,8 +32,10 @@ Aturan yang dijaga skrip:
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import json
+import os
 import platform
 import random
 import subprocess
@@ -62,10 +64,13 @@ SPLITS = ("train", "val", "test")
 
 DEFAULTS = dict(
     run_name="mnv3s_head", mode="head", unfreeze_blocks=2, pretrained=True,
-    batch_size=32, epochs=20, lr_head=1e-3, lr_backbone=1e-4, weight_decay=1e-4,
-    class_weights=False, augment=True, patience=6, num_workers=0, draft_size=448,
-    device="auto", overwrite=False,
+    batch_size=64, epochs=12, lr_head=1e-3, lr_backbone=1e-4, weight_decay=1e-4,
+    class_weights=False, augment=True, patience=4, num_workers=0, draft_size=256,
+    cache_ram=True, device="auto", overwrite=False,
 )
+
+# Cache gambar di RAM lintas-epoch dan lintas-run supaya tidak baca ulang ribuan foto besar dari disk/OneDrive
+_IMAGE_CACHE: dict[tuple[str, int], Image.Image] = {}
 
 
 # --------------------------------------------------------------------------- #
@@ -116,6 +121,11 @@ def set_seed(seed: int) -> None:
     torch.cuda.manual_seed_all(seed)
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
+    cpu_threads = os.cpu_count() or 8
+    try:
+        torch.set_num_threads(cpu_threads)
+    except Exception:
+        pass
 
 
 # --------------------------------------------------------------------------- #
@@ -130,17 +140,47 @@ def load_rgb(path, draft_size: int = 0) -> Image.Image:
     return img.convert("RGB")
 
 
-class FastBisindoDataset(BisindoDataset):
-    """BisindoDataset dengan decode JPEG cepat (draft). Transformasi tetap dari dataset.get_transforms."""
+def _load_and_resize_cached(full_path: Path, draft_size: int) -> Image.Image:
+    key = (str(full_path), draft_size)
+    cached = _IMAGE_CACHE.get(key)
+    if cached is not None:
+        return cached
+    img = load_rgb(full_path, draft_size)
+    if draft_size and (img.width > draft_size or img.height > draft_size):
+        img = img.resize((draft_size, draft_size), Image.BILINEAR)
+    _IMAGE_CACHE[key] = img
+    return img
 
-    def __init__(self, df, root, transform=None, draft_size: int = 448):
+
+def preload_images(paths: list[Path], draft_size: int) -> None:
+    """Preload & perkecil gambar ke RAM secara paralel (multi-thread) agar epoch berikutnya 0 detik disk I/O."""
+    todo = [p for p in paths if (str(p), draft_size) not in _IMAGE_CACHE]
+    if not todo:
+        return
+    t0 = time.perf_counter()
+    workers = min(16, (os.cpu_count() or 4) * 2)
+    with ThreadPoolExecutor(max_workers=workers) as ex:
+        list(ex.map(lambda p: _load_and_resize_cached(p, draft_size), todo))
+    dt = time.perf_counter() - t0
+    print(f"Preload {len(todo)} gambar ke RAM ({draft_size}px, {workers} threads) selesai dalam {dt:.1f}s")
+
+
+class FastBisindoDataset(BisindoDataset):
+    """BisindoDataset dengan decode JPEG cepat (draft) + opsi cache RAM. Transformasi tetap dari dataset.get_transforms."""
+
+    def __init__(self, df, root, transform=None, draft_size: int = 256, cache_ram: bool = True):
         super().__init__(df, root, transform)
         self.paths = self.df["path"].tolist()
         self.labels = self.df["label_idx"].astype(int).tolist()
         self.draft_size = draft_size
+        self.cache_ram = cache_ram
 
     def __getitem__(self, i):
-        img = load_rgb(self.root / self.paths[i], self.draft_size)
+        full_path = self.root / self.paths[i]
+        if self.cache_ram:
+            img = _load_and_resize_cached(full_path, self.draft_size)
+        else:
+            img = load_rgb(full_path, self.draft_size)
         if self.transform:
             img = self.transform(img)
         return img, self.labels[i]
@@ -172,14 +212,19 @@ def make_loaders(cfg: dict):
     root = Path(cfg["data_dir"])
     _check_files(df, root)
 
+    cache_ram = bool(cfg.get("cache_ram", True))
+    if cache_ram:
+        preload_images([root / p for p in df["path"].tolist()], int(cfg["draft_size"]))
+
     gen = torch.Generator()
     gen.manual_seed(cfg["seed"])
-    nw = int(cfg["num_workers"])
+    # Jika sudah di-cache di RAM pada proses utama, num_workers=0 menghindari overhead IPC multiprocessing di Windows
+    nw = 0 if cache_ram else int(cfg["num_workers"])
     loaders = {}
     for s in SPLITS:
         train = s == "train"
         tf = get_transforms(train=(train and cfg["augment"]), img_size=cfg["img_size"])
-        ds = FastBisindoDataset(df[df["split"] == s], root, tf, cfg["draft_size"])
+        ds = FastBisindoDataset(df[df["split"] == s], root, tf, cfg["draft_size"], cache_ram=cache_ram)
         loaders[s] = DataLoader(
             ds, batch_size=cfg["batch_size"], shuffle=train, num_workers=nw,
             generator=gen if train else None, pin_memory=torch.cuda.is_available(),
@@ -233,16 +278,25 @@ def count_params(model: nn.Module) -> tuple[int, int]:
 # --------------------------------------------------------------------------- #
 # Train / eval
 # --------------------------------------------------------------------------- #
-def train_one_epoch(model, loader, criterion, optimizer, device):
+def train_one_epoch(model, loader, criterion, optimizer, device, scaler=None):
     set_train(model)
     loss_sum, correct, total = 0.0, 0, 0
+    use_amp = device.type == "cuda" and scaler is not None
     for x, y in loader:
-        x, y = x.to(device), y.to(device)
+        x, y = x.to(device, non_blocking=True), y.to(device, non_blocking=True)
         optimizer.zero_grad(set_to_none=True)
-        logits = model(x)
-        loss = criterion(logits, y)
-        loss.backward()
-        optimizer.step()
+        if use_amp:
+            with torch.amp.autocast("cuda"):
+                logits = model(x)
+                loss = criterion(logits, y)
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
+        else:
+            logits = model(x)
+            loss = criterion(logits, y)
+            loss.backward()
+            optimizer.step()
         loss_sum += loss.item() * x.size(0)
         correct += (logits.argmax(1) == y).sum().item()
         total += y.size(0)
@@ -253,8 +307,15 @@ def train_one_epoch(model, loader, criterion, optimizer, device):
 def predict(model, loader, device) -> dict:
     model.eval()
     logits, labels = [], []
+    use_amp = device.type == "cuda"
     for x, y in loader:
-        logits.append(model(x.to(device)).cpu())
+        x = x.to(device, non_blocking=True)
+        if use_amp:
+            with torch.amp.autocast("cuda"):
+                out = model(x)
+        else:
+            out = model(x)
+        logits.append(out.float().cpu())
         labels.append(y)
     logits, labels = torch.cat(logits), torch.cat(labels)
     loss = nn.functional.cross_entropy(logits, labels).item()
@@ -417,6 +478,7 @@ def run(cfg: dict, evaluate_test: bool = True) -> dict:
     if rest:
         groups.append(dict(params=rest, lr=cfg["lr_backbone"]))
     optimizer = optim.AdamW(groups, weight_decay=cfg["weight_decay"])
+    scaler = torch.amp.GradScaler("cuda") if device.type == "cuda" else None
 
     w = compute_class_weights(df[df["split"] == "train"]).to(device) if cfg["class_weights"] else None
     crit_train = nn.CrossEntropyLoss(weight=w)
@@ -433,13 +495,13 @@ def run(cfg: dict, evaluate_test: bool = True) -> dict:
     try:
         for ep in range(1, cfg["epochs"] + 1):
             t0 = time.perf_counter()
-            tr_loss, tr_acc = train_one_epoch(model, loaders["train"], crit_train, optimizer, device)
+            tr_loss, tr_acc = train_one_epoch(model, loaders["train"], crit_train, optimizer, device, scaler=scaler)
             va = predict(model, loaders["val"], device)
             rows.append(dict(epoch=ep, train_loss=tr_loss, train_acc=tr_acc, val_loss=va["loss"],
                              val_acc=va["acc"], val_f1=va["f1"], seconds=time.perf_counter() - t0))
             pd.DataFrame(rows).to_csv(out / "log.csv", index=False)
             print(f"Epoch {ep:02d}/{cfg['epochs']} | train loss {tr_loss:.4f} acc {tr_acc:.3f} | "
-                  f"val loss {va['loss']:.4f} acc {va['acc']:.3f} f1 {va['f1']:.3f} | {rows[-1]['seconds']:.0f}s")
+                  f"val loss {va['loss']:.4f} acc {va['acc']:.3f} f1 {va['f1']:.3f} | {rows[-1]['seconds']:.1f}s")
             if va["f1"] > best_f1 + 1e-4:
                 best_f1, best_epoch, best_val, bad = va["f1"], ep, va, 0
                 torch.save(dict(state_dict={k: v.detach().cpu() for k, v in model.state_dict().items()},
@@ -528,8 +590,10 @@ def main():
     ap.add_argument("--weight-decay", type=float)
     ap.add_argument("--patience", type=int)
     ap.add_argument("--num-workers", type=int)
+    ap.add_argument("--draft-size", type=int)
     ap.add_argument("--seed", type=int)
     ap.add_argument("--device")
+    ap.add_argument("--no-cache-ram", action="store_true", help="matikan cache gambar di RAM")
     ap.add_argument("--no-augment", action="store_true", help="train tanpa augmentasi")
     ap.add_argument("--class-weights", action="store_true", help="CrossEntropy berbobot")
     ap.add_argument("--no-pretrained", action="store_true", help="tanpa bobot ImageNet (hanya untuk uji kode)")
@@ -546,7 +610,9 @@ def main():
     ov = dict(run_name=a.run_name, mode=a.mode, unfreeze_blocks=a.unfreeze_blocks, epochs=a.epochs,
               batch_size=a.batch_size, lr_head=a.lr_head, lr_backbone=a.lr_backbone,
               weight_decay=a.weight_decay, patience=a.patience, num_workers=a.num_workers,
-              seed=a.seed, device=a.device)
+              draft_size=a.draft_size, seed=a.seed, device=a.device)
+    if a.no_cache_ram:
+        ov["cache_ram"] = False
     if a.no_augment:
         ov["augment"] = False
     if a.class_weights:
