@@ -39,6 +39,8 @@ def make_processor_class():
             self.lock = threading.Lock()
             self.word = ""
             self.letter, self.conf, self.ms = "?", 0.0, 0.0
+            self.box = None
+            self._latest, self._thread, self._last_recv = None, None, 0.0
 
         # ---- dipanggil dari thread utama Streamlit ----
         def configure(self, model, tf, device, cropper, threshold, mirror):
@@ -54,46 +56,65 @@ def make_processor_class():
             with self.lock:
                 return self.word, self.letter, self.conf, self.ms
 
-        # ---- thread video ----
-        def recv(self, frame):
-            bgr = frame.to_ndarray(format="bgr24")
-            if self.model is None:
-                return frame
-            if self.mirror:
-                bgr = np.ascontiguousarray(bgr[:, ::-1])
-            h, w = bgr.shape[:2]
-            side = min(h, w)
-            x0, y0 = (w - side) // 2, (h - side) // 2
-            rgb = Image.fromarray(cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB))
-            try:
-                if self.cropper is not None:
-                    crop_img, box, _ = self.cropper.crop(rgb)
-                    if crop_img is None:
+        # ---- inferensi di thread latar: video tidak menunggu model ----
+        def _worker(self):
+            while time.time() - self._last_recv < 5:           # berhenti sendiri bila stream mati
+                with self.lock:
+                    rgb, self._latest = self._latest, None
+                if rgb is None or self.model is None:
+                    time.sleep(0.01)
+                    continue
+                try:
+                    h, w = rgb.shape[:2]
+                    side = min(h, w)
+                    x0, y0 = (w - side) // 2, (h - side) // 2
+                    img = Image.fromarray(rgb)
+                    found = True
+                    if self.cropper is not None:
+                        crop_img, box, _ = self.cropper.crop(img)
+                        found = crop_img is not None
+                        if found:
+                            x0, y0, side = box[0], box[1], box[2] - box[0]
+                    else:
+                        crop_img = img.crop((x0, y0, x0 + side, y0 + side))
+                    if not found:
                         self.stab.preds.clear()
                         self.stab.confs.clear()
                         with self.lock:
-                            self.letter, self.conf = "—", 0.0
-                        cv2.putText(bgr, "tangan tidak terdeteksi", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8,
-                                    (0, 0, 255), 2)
-                        return av.VideoFrame.from_ndarray(bgr, format="bgr24")
-                    x0, y0, side = box[0], box[1], box[2] - box[0]
-                else:
-                    crop_img = rgb.crop((x0, y0, x0 + side, y0 + side))
-                top, ms = inf.demo.predict_topk(self.model, self.tf, crop_img, self.device, k=1)
-            except Exception as e:  # jangan matikan stream karena satu frame gagal
-                cv2.putText(bgr, f"error: {type(e).__name__}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
-                            (0, 0, 255), 2)
-                return av.VideoFrame.from_ndarray(bgr, format="bgr24")
-            idx, conf = top[0]
-            locked = self.stab.update(idx, conf, time.perf_counter())
-            shown = CLASSES[idx] if conf >= self.threshold else "?"
+                            self.letter, self.conf, self.box = "—", 0.0, None
+                        continue
+                    top, ms = inf.demo.predict_topk(self.model, self.tf, crop_img, self.device, k=1)
+                    idx, conf = top[0]
+                    locked = self.stab.update(idx, conf, time.perf_counter())
+                    with self.lock:
+                        if locked is not None:
+                            self.word += CLASSES[locked]
+                        self.letter = CLASSES[idx] if conf >= self.threshold else "?"
+                        self.conf, self.ms, self.box = conf, ms, (x0, y0, side)
+                except Exception:
+                    time.sleep(0.05)
+
+        # ---- thread video: hanya menyimpan frame terbaru + menggambar hasil terakhir ----
+        def recv(self, frame):
+            bgr = frame.to_ndarray(format="bgr24")
+            if self.mirror:
+                bgr = np.ascontiguousarray(bgr[:, ::-1])
+            self._last_recv = time.time()
+            if self._thread is None or not self._thread.is_alive():
+                self._thread = threading.Thread(target=self._worker, daemon=True)
+                self._thread.start()
             with self.lock:
-                if locked is not None:
-                    self.word += CLASSES[locked]
-                self.letter, self.conf, self.ms = shown, conf, ms
-            cv2.rectangle(bgr, (x0, y0), (x0 + side, y0 + side), (0, 255, 0), 2)
-            cv2.putText(bgr, f"Huruf: {shown} ({conf:.2f})", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.9,
-                        (0, 255, 0), 2)
+                self._latest = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)   # frame lama dibuang (selalu terbaru)
+                letter, conf, box = self.letter, self.conf, self.box
+            h, w = bgr.shape[:2]
+            if self.cropper is None or box is not None:
+                x0, y0, side = box or ((w - min(h, w)) // 2, (h - min(h, w)) // 2, min(h, w))
+                cv2.rectangle(bgr, (x0, y0), (x0 + side, y0 + side), (0, 255, 0), 2)
+                cv2.putText(bgr, f"Huruf: {letter} ({conf:.2f})", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.9,
+                            (0, 255, 0), 2)
+            else:
+                cv2.putText(bgr, "tangan tidak terdeteksi", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8,
+                            (0, 0, 255), 2)
             return av.VideoFrame.from_ndarray(bgr, format="bgr24")
 
     return LiveProcessor

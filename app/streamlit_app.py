@@ -161,7 +161,8 @@ with tab_live:
         ctx = webrtc_streamer(
             key="live", video_processor_factory=live.make_processor_class(),
             rtc_configuration={"iceServers": []},  # lokal saja, tanpa STUN
-            media_stream_constraints={"video": True, "audio": False},
+            media_stream_constraints={"video": {"width": {"ideal": 1280}, "height": {"ideal": 720},
+                                                "frameRate": {"ideal": 30}}, "audio": False},
             async_processing=True,
         )
         proc = ctx.video_processor

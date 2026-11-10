@@ -5,8 +5,12 @@
   "epochs_run": 12,
   "best_val_macro_f1": 0.7280605873840411,
   "best_val_accuracy": 0.7277777777777777,
-  "report_split": "val",
-  "test": null,
+  "report_split": "test",
+  "test": {
+    "accuracy": 0.7869565217391304,
+    "macro_f1": 0.7845415299299134,
+    "weighted_f1": 0.7865383465942617
+  },
   "val": {
     "accuracy": 0.7277777777777777,
     "macro_f1": 0.7280605873840411,
