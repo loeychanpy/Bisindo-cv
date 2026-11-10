@@ -1,0 +1,43 @@
+{
+  "run_name": "v3_partial6",
+  "mode": "partial",
+  "best_epoch": 11,
+  "epochs_run": 12,
+  "best_val_macro_f1": 0.7326691841700617,
+  "best_val_accuracy": 0.7333333333333333,
+  "report_split": "val",
+  "test": null,
+  "val": {
+    "accuracy": 0.7333333333333333,
+    "macro_f1": 0.7326691841700617,
+    "weighted_f1": 0.7325886244656555
+  },
+  "latency_ms": {
+    "total_ms_median": 122.54554999981337,
+    "forward_ms_median": 61.713650000456255,
+    "n": 50
+  },
+  "device": "cpu",
+  "train_seconds": 768.9,
+  "params_total": 1544506,
+  "params_trainable": 1405754,
+  "split_md5": "2769336bff6371ed4bc184fb95e8bba8",
+  "n": {
+    "train": 3052,
+    "val": 720,
+    "test": 690
+  },
+  "hparams": {
+    "unfreeze_blocks": 6,
+    "lr_head": 0.001,
+    "lr_backbone": 0.0001,
+    "weight_decay": 0.0001,
+    "batch_size": 64,
+    "augment": true,
+    "class_weights": false,
+    "pretrained": true,
+    "seed": 42,
+    "epochs": 12,
+    "patience": 4
+  }
+}

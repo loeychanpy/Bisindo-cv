@@ -3,4 +3,12 @@ data/*
 __pycache__/
 .ipynb_checkpoints/
 .venv/
+.venv-mp/
+.pytest_cache/
+.claude/
+.agents/
 data/BISINDO*/
+Plan.md
+PLAN.md
+PLAN_streamlit.md
+.vscode/

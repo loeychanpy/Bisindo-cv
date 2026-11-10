@@ -1,0 +1,6 @@
+-r requirements.txt
+streamlit>=1.50
+# Opsional (tombol "Potong ke tangan"): pip install mediapipe
+# Dipakai juga oleh src/hand_bbox.py; tanpa paket ini aplikasi tetap jalan tanpa fitur crop.
+streamlit-webrtc>=0.60
+opencv-python

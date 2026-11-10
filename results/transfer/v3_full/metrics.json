@@ -1,0 +1,43 @@
+{
+  "run_name": "v3_full",
+  "mode": "full",
+  "best_epoch": 11,
+  "epochs_run": 12,
+  "best_val_macro_f1": 0.753769964161821,
+  "best_val_accuracy": 0.7555555555555555,
+  "report_split": "test",
+  "test": {
+    "accuracy": 0.8405797101449275,
+    "macro_f1": 0.8369439889230735,
+    "weighted_f1": 0.8400037955597235
+  },
+  "val": null,
+  "latency_ms": {
+    "total_ms_median": 98.28379999999015,
+    "forward_ms_median": 44.072549999782495,
+    "n": 50
+  },
+  "device": "cpu",
+  "train_seconds": 1256.4,
+  "params_total": 1544506,
+  "params_trainable": 1544506,
+  "split_md5": "2769336bff6371ed4bc184fb95e8bba8",
+  "n": {
+    "train": 3052,
+    "val": 720,
+    "test": 690
+  },
+  "hparams": {
+    "unfreeze_blocks": 2,
+    "lr_head": 0.001,
+    "lr_backbone": 0.0001,
+    "weight_decay": 0.0001,
+    "batch_size": 64,
+    "augment": true,
+    "class_weights": false,
+    "pretrained": true,
+    "seed": 42,
+    "epochs": 12,
+    "patience": 4
+  }
+}

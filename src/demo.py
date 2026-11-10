@@ -3,12 +3,16 @@ demo.py - Demo inferensi BISINDO A-Z dari model hasil src/train_transfer.py.
 
   python src/demo.py --run mnv3s_partial3 --image foto1.jpg foto2.jpg     # demo offline (utama)
   python src/demo.py --run mnv3s_partial3 --webcam                        # bonus; perlu: pip install opencv-python
+  python src/demo.py --run <run_crop> --crop --image foto1.jpg            # dengan deteksi tangan (MediaPipe)
 
 Model dibaca dari results/transfer/<run>/best.pth (tidak di-commit; ada di laptop yang melatihnya).
 
 Catatan penting:
-  - Model TIDAK punya deteksi tangan. Tanpa tangan di bingkai, ia tetap menebak satu huruf.
+  - Tanpa --crop model TIDAK punya deteksi tangan: tanpa tangan di bingkai ia tetap menebak satu huruf.
     Karena itu prediksi di bawah --threshold ditampilkan sebagai "?" dan tidak dikunci.
+  - Dengan --crop, MediaPipe mencari tangan dan gambar dipotong ke tangan (sama dengan training crop=bbox).
+    Bila tidak ada tangan, demo menampilkan "tangan tidak terdeteksi" dan tidak menebak.
+    Butuh `pip install mediapipe` di environment demo (model tangan diunduh otomatis ke models/).
   - Mode webcam memotong tengah bingkai menjadi persegi (kotak hijau): letakkan tangan di dalam kotak.
     Foto latih berbentuk persegi, jadi bingkai 4:3 / 16:9 yang dipaksa jadi persegi akan terdistorsi.
   - Jalankan di terminal, bukan di dalam Jupyter (cv2.imshow di notebook membuat kernel macet).
@@ -30,6 +34,29 @@ from PIL import Image
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from dataset import CLASSES, get_transforms  # noqa: E402
 from train_transfer import ROOT, build_model, load_rgb  # noqa: E402
+
+
+class HandCropper:
+    """Deteksi tangan MediaPipe -> crop persegi (aturan sama dengan src/hand_bbox.py). Dipakai oleh --crop."""
+
+    def __init__(self, model_path: Path | None = None):
+        from hand_bbox import make_detector  # impor di sini agar demo tanpa --crop tidak butuh mediapipe
+        self.mp, self.det = make_detector(model_path or ROOT / "models" / "hand_landmarker.task")
+
+    def crop(self, img: Image.Image):
+        """Return (gambar_crop atau None bila tidak ada tangan, kotak piksel atau None, ms detektor)."""
+        from hand_bbox import square_box
+        t0 = time.perf_counter()
+        res = self.det.detect(self.mp.Image(image_format=self.mp.ImageFormat.SRGB, data=np.asarray(img)))
+        ms = (time.perf_counter() - t0) * 1000
+        if not res.hand_landmarks:
+            return None, None, ms
+        xs = [lm.x for h in res.hand_landmarks for lm in h]
+        ys = [lm.y for h in res.hand_landmarks for lm in h]
+        w, h = img.size
+        b = square_box(xs, ys, w, h)
+        box = (round(b[0] * w), round(b[1] * h), round(b[2] * w), round(b[3] * h))
+        return img.crop(box), box, ms
 
 
 def load_model(run_dir: Path, device: torch.device):
@@ -77,21 +104,29 @@ class LetterStabilizer:
         return None
 
 
-def run_images(model, tf, device, paths, threshold):
+def run_images(model, tf, device, paths, threshold, cropper=None):
     for p in paths:
         try:
-            img = load_rgb(p, 448)
+            img = load_rgb(p, 1024 if cropper else 448)
         except (FileNotFoundError, OSError) as e:
             print(f"{Path(p).name}: gagal dibuka ({type(e).__name__}), dilewati")
             continue
+        det_ms = 0.0
+        if cropper:
+            img, _, det_ms = cropper.crop(img)
+            if img is None:
+                print(f"{Path(p).name}: tangan tidak terdeteksi (tidak menebak) | detektor {det_ms:.1f} ms")
+                continue
         top, ms = predict_topk(model, tf, img, device)
         best_i, best_p = top[0]
         flag = "" if best_p >= threshold else "  (di bawah threshold)"
         alts = ", ".join(f"{CLASSES[i]} {pr:.2f}" for i, pr in top)
-        print(f"{Path(p).name}: {CLASSES[best_i]} ({best_p:.2f}){flag} | top-3: {alts} | {ms:.1f} ms")
+        lat = (f"{ms:.1f} ms" if not cropper
+               else f"{ms:.1f} ms tanpa detektor | {ms + det_ms:.1f} ms dengan detektor ({det_ms:.1f} ms)")
+        print(f"{Path(p).name}: {CLASSES[best_i]} ({best_p:.2f}){flag} | top-3: {alts} | {lat}")
 
 
-def run_webcam(model, tf, device, args):
+def run_webcam(model, tf, device, args, cropper=None):
     import cv2  # impor di sini agar mode --image tidak butuh OpenCV
 
     cap = cv2.VideoCapture(args.camera)
@@ -108,8 +143,25 @@ def run_webcam(model, tf, device, args):
             h, w = frame.shape[:2]
             side = min(h, w)
             x0, y0 = (w - side) // 2, (h - side) // 2
-            crop = cv2.cvtColor(frame[y0:y0 + side, x0:x0 + side], cv2.COLOR_BGR2RGB)
-            top, ms = predict_topk(model, tf, Image.fromarray(crop), device, k=1)
+            if cropper:
+                hand, box, _ = cropper.crop(Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)))
+                if hand is None:
+                    cv2.putText(frame, "tangan tidak terdeteksi", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8,
+                                (0, 0, 255), 2)
+                    cv2.imshow("BISINDO demo (q=keluar, c=hapus)", frame)
+                    stab.preds.clear()
+                    stab.confs.clear()
+                    key = cv2.waitKey(1) & 0xFF
+                    if key == ord("q"):
+                        break
+                    if key == ord("c"):
+                        word = ""
+                    continue
+                x0, y0, side = box[0], box[1], box[2] - box[0]
+                crop_img = hand
+            else:
+                crop_img = Image.fromarray(cv2.cvtColor(frame[y0:y0 + side, x0:x0 + side], cv2.COLOR_BGR2RGB))
+            top, ms = predict_topk(model, tf, crop_img, device, k=1)
             idx, conf = top[0]
             locked = stab.update(idx, conf, time.perf_counter())
             if locked is not None:
@@ -141,6 +193,7 @@ def main(argv=None):
     ap.add_argument("--run", required=True, help="nama run di results/transfer/")
     ap.add_argument("--image", nargs="+", help="satu atau lebih gambar")
     ap.add_argument("--webcam", action="store_true")
+    ap.add_argument("--crop", action="store_true", help="deteksi tangan (MediaPipe) lalu crop sebelum klasifikasi")
     ap.add_argument("--camera", type=int, default=0)
     ap.add_argument("--threshold", type=float, default=0.8)
     ap.add_argument("--window", type=int, default=15)
@@ -160,10 +213,16 @@ def main(argv=None):
     model, img_size, ckpt = load_model(run_dir, device)
     tf = get_transforms(train=False, img_size=img_size)
     print(f"Model: {a.run} (epoch {ckpt.get('epoch')}, val macro-F1 {ckpt.get('val_f1', float('nan')):.3f}) | {device}")
+    train_crop = json.loads((run_dir / "config_used.json").read_text(encoding="utf-8")).get("crop", "none")
+    if train_crop != "none" and not a.crop:
+        print(f"[PERINGATAN] run ini dilatih dengan crop={train_crop}; tanpa --crop akurasi bisa turun.")
+    if a.crop and train_crop == "none":
+        print("[PERINGATAN] run ini dilatih tanpa crop; --crop mengubah distribusi masukan.")
+    cropper = HandCropper() if a.crop else None
     if a.image:
-        run_images(model, tf, device, a.image, a.threshold)
+        run_images(model, tf, device, a.image, a.threshold, cropper)
     if a.webcam:
-        word = run_webcam(model, tf, device, a)
+        word = run_webcam(model, tf, device, a, cropper)
         print(f"Kata terakhir: {word!r}")
 
 

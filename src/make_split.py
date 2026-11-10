@@ -102,6 +102,18 @@ def scan_images(data_dir, exts, label_regex, group_regex, exclude=frozenset()):
     return recs, skipped
 
 
+def apply_group_file(recs, group_file):
+    """Ganti group dan label tiap gambar dengan isi group_file (hasil src/group_keys.py), lalu tambah 'background'."""
+    gf = {r["path"]: r for r in read_csv(group_file)}
+    missing = [r["path"] for r in recs if r["path"] not in gf]
+    if missing:
+        sys.exit(f"{len(missing)} gambar tidak ada di {group_file}, mis. {missing[:3]}. "
+                 "Jalankan ulang src/group_keys.py dengan --exclude yang sama.")
+    for r in recs:
+        g = gf[r["path"]]
+        r["group"], r["label"], r["background"] = g["group"], g["label"], g["background"]
+
+
 def sha256_file(p):
     h = hashlib.sha256()
     with open(p, "rb") as f:
@@ -221,6 +233,7 @@ def do_split(recs, ratios, seed, group_mode):
 def leakage_checks(recs):
     """Return (lines_laporan, jumlah_masalah)."""
     lines, problems = [], 0
+    strict_groups = any(r.get("background") for r in recs)  # split berbasis group_file: irisan grup harus 0
     by_split = {s: [r for r in recs if r["split"] == s] for s in SPLITS}
 
     lines.append("== Jumlah gambar per kelas per split ==")
@@ -246,7 +259,13 @@ def leakage_checks(recs):
             ga = {r["group"] for r in by_split[a] if r["group"]}
             gb = {r["group"] for r in by_split[b] if r["group"]}
             n = len(ga & gb)
-            lines.append(f"{a} & {b}: {n} grup sama {'OK' if n == 0 else '(cek: wajar kalau mode per_class)'}")
+            if strict_groups:
+                problems += n > 0
+                lines.append(f"{a} & {b}: {n} grup sama {'OK' if n == 0 else 'BOCOR!'}")
+            else:
+                lines.append(f"{a} & {b}: {n} grup sama {'OK' if n == 0 else '(cek: wajar kalau mode per_class)'}")
+        lines.append(f"jumlah grup per split: " + ", ".join(
+            f"{s}={len({r['group'] for r in by_split[s]})}" for s in SPLITS))
     else:
         lines.append("\n[CATATAN] Metadata signer/latar nggak ada -> split cuma stratifikasi per kelas. "
                      "Tulis ini sebagai keterbatasan di README.")
@@ -264,6 +283,14 @@ def leakage_checks(recs):
         lines.append(f"(info) gambar duplikat di dalam split yang sama: {n_inner}")
     else:
         lines.append("\n[CATATAN] Hash file nggak dihitung -> cek duplikat dilewati.")
+
+    if strict_groups:
+        lines.append("\n== Jumlah gambar per bucket latar per split ==")
+        buckets = sorted({r["background"] for r in recs})
+        lines.append(f"{'latar':<14}" + "  ".join(f"{s:>6}" for s in SPLITS))
+        for b in buckets:
+            c = [sum(1 for r in by_split[s] if r["background"] == b) for s in SPLITS]
+            lines.append(f"{b:<14}" + "  ".join(f"{x:>6}" for x in c))
     return lines, problems
 
 
@@ -305,11 +332,13 @@ COLS = ["path", "label", "group", "sha256", "split"]
 
 def write_csv(recs, out):
     out.parent.mkdir(parents=True, exist_ok=True)
+    cols = COLS + (["background"] if any(r.get("background") for r in recs) else [])  # hanya split berbasis group_file
     with open(out, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        w.writerow(COLS)
+        w.writerow(cols)
         for r in sorted(recs, key=lambda r: r["path"]):
-            w.writerow([r["path"], r["label"], r["group"] or "", r["sha256"], r["split"]])
+            w.writerow([r["path"] if c == "path" else (r["group"] or "") if c == "group" else r.get(c, "") or ""
+                        for c in cols])
 
 
 def read_csv(p):
@@ -356,7 +385,8 @@ def main():
     args = ap.parse_args()
 
     cfg = yaml.safe_load(open(args.config, encoding="utf-8"))
-    seed = cfg.get("seed", 42)
+    seed = cfg.get("split_seed", cfg.get("seed", 42))   # split_seed opsional: seed split terpisah dari seed training
+    group_file = cfg.get("group_file")                   # CSV group/label/background dari src/group_keys.py
     data_dir = resolve_data_dir(cfg["data_dir"])
     if "val_frac" in cfg or "test_frac" in cfg:
         val_f, test_f = cfg.get("val_frac", 0.15), cfg.get("test_frac", 0.15)
@@ -403,8 +433,10 @@ def main():
         print("[INFO] hitung sha256 (agak lama buat dataset gede) ...")
         add_hashes(recs, data_dir)
 
+    if group_file:
+        apply_group_file(recs, group_file)
     assign_group_ids(recs)
-    mode = do_split(recs, ratios, seed, cfg.get("group_mode", "auto"))
+    mode = do_split(recs, ratios, seed, "global" if group_file else cfg.get("group_mode", "auto"))
     write_csv(recs, out)
     write_label_map(recs, label_map_path)
 

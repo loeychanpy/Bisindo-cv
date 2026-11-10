@@ -536,6 +536,36 @@ def run(cfg: dict, evaluate_test: bool = True) -> dict:
     return dict(out_dir=out, metrics=metrics, log=log)
 
 
+def eval_only(cfg: dict, split_name: str = "test") -> dict:
+    """Evaluasi best.pth dari run yang sudah ada pada split_name tanpa melatih ulang.
+    Menulis laporan <split_name> di folder run dan memperbarui metrics.json (bagian test)."""
+    device = _pick_device(cfg["device"])
+    out = Path(cfg["results_dir"]) / "transfer" / cfg["run_name"]
+    if not (out / "best.pth").exists() or not (out / "metrics.json").exists():
+        raise FileNotFoundError(f"{out} tidak punya best.pth dan metrics.json; jalankan training dulu.")
+    metrics = json.loads((out / "metrics.json").read_text(encoding="utf-8"))
+    split_md5 = hashlib.md5(Path(cfg["split_path"]).read_bytes()).hexdigest()
+    if metrics.get("split_md5") != split_md5:
+        raise ValueError(f"Split berbeda dari saat run dilatih (md5 {metrics.get('split_md5')} vs {split_md5}).")
+
+    set_seed(cfg["seed"])
+    ckpt = torch.load(out / "best.pth", map_location=device, weights_only=True)
+    model = build_model(ckpt["mode"], pretrained=False).to(device)
+    model.load_state_dict(ckpt["state_dict"])
+    loaders, df = make_loaders(cfg)
+    res = predict(model, loaders[split_name], device)
+    df_s = df[df["split"] == split_name].reset_index(drop=True)
+    summary = _report(split_name, res, df_s, out)
+    _save_samples(df_s, res, Path(cfg["data_dir"]), cfg["draft_size"], cfg["seed"],
+                  out / f"sample_predictions_{split_name}.png")
+    metrics[split_name] = summary
+    metrics["report_split"] = split_name
+    (out / "metrics.json").write_text(json.dumps(metrics, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(f"[{split_name}] {cfg['run_name']} (epoch {ckpt['epoch']}): accuracy {summary['accuracy']:.4f} | "
+          f"macro-F1 {summary['macro_f1']:.4f}")
+    return dict(out_dir=out, metrics=metrics)
+
+
 def compare_runs(results_dir: str | None = None, save: bool = True) -> pd.DataFrame:
     """Tabel perbandingan semua run di results/transfer/*/metrics.json (untuk eksperimen terkontrol)."""
     base = Path(results_dir) if results_dir else _abs(_load_yaml(_abs("configs/config.yaml")).get("results_dir", "results"))
@@ -564,7 +594,8 @@ def main():
     ap = argparse.ArgumentParser(description="Transfer learning MobileNetV3-Small untuk BISINDO")
     ap.add_argument("--config", default="configs/config.yaml")
     ap.add_argument("--transfer-config", default="configs/transfer.yaml")
-    ap.add_argument("--run-name")
+    ap.add_argument("--run-name", "--run", dest="run_name")
+    ap.add_argument("--eval-only", action="store_true", help="evaluasi best.pth run --run-name pada test, tanpa training")
     ap.add_argument("--mode", choices=MODES)
     ap.add_argument("--unfreeze-blocks", type=int)
     ap.add_argument("--epochs", type=int)
@@ -608,8 +639,13 @@ def main():
     if a.overwrite:
         ov["overwrite"] = True
     try:
+        if a.eval_only:
+            if not a.run_name:
+                sys.exit("--eval-only butuh --run <run_name>")
+            eval_only(build_cfg(ov, a.config, a.transfer_config))
+            return
         run(build_cfg(ov, a.config, a.transfer_config), evaluate_test=not a.no_test)
-    except FileExistsError as e:
+    except (FileExistsError, FileNotFoundError, ValueError) as e:
         sys.exit(str(e))
 
 

@@ -1,0 +1,57 @@
+split_v3 | seed=42 | ratio={'train': 0.7, 'val': 0.15, 'test': 0.15} | mode=global | gambar=4462
+
+== Jumlah gambar per kelas per split ==
+kelas   train     val    test
+A         117      24      24
+B         116      28      24
+C         117      27      24
+D         122      25      23
+E         118      28      24
+F         117      28      28
+G         117      28      28
+H         117      28      28
+I         117      28      28
+J         117      28      24
+K         117      28      28
+L         114      28      28
+M         117      28      28
+N         117      28      28
+O         117      28      28
+P         120      28      23
+Q         121      28      24
+R         115      28      28
+S         118      28      28
+T         117      28      28
+U         117      28      28
+V         115      28      28
+W         118      28      24
+X         118      28      28
+Y         119      28      28
+Z         117      28      28
+total    3052     720     690
+
+== Irisan path antar split (harus 0) ==
+train & val: 0 OK
+train & test: 0 OK
+val & test: 0 OK
+
+== Irisan signer/latar antar split (0 = bersih) ==
+train & val: 0 grup sama OK
+train & test: 0 grup sama OK
+val & test: 0 grup sama OK
+jumlah grup per split: train=32, val=6, test=6
+
+== Duplikat file (hash sama) lintas split (harus 0) ==
+hash yang muncul di >1 split: 0 OK
+(info) gambar duplikat di dalam split yang sama: 0
+
+== Jumlah gambar per bucket latar per split ==
+latar          train     val    test
+baju             804     180     173
+bebas            678     128     173
+other             12     104       0
+polos             26       0       0
+polos_gelap      752     154     171
+polos_terang     780     154     173
+
+HASIL: BERSIH
