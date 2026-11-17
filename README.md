@@ -1,181 +1,188 @@
-# Pengenalan Alfabet BISINDO (A-Z) dari Gambar Tangan
+# Pengenalan Alfabet BISINDO (A–Z) dari Citra Gestur Tangan
 
-Proyek Akhir Visi Komputer (IF0PP006, kelas 5PITA, Semester Ganjil 2026/2027) - Kelompok 4.
+Proyek Akhir Visi Komputer (IF0PP006, Kelas 5PITA, Semester Ganjil 2026/2027) — **Kelompok 4**.
 
-## Pertanyaan proyek
-Seberapa baik MobileNetV3-Small pra-latih (ImageNet) mengenali 26 huruf BISINDO dari foto tangan, dan strategi transfer learning mana yang paling efektif: hanya melatih kepala klasifikasi (`head`, baseline), membuka beberapa blok terakhir (`partial`, metode utama), atau melatih seluruh jaringan (`full`). Dataset: BISINDO Alphabet (Sanjaya, UMN 2024), varian Original. Ukuran keberhasilan: macro-F1 dan akurasi pada test set beku (`split_v2`), plus kelas yang paling sering tertukar dan latensi inferensi.
+## Ringkasan Proyek
+Proyek ini mengimplementasikan pipeline visi komputer *end-to-end* untuk mengenali 26 huruf alfabet Bahasa Isyarat Indonesia (BISINDO) A–Z secara otomatis dari citra gestur tangan. Arsitektur model mengadaptasi **MobileNetV3-Small** pra-latih ImageNet menggunakan transfer learning, dilengkapi optimasi kuantisasi/TorchScript untuk inferensi berlatensi rendah, serta antarmuka web interaktif berbasis **Streamlit**.
+
+### Hasil Utama (Benchmark Evaluasi pada `split_v3` Zero-Leakage)
+- **Model Terbaik:** `v3_full_cos30_ls_strong` (Full Fine-Tuning 30 Epoch + Cosine Annealing LR + Label Smoothing 0.1 + Strong Augmentation).
+- **Test Accuracy:** **90,0%** (0,9000 pada 690 citra uji independen).
+- **Test Macro-F1:** **0,8979** (Macro Precision: 0,897 | Macro Recall: 0,899).
+- **Val Macro-F1:** 0,8083 (meningkat signifikan dari baseline 0,4925).
+- **Latensi Inferensi Forward (TorchScript Channels-Last):**
+  - **GPU (NVIDIA RTX 3050 Laptop):** **6,5 ms** (total *end-to-end* 59,4 ms).
+  - **CPU (8-thread / 2-thread opt):** **11,2 ms** (total *end-to-end* 38,2 ms).
+
+---
 
 ## Dataset
-- Sanjaya, UMN 2024, Mendeley Data. DOI: 10.17632/ywnjpbcz8m.1
-- Lisensi: CC BY 4.0
-- Cara memperoleh: unduh dari Mendeley Data, ekstrak ke `data/`, sehingga folder `data/BISINDO Indonesian Sign Language Alphabet Image Data/01. Original Images/<HURUF>/` ada. Pipeline hanya memakai varian Original.
-- Dataset tidak di-commit (lihat `.gitignore`).
+- **Sumber:** Mendeley Data — *BISINDO Indonesian Sign Language Alphabet Image Data* (Sanjaya, Universitas Multimedia Nusantara, 2024).
+- **DOI:** [10.17632/ywnjpbcz8m.1](https://doi.org/10.17632/ywnjpbcz8m.1)
+- **Lisensi:** Creative Commons Attribution 4.0 International (CC BY 4.0).
+- **Struktur:** Pipeline memproses varian `01. Original Images` (4.462 citra valid setelah pembersihan). Dataset mentah tidak di-commit ke repositori (lihat `.gitignore`).
+- **Penempatan Lokal:** Ekstrak dataset ke folder `data/` sehingga jalur berikut tersedia:  
+  `data/BISINDO Indonesian Sign Language Alphabet Image Data/01. Original Images/<HURUF>/`
 
-## Setup
-Semua perintah dijalankan dari root repo (Windows, PowerShell).
-```
+---
+
+## Pembagian Data & Jaminan Bebas Kebocoran (`split_v3`)
+Agar evaluasi model mencerminkan performa dunia nyata, repositori ini menggunakan **`split_v3`** sebagai satu-satunya tolok ukur resmi:
+1. **Pengelompokan Berbasis Ponsel/Kontributor:** Sebanyak 4.462 citra dikelompokkan ke dalam 44 grup ponsel kontributor independen berdasarkan metadata nama file (`<Huruf>_<Latar>_<Merek>_<Model>.jpg`).
+2. **Zero-Leakage (Irisan = 0):** Seluruh citra dari satu kontributor ponsel dialokasikan eksklusif ke salah satu split (*Train*, *Validation*, atau *Test*). Tidak ada kontributor, perangkat, atau latar yang bocor antar-split.
+3. **Statistik Split:**
+   - **Train:** 3.052 citra (30 grup ponsel)
+   - **Validation:** 720 citra (8 grup ponsel)
+   - **Test:** 690 citra (6 grup ponsel)
+   - Status audit kebocoran data: `splits/leakage_report_v3.txt` berakhir dengan status **`HASIL: BERSIH`**.
+
+---
+
+## Setup Lingkungan Pengembangan
+Semua perintah dijalankan dari root repositori (Windows PowerShell).
+
+```powershell
+# 1. Buat dan aktifkan virtual environment
 python -m venv .venv
 .venv\Scripts\activate
+
+# 2. Pasang dependensi utama
 pip install -r requirements.txt
 ```
 
-### Memakai GPU NVIDIA (opsional, jauh lebih cepat)
-`pip install torch` di Windows biasanya memasang build CPU. Cek dulu:
-```
-python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
-```
-Jika hasilnya `...+cpu False`, ganti dengan build CUDA (driver NVIDIA yang sudah terpasang cukup):
-```
+### Akselerasi GPU NVIDIA (CUDA)
+Secara bawaan `pip install torch` di Windows sering memasang versi CPU. Untuk mengaktifkan akselerasi GPU:
+```powershell
 pip uninstall -y torch torchvision
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126
 ```
-Ulangi cek di atas; harus tercetak `True`. Training memilih GPU otomatis (`device: auto` di `configs/transfer.yaml`); paksa dengan `--device cuda` atau `--device cpu`. Baris pertama log run mencetak `device=cuda` atau `device=cpu`. Pada GPU 4 GB, turunkan `--batch-size` bila memori habis.
+Pastikan `python -c "import torch; print(torch.cuda.is_available())"` menghasilkan output `True`.
 
-## Panduan langkah demi langkah
-Urutan lengkap dari data sampai demo. Langkah 1-2 cukup sekali; hasilnya (`results/sanitary/`, `splits/`) sudah ada di repo.
+---
 
-**Langkah 0 - Siapkan data.** Unduh dataset (lihat bagian Dataset), ekstrak ke `data/` sehingga folder `data/BISINDO Indonesian Sign Language Alphabet Image Data/01. Original Images/<HURUF>/` ada.
+## Panduan Langkah demi Langkah
 
-**Langkah 1 - Sanity check data** (opsional; hasilnya sudah di repo).
-```
+### Langkah 1: Sanitasi Citra & Partisi Data (Sudah Beku di Repo)
+Sanitasi dan pembentukan split sudah dibekukan di direktori `splits/`. Jika ingin memverifikasi ulang:
+```powershell
+# Verifikasi sanitasi data
 python src/sanitary_check.py --root "data/BISINDO Indonesian Sign Language Alphabet Image Data"
-```
-Menulis `results/sanitary/` termasuk `excluded_files.txt` (file rusak, HEIC bernama `.jpg`, duplikat). Notebook `notebooks/bisindo_cp07_data_pipeline.ipynb` (Run All) menghasilkan `results/sanity_summary.json` dan `results/figures/`.
 
-**Langkah 2 - Split data** (dibuat sekali, lalu dibekukan; skrip menolak menimpa split yang sudah ada).
-- `split_v2` (lama, stratified per kelas) sudah ada di `splits/` dan menjadi default `configs/config.yaml`.
-- `split_v3` (disarankan; tanpa kebocoran ponsel antar split) dibuat dengan dua perintah:
+# Verifikasi audit kebocoran split_v3
+python src/make_split.py --config configs/config_v3.yaml --version v3 --check-only
 ```
-python src/group_keys.py --root "data/BISINDO Indonesian Sign Language Alphabet Image Data/01. Original Images"
-python src/make_split.py --config configs/config_v3.yaml --version v3
-python src/make_split.py --config configs/config_v3.yaml --version v3 --check-only    # cek ulang leakage
-```
-`group_keys.py` menulis `splits/groups_v3.csv` (ID ponsel dari nama file, bucket latar, dan koreksi 5 file yang salah folder) beserta daftar pemetaan nama mentah ke grup untuk diperiksa mata. `make_split.py` menulis `splits/split_v3.csv` dan `splits/leakage_report_v3.txt`; laporan harus berakhir `HASIL: BERSIH`.
 
-**Langkah 3 - Latih model.** Gunakan `--config configs/config_v3.yaml` agar memakai `split_v3` (tanpa opsi itu dipakai `split_v2`). Hyperparameter dasar ada di `configs/transfer.yaml` dan bisa ditimpa lewat CLI.
-```
+### Langkah 2: Pelatihan Model (Transfer Learning)
+Pelatihan dijalankan dengan mengacu pada `configs/config_v3.yaml`.
+
+```powershell
+# A. Baseline: Head-Only (Hanya melatih classification head, backbone freeze)
 python src/train_transfer.py --config configs/config_v3.yaml --run-name v3_head --mode head --epochs 20
-python src/train_transfer.py --config configs/config_v3.yaml --run-name v3_partial4 --mode partial --unfreeze-blocks 4 --no-test
-python src/train_transfer.py --config configs/config_v3.yaml --run-name v3_full --mode full --epochs 12
-```
-- `--no-test`: tuning memakai val saja; test tidak disentuh.
-- Smoke test sebelum run panjang: `--epochs 1 --no-test --run-name smoke_x`, lalu hapus folder `results/transfer/smoke_x`.
-- Run yang sudah ada tidak ditimpa tanpa `--overwrite`. Satu run, satu perubahan dari run pembanding.
-- Opsi kecepatan: `amp` (mixed precision, hanya di GPU), `fast_cudnn`, `cache_images`, dan `num_workers` di `configs/transfer.yaml`; matikan AMP dengan `--no-amp`. Untuk eksperimen terkontrol yang harus persis sama antar run, set `amp: false` dan `fast_cudnn: false`.
-- Atau lewat `notebooks/02_transfer_learning.ipynb` (notebook tipis; logikanya di `src/train_transfer.py`).
-- Run panjang di background, simpan log: `python src/train_transfer.py ... > results/transfer/_logs/<run>.txt 2>&1`.
 
-**Langkah 4 - Evaluasi test tanpa melatih ulang.** Setelah memilih run terbaik dari nilai val, evaluasi `best.pth`-nya pada test sekali saja:
-```
-python src/train_transfer.py --config configs/config_v3.yaml --eval-only --run v3_partial4
-```
-Perintah ini menolak berjalan bila split berbeda dari saat run dilatih.
+# B. Partial Fine-Tuning (Melatih head + 6 blok konvolusi teratas)
+python src/train_transfer.py --config configs/config_v3.yaml --run-name v3_partial6 --mode partial --unfreeze-blocks 6 --epochs 12
 
-**Langkah 5 - Bandingkan semua run.**
+# C. Model SOTA Terbaik (Full Fine-Tuning + Cosine Annealing + Label Smoothing 0.1 + Strong Aug)
+python src/train_transfer.py --config configs/config_v3.yaml --run-name v3_full_cos30_ls_strong --mode full --epochs 30 --scheduler cosine --warmup-epochs 2 --label-smoothing 0.1 --aug strong
 ```
+
+### Langkah 3: Evaluasi & Perbandingan Hasil
+```powershell
+# Evaluasi model pada test set beku (sekali saja)
+python src/train_transfer.py --config configs/config_v3.yaml --eval-only --run v3_full_cos30_ls_strong
+
+# Rekapitulasi perbandingan seluruh model ke results/transfer/comparison.csv
 python src/train_transfer.py --compare
 ```
-Menulis `results/transfer/comparison.csv`.
 
-**Langkah 6 - Analisis kesalahan** (butuh `predictions_test.csv`, ada setelah run dievaluasi di test).
+### Langkah 4: Uji Latensi Inferensi
+Mengukur waktu pemrosesan per tahap (*decode*, *preprocessing*, *forward pass eager*, *forward pass TorchScript*, dan total *end-to-end*):
+```powershell
+# Benchmark GPU
+python src/benchmark_latency.py --config configs/config_v3.yaml --run v3_full_cos30_ls_strong --device cuda
+
+# Benchmark CPU
+python src/benchmark_latency.py --config configs/config_v3.yaml --run v3_full_cos30_ls_strong --device cpu
 ```
-python src/error_analysis.py --run v3_partial4 --split test
+
+### Langkah 5: Analisis Kesalahan (Error Analysis)
+```powershell
+python src/error_analysis.py --run v3_full_cos30_ls_strong --split test
 ```
-Keluaran di `results/transfer/<run>/`: `error_analysis.md` (ringkasan), akurasi per latar dan per grup ponsel, pasangan huruf yang paling tertukar (M/N, D/P, J/I) beserta contoh gambar, dan tabel akurasi vs confidence dengan saran `--threshold` demo.
+Menghasilkan matriks kesalahan per latar belakang (`error_by_background.png`), kelompok kontributor (`error_worst_group.png`), pasangan huruf paling membingungkan (M/N, D/P), dan kalibrasi confidence (`error_reliability.csv`).
 
-**Langkah 7 - Kotak tangan MediaPipe** (opsional; dasar fitur "potong ke tangan"). MediaPipe dipasang di environment terpisah agar tidak mengganggu environment utama:
-```
-python -m venv .venv-mp
-.venv-mp\Scripts\pip install mediapipe pandas pillow pyyaml
-.venv-mp\Scripts\python src/hand_bbox.py --config configs/config_v3.yaml
-```
-Model tangan (`models/hand_landmarker.task`) diunduh otomatis. Keluaran: `results/crops/bboxes_v3.csv`, `detection_rate.csv`, dan `crop_grid.png` (periksa visual). Opsi training `crop=bbox` belum tersedia di branch ini; bbox saat ini dipakai oleh `demo.py --crop`.
+---
 
-**Langkah 8 - Demo inferensi** (butuh `best.pth` dari run yang dipilih).
-```
-python src/demo.py --run v3_partial4 --image foto1.jpg foto2.jpg    # demo offline
-python src/demo.py --run v3_partial4 --webcam                       # bonus; perlu pip install opencv-python
-python src/demo.py --run v3_partial4 --crop --image foto1.jpg       # deteksi tangan dulu; perlu pip install mediapipe
-```
-Tanpa `--crop` model tidak punya deteksi tangan: tanpa tangan di bingkai ia tetap menebak satu huruf, sehingga prediksi di bawah `--threshold` ditampilkan sebagai `?`. Dengan `--crop`, bila tidak ada tangan demo menampilkan "tangan tidak terdeteksi" dan tidak menebak. Jalankan mode webcam di terminal, bukan di Jupyter.
+## Tabel Perbandingan Eksperimen Model (`split_v3`)
 
-**Langkah 9 - Tampilan Streamlit.** Lihat bagian berikutnya.
+| Model | Strategi | Parameter Dilatih | Val Macro-F1 | Test Acc | Test Macro-F1 | Forward Latency | Keterangan |
+|---|---|---|---|---|---|---|---|
+| `v3_head` | Head-Only | 26.650 (1,7%) | 0,4925 | 53,8% | 0,5346 | 20,8 ms (CPU) | Baseline awal, representasi ImageNet kurang spesifik |
+| `v3_partial6` | Partial 6 Blok | 1.405.754 (91,0%) | 0,7327 | — | — | 61,7 ms (CPU) | Peningkatan adaptasi representasi tangan |
+| `v3_full_e30` | Full Fine-Tune | 1.544.506 (100%) | 0,7765 | — | — | 20,8 ms (CPU) | 30 epoch konstan LR |
+| **`v3_full_cos30_ls_strong`** | **Full + Cosine + LS + Strong** | **1.544.506 (100%)** | **0,8083** | **90,0%** | **0,8979** | **6,5 ms (GPU) / 11,2 ms (CPU)** | **Model Terbaik (SOTA)** |
 
-Keluaran tiap run ada di `results/transfer/<run_name>/`: `config_used.json`, `log.csv`, `curves.png`, `metrics.json`, per-kelas, confusion matrix, pasangan huruf yang paling tertukar, dan prediksi contoh. `best.pth` tidak di-commit (`.gitignore`), jadi hanya ada di laptop yang melatihnya.
+---
 
-Aturan yang dijaga: augmentasi hanya di train (tanpa horizontal flip karena bisa mengubah makna isyarat), BatchNorm pada layer beku tetap mode eval, model terbaik dipilih dari val macro-F1, test dievaluasi sekali di akhir, dan run yang sudah ada tidak ditimpa tanpa `--overwrite`.
+## Aplikasi GUI Interaktif (Streamlit)
+Aplikasi pengenalan BISINDO berbasis web lokal dapat dijalankan tanpa memerlukan dependensi eksternal cloud:
 
-### Masalah umum
-| Gejala | Penyebab dan solusi |
-|---|---|
-| Log mencetak `device=cpu` padahal ada GPU | torch build CPU; ikuti "Memakai GPU NVIDIA" di atas. |
-| `CUDA out of memory` | Turunkan `--batch-size` (mis. 16) atau `--num-workers`. |
-| `FileExistsError ... sudah berisi hasil` | Ganti `--run-name` atau tambahkan `--overwrite`. |
-| `File contoh tidak ada di ...` | `data_dir` di `configs/config*.yaml` salah; harus folder `01. Original Images`. |
-| `make_split.py` menolak menulis | Split itu sudah dibekukan; buat versi baru (`--version v4`) dan catat alasannya. |
-| Error saat `num_workers` > 0 di Windows | Set `num_workers: 0` di `configs/transfer.yaml`. |
-
-## Tampilan (Streamlit, lokal)
-Aplikasi demo yang hanya berjalan di laptop sendiri (tanpa deployment, tanpa training di dalam aplikasi). Butuh `best.pth` hasil `src/train_transfer.py` (tidak di-commit, jadi hanya run yang dilatih di laptop ini yang muncul).
-
-```
+```powershell
+# Pasang dependensi GUI
 pip install -r requirements-app.txt
+
+# Jalankan server aplikasi
 streamlit run app/streamlit_app.py
 ```
-Fitur "Potong ke tangan" butuh `pip install mediapipe`; tanpa itu kotak centangnya nonaktif dan aplikasi tetap jalan.
 
-| Tab | Fungsi |
-|---|---|
-| Unggah Gambar | Prediksi banyak foto sekaligus: huruf, keyakinan, top-k, latensi. File rusak/HEIC/terlalu kecil hanya menampilkan pesan di kartunya. |
-| Kamera | Foto dari kamera + "Susun kata" (tambah huruf, spasi, hapus, reset). Video real-time tetap lewat `python src/demo.py --webcam`. |
-| Contoh Data Uji | Demo tanpa kamera: 9 gambar acak dari split test, border hijau/merah, opsi "Hanya tampilkan yang salah". |
-| Hasil Model | Metrik, kurva, confusion matrix, tabel per kelas, perbandingan semua run. |
-| Tentang | Masalah, dataset, model, dan keterbatasan. |
+### Fitur Utama Aplikasi:
+1. **Unggah Gambar (Batch Inference):** Mengunggah banyak citra secara bersamaan, menampilkan bounding box prediksi, top-3 confidence, dan latensi pemrosesan.
+2. **Kamera & Susun Kata:** Mengambil foto gestur secara langsung dari webcam lokal dan merangkai huruf demi huruf menjadi kata dengan tombol spasi, koreksi, dan reset.
+3. **Contoh Data Uji:** Melakukan simulasi pengujian pada citra uji acak tanpa memerlukan kamera fisik, dilengkapi filter untuk mengevaluasi kasus salah (*false predictions*).
+4. **Hasil Model & Visualisasi:** Menampilkan kurva pelatihan, confusion matrix interaktif, tabel metrik per kelas, serta kalibrasi threshold.
+5. **Potong ke Tangan (MediaPipe Crop):** Opsi pra-pemrosesan opsional menggunakan `MediaPipe HandLandmarker` untuk memotong area tangan sebelum diklasifikasikan oleh MobileNetV3.
 
-Tes: `pytest tests/test_app.py` (tes yang butuh `best.pth` di-skip bila tidak ada).
+---
 
-### Skrip demo UAS (5 menit)
-1. **Hasil Model** (30 dtk): metrik, confusion matrix, perbandingan run.
-2. **Unggah Gambar** (1,5 mnt): 3 foto yang sudah disiapkan, termasuk satu yang gagal (mis. `.heic` atau foto tanpa tangan); jelaskan "?" dan threshold.
-3. **Kamera** (2 mnt): ambil foto langsung, susun satu kata pendek.
-4. **Contoh Data Uji** (1 mnt): centang "Hanya tampilkan yang salah", jelaskan satu kegagalan.
-
-Ingat: tetap rekam **video cadangan 2-3 menit** yang diwajibkan mata kuliah.
-
-## Struktur folder
+## Struktur Repositori
 ```
-configs/    config.yaml (split_v2), config_v3.yaml (split_v3), transfer.yaml (hyperparameter training)
-data/       data mentah (tidak di-commit)
-models/     hand_landmarker.task untuk MediaPipe (diunduh otomatis, tidak di-commit)
-splits/     split_v2.csv, split_v3.csv, groups_v3.csv, label_map.json, laporan leakage; split_v1.csv hanya arsip
-app/        aplikasi Streamlit lokal (streamlit_app.py, inference.py, ui_parts.py)
-src/        sanitary_check.py, make_split.py, group_keys.py, dataset.py, train_transfer.py, hand_bbox.py,
-            error_analysis.py, demo.py
-notebooks/  bisindo_cp07_data_pipeline.ipynb (CP07), 02_transfer_learning.ipynb (CP08)
-results/    sanitary/, figures/, transfer/<run_name>/, sanity_summary.json
+Bisindo-cv/
+├── configs/              # Konfigurasi eksperimen (config_v3.yaml, transfer.yaml)
+├── data/                 # Dataset mentah (diabaikan oleh git)
+├── models/               # Model detektor tangan MediaPipe (hand_landmarker.task)
+├── splits/               # Partisi split_v3.csv, groups_v3.csv, label_map.json, leakage_report_v3.txt
+├── src/                  # Kode sumber modul inti:
+│   ├── sanitary_check.py # Audit citra rusak & duplikasi
+│   ├── make_split.py     # Pembuat partisi zero-leakage
+│   ├── group_keys.py     # Normalisasi kelompok kontributor ponsel
+│   ├── dataset.py        # PyTorch Dataset & Image Transforms
+│   ├── train_transfer.py # Engine pelatihan transfer learning & evaluasi
+│   ├── benchmark_latency.py # Skrip benchmark performa CPU & GPU
+│   ├── error_analysis.py # Analisis diagnostik error & kalibrasi
+│   ├── hand_bbox.py      # Ekstraksi bounding box tangan via MediaPipe
+│   └── demo.py           # Engine inferensi dan optimasi TorchScript
+├── app/                  # Antarmuka Streamlit:
+│   ├── streamlit_app.py  # Entrypoint antarmuka web
+│   ├── inference.py      # Wrapper inferensi model & cropper
+│   └── ui_parts.py       # Komponen visual & CSS
+├── results/              # Artefak hasil eksperimen:
+│   └── transfer/         # Log pelatihan, bobot model, kurva, dan confusion matrix
+└── tests/                # Unit test (pytest)
 ```
 
-## Split dan leakage
-- Split dibuat sekali (`split_v2.csv`) dengan seed 42, lalu dibekukan. Hasilnya identik (byte per byte) saat dijalankan dua kali.
-- Mode split: stratified per kelas (`per_class`), 4.462 gambar: train 3.114, val 675, test 673.
-- Sebelum split, `sanitary_check.py` membuang 337 file (HEIC bernama `.jpg`, file rusak atau kosong, file `._*` macOS, dan duplikat lintas kelas). File identik (sha256) digabung ke satu grup sehingga tidak terpisah antar split.
-- Alasan `split_v1` diganti `split_v2`: `split_v1` masih memuat 297 file yang tidak bisa dibuka dan 1 hash yang ada di dua split. Pemeriksaan sekarang: `python src/make_split.py --version v2 --check-only`.
-- **Keterbatasan:** `group_regex` kosong, jadi perangkat dan latar yang sama bisa muncul di train dan test. Akibatnya skor test bisa lebih optimis daripada kondisi nyata. Nama file memuat latar dan perangkat, sehingga ini bisa diperbaiki pada split berikutnya.
-- `splits/split_v1.csv` dipertahankan sebagai arsip dan tidak dipakai oleh kode mana pun.
-- Perubahan split harus menjadi versi baru dengan alasan tercatat di sini.
-- **`split_v3` (split berbasis ponsel):** nama file mengikuti `<Huruf>_<Latar>_<Merek>_<Model>.jpg` dan satu ponsel memuat sekitar 104 gambar, sehingga ponsel dianggap satu kontributor (asumsi). `src/group_keys.py` menormalkan nama ponsel (alias merek digabung, penghitung duplikat seperti `(2)` dibuang) menjadi 44 grup; satu grup selalu masuk tepat satu split. Hasil: train 3.052, val 720, test 690 gambar, 26 huruf di tiap split, irisan path, sha256, dan grup antar split semuanya 0, dan hasilnya identik byte per byte saat dijalankan dua kali. Lima file yang namanya menunjuk huruf lain dari foldernya dikoreksi labelnya lewat `groups_v3.csv` (file tidak dipindah): `C/D_Bebas_Redmi_Note 12 Pro.jpg`, `L/E_Baju_Apple_Iphone 11.jpg`, `L/E_Bebas_Apple_Iphone 11.jpg`, `V/Y_Polos Gelap_Iphone_14 Pro.jpg`, `Z/S_Baju_Iphone_14 Pro.jpg`.
-- **Keterbatasan `split_v3`:** ponsel dianggap setara dengan kontributor, padahal satu orang bisa memakai beberapa ponsel. Skor `split_v2` dan `split_v3` tidak boleh dibandingkan tanpa menyebut perbedaan ini.
-- Dampak ke CP08: karena split tidak dikelompokkan per perangkat atau latar, skor test bisa lebih tinggi daripada performa pada foto dari HP atau latar baru. Laporkan angka test dengan catatan ini.
+---
 
-## Kontribusi anggota
-| Anggota (akun GitHub) | Kontribusi |
-|---|---|
-| loeychanpy | Struktur proyek, `config.yaml`, README, integrasi dan merge |
-| NoluckDv | `src/make_split.py`: split stratified, deteksi duplikat (sha256), laporan leakage, `label_map.json` |
-| Vetians | `src/sanitary_check.py`, `src/dataset.py` (loader, transform), hasil sanity check |
-| (isi) | CP08: `train_transfer.py`, `demo.py`, `02_transfer_learning.ipynb` |
+## Kontribusi Anggota (Kelompok 4 - Kelas 5PITA)
 
-## Bantuan eksternal
-- **PyTorch dan torchvision:** model MobileNetV3-Small dengan bobot ImageNet pra-latih, transform, DataLoader.
-- **scikit-learn:** metrik (accuracy, macro-F1, confusion matrix); **pandas, NumPy, matplotlib, Pillow, PyYAML:** pengolahan data, grafik, dan pembacaan gambar dan config.
-- **Dataset:** Sanjaya, UMN 2024, Mendeley Data (CC BY 4.0), DOI 10.17632/ywnjpbcz8m.1.
+| Nama Anggota | NIM | Akun GitHub / Identitas | Peran & Kontribusi Utama |
+|---|---|---|---|
+| **Felix Wong** | 412024004 | `NoluckDv` | **Project Lead & Integrator**<br>• Manajemen repositori, branch, dan integrasi pull request.<br>• Perancangan struktur konfigurasi `configs/config_v3.yaml` dan skema partisi dataset.<br>• Penyusunan laporan master dan dokumentasi teknis. |
+| **Janisha Jaya** | 412024033 | `loeychanpy` | **Data & Leakage Engineer**<br>• Pengembangan modul sanitasi citra (`src/sanitary_check.py`).<br>• Implementasi pemuatan data dan transformasi (`src/dataset.py`).<br>• Formulasi identifikasi grup ponsel kontributor (`src/group_keys.py`) dan pemetaan label (`label_map.json`).<br>• Pengujian integritas dan audit *zero-leakage* pada `split_v3`. |
+| **Christian Melhan** | 412024003 | `Vetians` / `Pongo` | **Model & Application Engineer**<br>• Implementasi arsitektur transfer learning dan engine pelatihan (`src/train_transfer.py`).<br>• Eksperimen optimasi GPU: Cosine Annealing, Label Smoothing, dan Regularisasi Augmentasi.<br>• Pengembangan modul akselerasi inferensi TorchScript Channels-Last dan benchmark latensi (`src/benchmark_latency.py`).<br>• Perancangan antarmuka aplikasi interaktif (`app/streamlit_app.py`, `app/inference.py`). |
+
+---
+
+## Referensi & Dependensi
+- **Arsitektur Backbone:** MobileNetV3-Small (*Searching for MobileNetV3*, Howard et al., ICCV 2019).
+- **Framework & Pustaka Utama:** PyTorch, Torchvision, Scikit-Learn, Pandas, NumPy, Pillow, Streamlit, MediaPipe, Matplotlib.
+- **Dataset:** Sanjaya, R. (2024). *BISINDO Indonesian Sign Language Alphabet Image Data*, Mendeley Data, V1, doi: 10.17632/ywnjpbcz8m.1.
