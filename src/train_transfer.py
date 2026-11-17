@@ -34,6 +34,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import platform
 import random
 import subprocess
@@ -66,7 +67,21 @@ DEFAULTS = dict(
     class_weights=False, augment=True, patience=6, num_workers=0, draft_size=448,
     device="auto", overwrite=False,
     amp=True, fast_cudnn=True, cache_images=False, cache_size=448,
+    scheduler="none", warmup_epochs=0, min_lr_factor=0.01, label_smoothing=0.0, aug="base",
 )
+SCHEDULERS = ("none", "cosine")
+
+
+def lr_factor(epoch_idx: int, epochs: int, scheduler: str, warmup: int, min_factor: float) -> float:
+    """Pengali LR untuk epoch ke-epoch_idx (mulai 0). none = konstan 1.0.
+    cosine = warmup linear `warmup` epoch, lalu turun cosinus dari 1.0 ke min_factor di epoch terakhir."""
+    if scheduler == "none":
+        return 1.0
+    if epoch_idx < warmup:
+        return (epoch_idx + 1) / (warmup + 1)
+    span = max(1, epochs - warmup - 1)
+    t = min(1.0, (epoch_idx - warmup) / span)
+    return min_factor + (1.0 - min_factor) * 0.5 * (1.0 + math.cos(math.pi * t))
 
 
 # --------------------------------------------------------------------------- #
@@ -107,6 +122,8 @@ def build_cfg(overrides: dict | None = None, config: str = "configs/config.yaml"
     cfg["results_dir"] = str(_abs(base.get("results_dir", "results")))
     if cfg["mode"] not in MODES:
         raise ValueError(f"mode harus salah satu dari {MODES}, bukan {cfg['mode']!r}")
+    if cfg["scheduler"] not in SCHEDULERS:
+        raise ValueError(f"scheduler harus salah satu dari {SCHEDULERS}, bukan {cfg['scheduler']!r}")
     return cfg
 
 
@@ -204,7 +221,7 @@ def make_loaders(cfg: dict):
     loaders = {}
     for s in SPLITS:
         train = s == "train"
-        tf = get_transforms(train=(train and cfg["augment"]), img_size=cfg["img_size"])
+        tf = get_transforms(train=(train and cfg["augment"]), img_size=cfg["img_size"], aug=cfg["aug"])
         ds = FastBisindoDataset(ds_df[ds_df["split"] == s], root, tf, cfg["draft_size"])
         loaders[s] = DataLoader(
             ds, batch_size=cfg["batch_size"], shuffle=train, num_workers=nw,
@@ -463,9 +480,12 @@ def run(cfg: dict, evaluate_test: bool = True) -> dict:
     if rest:
         groups.append(dict(params=rest, lr=cfg["lr_backbone"]))
     optimizer = optim.AdamW(groups, weight_decay=cfg["weight_decay"])
+    base_lrs = [g["lr"] for g in optimizer.param_groups]
+    print(f"LR: scheduler={cfg['scheduler']} warmup={cfg['warmup_epochs']} | label_smoothing={cfg['label_smoothing']}")
 
     w = compute_class_weights(df[df["split"] == "train"]).to(device) if cfg["class_weights"] else None
-    crit_train = nn.CrossEntropyLoss(weight=w)
+    # label smoothing hanya untuk loss train; val loss di predict() tetap CE biasa agar sebanding antar run
+    crit_train = nn.CrossEntropyLoss(weight=w, label_smoothing=float(cfg["label_smoothing"]))
 
     used = {k: v for k, v in cfg.items() if k not in ("data_dir", "split_path", "label_map_path", "results_dir")}
     used.update(data_dir=_rel(cfg["data_dir"]), split_path=_rel(cfg["split_path"]),
@@ -479,10 +499,14 @@ def run(cfg: dict, evaluate_test: bool = True) -> dict:
     try:
         for ep in range(1, cfg["epochs"] + 1):
             t0 = time.perf_counter()
+            f = lr_factor(ep - 1, cfg["epochs"], cfg["scheduler"], int(cfg["warmup_epochs"]), float(cfg["min_lr_factor"]))
+            for g, lr0 in zip(optimizer.param_groups, base_lrs):
+                g["lr"] = lr0 * f
             tr_loss, tr_acc = train_one_epoch(model, loaders["train"], crit_train, optimizer, device, scaler)
             va = predict(model, loaders["val"], device, use_amp)
             rows.append(dict(epoch=ep, train_loss=tr_loss, train_acc=tr_acc, val_loss=va["loss"],
-                             val_acc=va["acc"], val_f1=va["f1"], seconds=time.perf_counter() - t0))
+                             val_acc=va["acc"], val_f1=va["f1"], seconds=time.perf_counter() - t0,
+                             lr_head=optimizer.param_groups[0]["lr"]))
             pd.DataFrame(rows).to_csv(out / "log.csv", index=False)
             print(f"Epoch {ep:02d}/{cfg['epochs']} | train loss {tr_loss:.4f} acc {tr_acc:.3f} | "
                   f"val loss {va['loss']:.4f} acc {va['acc']:.3f} f1 {va['f1']:.3f} | {rows[-1]['seconds']:.0f}s")
@@ -522,7 +546,8 @@ def run(cfg: dict, evaluate_test: bool = True) -> dict:
         latency_ms=lat, device=str(device), train_seconds=round(train_seconds, 1),
         params_total=total_p, params_trainable=train_p, split_md5=split_md5, n=n,
         hparams={k: cfg[k] for k in ("unfreeze_blocks", "lr_head", "lr_backbone", "weight_decay", "batch_size",
-                                     "augment", "class_weights", "pretrained", "seed", "epochs", "patience")},
+                                     "augment", "class_weights", "pretrained", "seed", "epochs", "patience",
+                                     "scheduler", "warmup_epochs", "min_lr_factor", "label_smoothing", "aug")},
     )
     if "group" not in df.columns or df["group"].isna().all():
         metrics["catatan"] = ("Split tanpa grup perangkat/latar: gambar dengan kondisi sama bisa ada di train dan "
@@ -576,7 +601,9 @@ def compare_runs(results_dir: str | None = None, save: bool = True) -> pd.DataFr
         rows.append(dict(
             run=m["run_name"], mode=m["mode"], unfreeze=h.get("unfreeze_blocks") if m["mode"] == "partial" else None,
             lr_head=h.get("lr_head"), lr_backbone=h.get("lr_backbone"), augment=h.get("augment"),
-            class_w=h.get("class_weights"), seed=h.get("seed"), epochs=m["epochs_run"], best_ep=m["best_epoch"],
+            class_w=h.get("class_weights"), sched=h.get("scheduler", "none"), warmup=h.get("warmup_epochs", 0),
+            ls=h.get("label_smoothing", 0.0), aug=h.get("aug", "base"),
+            seed=h.get("seed"), epochs=m["epochs_run"], best_ep=m["best_epoch"],
             val_f1=round(m["best_val_macro_f1"], 4),
             test_acc=round(t["accuracy"], 4) if t else None, test_f1=round(t["macro_f1"], 4) if t else None,
             ms=round(m["latency_ms"]["total_ms_median"], 1), trainable=m["params_trainable"],
@@ -607,6 +634,11 @@ def main():
     ap.add_argument("--num-workers", type=int)
     ap.add_argument("--seed", type=int)
     ap.add_argument("--device")
+    ap.add_argument("--scheduler", choices=SCHEDULERS, help="none = LR konstan (default), cosine = warmup + cosinus")
+    ap.add_argument("--warmup-epochs", type=int, help="epoch warmup linear (hanya scheduler cosine)")
+    ap.add_argument("--min-lr-factor", type=float, help="LR akhir cosine = LR awal x faktor ini (default 0.01)")
+    ap.add_argument("--label-smoothing", type=float, help="label smoothing loss train, mis. 0.1 (default 0)")
+    ap.add_argument("--aug", choices=("base", "strong"), help="kekuatan augmentasi train (default base)")
     ap.add_argument("--no-augment", action="store_true", help="train tanpa augmentasi")
     ap.add_argument("--class-weights", action="store_true", help="CrossEntropy berbobot")
     ap.add_argument("--no-pretrained", action="store_true", help="tanpa bobot ImageNet (hanya untuk uji kode)")
@@ -625,7 +657,8 @@ def main():
     ov = dict(run_name=a.run_name, mode=a.mode, unfreeze_blocks=a.unfreeze_blocks, epochs=a.epochs,
               batch_size=a.batch_size, lr_head=a.lr_head, lr_backbone=a.lr_backbone,
               weight_decay=a.weight_decay, patience=a.patience, num_workers=a.num_workers,
-              seed=a.seed, device=a.device)
+              seed=a.seed, device=a.device, scheduler=a.scheduler, warmup_epochs=a.warmup_epochs,
+              min_lr_factor=a.min_lr_factor, label_smoothing=a.label_smoothing, aug=a.aug)
     if a.no_augment:
         ov["augment"] = False
     if a.class_weights:

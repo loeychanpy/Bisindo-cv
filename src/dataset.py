@@ -214,9 +214,33 @@ def make_splits(df: pd.DataFrame, val_size: float = 0.15, test_size: float = 0.1
 # --------------------------------------------------------------------------- #
 # Transform
 # --------------------------------------------------------------------------- #
-def get_transforms(train: bool, img_size: int = IMG_SIZE) -> T.Compose:
-    """Catatan: TIDAK memakai horizontal flip karena bisa mengubah makna isyarat (kiri/kanan)."""
+AUG_LEVELS = ("base", "strong")
+_MEAN_RGB = [round(255 * v) for v in IMAGENET_MEAN]
+
+
+def get_transforms(train: bool, img_size: int = IMG_SIZE, aug: str = "base") -> T.Compose:
+    """Catatan: TIDAK memakai horizontal flip karena bisa mengubah makna isyarat (kiri/kanan).
+    aug="base"  : augmentasi awal (dipakai semua run sebelum opsi ini ada).
+    aug="strong": crop/rotasi/warna lebih kuat + perspektif + grayscale + random erasing kecil.
+                  Crop minimal 60% area karena tangan sering memenuhi bingkai (ujung jari di tepi)."""
+    if aug not in AUG_LEVELS:
+        raise ValueError(f"aug harus salah satu dari {AUG_LEVELS}, bukan {aug!r}")
     norm = T.Normalize(IMAGENET_MEAN, IMAGENET_STD)
+    if train and aug == "strong":
+        return T.Compose(
+            [
+                T.RandomResizedCrop(img_size, scale=(0.6, 1.0), ratio=(0.8, 1.25)),
+                # sudut kosong diisi abu-abu rata-rata ImageNet (bukan hitam) agar tidak jadi petunjuk palsu
+                T.RandomAffine(degrees=20, translate=(0.08, 0.08), scale=(0.9, 1.1), shear=8, fill=_MEAN_RGB),
+                T.RandomPerspective(distortion_scale=0.2, p=0.3, fill=_MEAN_RGB),
+                T.ColorJitter(brightness=0.3, contrast=0.35, saturation=0.3, hue=0.04),
+                T.RandomGrayscale(p=0.1),
+                T.RandomApply([T.GaussianBlur(5, sigma=(0.1, 2.0))], p=0.3),
+                T.ToTensor(),
+                norm,
+                T.RandomErasing(p=0.25, scale=(0.02, 0.08), ratio=(0.3, 3.3), value=0),  # oklusi kecil
+            ]
+        )
     if train:
         return T.Compose(
             [
