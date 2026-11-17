@@ -1,0 +1,674 @@
+path,true,pred,conf
+A/A _Baju_Iphone_14Pro.jpg,A,A,0.9993
+A/A_BackgroundBaju_Vivo_V20.jpeg,A,A,0.9999
+A/A_Baju_Apple_Iphone 12.JPG,A,A,0.9983
+A/A_Baju_Sony_A7C.JPG,A,A,0.9981
+A/A_Baju_Vivo_V23 5G.jpg,A,A,0.9998
+A/A_Baju_iPhone_XR.jpeg,A,A,0.9999
+A/A_Bebas_Apple_Iphone 11.jpg,A,A,0.9853
+A/A_Bebas_Apple_Iphone XS.jpg,A,A,0.9999
+A/A_Bebas_Iphone_14 Pro.jpg,A,A,0.9988
+A/A_Bebas_Oppo_A Series.jpg,A,A,0.9306
+A/A_Bebas_ROG_Phone5.jpg,A,X,0.3943
+A/A_Bebas_Redmi_Note 12 Pro.jpg,A,A,0.9933
+A/A_Body_Infinix_Note 30.jpg,A,A,0.9999
+A/A_Polos Gelap_Apple_Iphone 11.jpg,A,A,0.996
+A/A_Polos Gelap_Infinix_Hot 11s NFC.jpg,A,A,0.5822
+A/A_Polos Gelap_Realme_7i.jpg,A,A,0.652
+A/A_Polos Gelap_Samsung_Galaxy M14 5G.jpg,A,A,0.9956
+A/A_Polos Gelap_iPhone_14 Pro (2).jpg,A,A,0.9986
+A/A_Polos Terang_Infinix_Hot 11s NFC.jpg,A,A,0.782
+A/A_Polos Terang_Oppo_A Series.jpg,A,A,0.9999
+A/A_Polos Terang_Oppo_Reno 11f.jpg,A,A,0.9991
+A/A_Polos Terang_Redmi_9 Pro.jpg,A,A,0.9994
+A/A_Polos Terang_Samsung_Galaxy M14 5G.jpg,A,A,0.9834
+A/A_Polos Terang_iPhone_XR.jpeg,A,A,0.9993
+A/A_Polos terang_Oppo_A53.jpg,A,A,0.994
+B/B _Polos Gelap_Apple_Iphone 7+.JPG,B,B,0.8717
+B/B_BAJU PUTIH_SAMSUNG_S22 ULTRA.jpg,B,B,0.9971
+B/B_Background Baju_Oppo_A95.jpg,B,B,0.7248
+B/B_Background Bebas_POCO_F4.jpg,B,D,0.7119
+B/B_Background Terang_Iphone 14 Pro.jpg,B,B,0.986
+B/B_Baju_Apple_Iphone 11.jpg,B,B,0.4825
+B/B_Baju_Apple_Iphone 7+.JPG,B,B,0.9949
+B/B_Baju_Apple_Iphone XS.jpg,B,Q,0.5865
+B/B_Baju_Samsung_A23.jpeg,B,B,0.9995
+B/B_Baju_Vivo_V23 5G.jpg,B,B,0.9887
+B/B_Baju_Xiaomi_Redmi Note 11.jpg,B,B,0.9999
+B/B_Hitam Polos_Vivo_V21.jpg,B,B,0.9975
+B/B_Hitam_Samsung_M51.jpg,B,B,0.7824
+B/B_Polos Gelap_ROG_Phone5.jpg,B,B,0.937
+B/B_Polos Terang_Iphone_14 Pro.jpg,B,B,0.9999
+B/B_Polos Terang_Samsung_A22.jpg,B,D,0.7371
+B/B_Polos Terang_Vivo_V23 5G.jpg,B,B,0.9804
+B/B_Polos Terang_iPhone_14 Pro (2).jpg,B,B,0.9349
+B/B_Polos Terang_iPhone_XR.jpeg,B,B,0.9993
+B/B_PolosTerang_Xiaomi_Poco X3.jpg,B,B,0.9997
+B/B_Putih_Iphone_14Pro.jpg,B,B,0.3675
+B/B_Terang_Xiaomi_MI T10.jpg,B,B,0.9766
+B/B_polos gelap_Samsung_A33.jpg,B,B,0.988
+B/B_polos terang_Samsung_A33.jpg,B,B,0.9928
+B/B_terang_Iph_Iph15.jpg,B,B,0.9992
+C/20240509_183154.jpg,C,U,0.5642
+C/C_BAJU PUTIH_SAMSUNG_S22 ULTRA.jpg,C,C,0.9935
+C/C_Background Baju_Oppo_A95.jpg,C,S,0.6866
+C/C_Background Polos Terang_Oppo_A95.jpg,C,C,0.7514
+C/C_Baju_Iphone_14Pro (2).jpg,C,C,0.7211
+C/C_Baju_Iphone_14Pro.jpg,C,C,0.9969
+C/C_Baju_Redmi_Note 12 Pro.jpg,C,C,0.9978
+C/C_Baju_Samsung_A22.jpg,C,C,0.4882
+C/C_Baju_Vivo_V23 5G.jpg,C,C,0.9894
+C/C_Bebas_Iphone_14 Pro.jpg,C,C,0.9932
+C/C_Bebas_Samsung_A23.jpeg,C,Z,0.6087
+C/C_Bebas_Vivo_V23 5G.jpg,C,C,0.9958
+C/C_Bebas_Xiaomi_Redmi Note 11.jpg,C,C,0.9966
+C/C_Bebas_iPhone_XR.jpeg,C,C,0.7647
+C/C_Polos Gelap_Infinix_Hot 11s NFC.jpg,C,C,0.9639
+C/C_Polos Gelap_Samsung_Galaxy M14 5G.jpg,C,C,0.8542
+C/C_Polos Terang_Apple_Iphone 11.jpg,C,C,0.4064
+C/C_Polos Terang_Iphone_14 Pro.jpg,C,C,0.4453
+C/C_Polos Terang_Oppo_Reno 11f.jpg,C,J,0.6231
+C/C_Polos Terang_Xiaomi_Redmi Note 11.jpg,C,C,0.9753
+C/C_Polos terang_Oppo_A53.jpg,C,C,0.9954
+C/C_backgroundbebas_VIVO_V20.jpeg,C,R,0.3937
+C/C_backgroundhitam_vivov20.jpeg,C,C,0.9909
+C/C_polos gelap_Samsung_A33.jpg,C,U,0.8794
+C/D_Bebas_Redmi_Note 12 Pro.jpg,C,C,0.9556
+C/c_Bebas_Xiaomi _Note 8 Pro.jpg,C,C,0.8809
+D/20240509_183310.jpg,D,P,0.768
+D/D_BEBAS_Apple_Iphone 12.JPG,D,P,0.3851
+D/D_Background Bebas (Tirai)_Samsung_A53 5G.jpg,D,P,0.8021
+D/D_Background Gelap_Iphone 14 Pro.jpg,D,P,0.7827
+D/D_Background Polos Terang_Oppo_A95.jpg,D,D,0.8392
+D/D_Background Terang_Iphone 14 Pro.jpg,D,P,0.7051
+D/D_Background_Baju_POCO_F4.jpg,D,P,0.7058
+D/D_Baju_Infinix_Hot 11s NFC.jpg,D,D,0.9911
+D/D_Baju_Vivo_V21.jpg,D,S,0.2765
+D/D_Baju_Xiaomi_Redmi Note 11.jpg,D,D,0.6932
+D/D_Baju_iPhone_XR.jpeg,D,D,0.9703
+D/D_Bebas_Apple_Iphone 11.jpg,D,O,0.4276
+D/D_Bebas_Infinix_Note 30.jpg,D,P,0.8416
+D/D_Bebas_Oppo_Reno 11f.jpg,D,F,0.3074
+D/D_Bebas_Samsung_Galaxy A32 5G.jpg,D,P,0.5844
+D/D_Bebas_Vivo_V21.jpg,D,P,0.5961
+D/D_Body Red_Xiaomi_Redmi Note 9.jpg,D,Q,0.8404
+D/D_Hitam Polos_Vivo_V21.jpg,D,D,0.7648
+D/D_Polos Gelap_Realme_7i.jpg,D,P,0.6239
+D/D_Polos Terang_Oppo_Reno 11f.jpg,D,P,0.9555
+D/D_Polos Terang_Vivo_V23 5G.jpg,D,D,0.592
+D/D_Polos Terang_iPhone_XR.jpeg,D,D,0.7753
+D/D_Polos terang_Oppo_A53.jpg,D,P,0.8447
+D/D_Putih_Samsung_M51 (2).jpg,D,P,0.854
+D/D_baju_ROG_Phone5.jpg,D,D,0.7761
+D/IMG_20240506_122812.jpg,D,D,0.9374
+E/20240509_183434.jpg,E,E,0.5179
+E/E_Background Baju_Oppo_A95.jpg,E,Z,0.6927
+E/E_Background Bebas (Tirai)_Samsung_A53 5G.jpg,E,S,0.4718
+E/E_Background Bebas_Samsung_A55.jpg,E,E,0.8718
+E/E_Baju_Apple_Iphone XS.jpg,E,E,0.9491
+E/E_Baju_Iphone_14 Pro.jpg,E,E,0.9041
+E/E_Baju_Oppo_A53.jpg,E,E,0.8571
+E/E_Bebas_Apple_Iphone 7+.JPG,E,E,0.9389
+E/E_Bebas_Infinix_Note 30.jpg,E,E,0.9487
+E/E_Bebas_Samsung_A51.jpg,E,E,0.9913
+E/E_Bebas_Xiaomi_MI T10.jpg,E,V,0.6043
+E/E_Bebas_Xiaomi_Redmi Note 11.jpg,E,E,0.9694
+E/E_Bebas_iPhone_XR.jpeg,E,E,0.9986
+E/E_Hitam Polos_Vivo_V21.jpg,E,S,0.8658
+E/E_Hitam_Iphone_14Pro.jpg,E,E,0.9999
+E/E_Polos Gelap_Infinix_Note 30.jpg,E,E,0.9991
+E/E_Polos Gelap_Oppo_A Series.jpg.jpg,E,V,0.8943
+E/E_Polos Gelap_Redmi_Note 12 Pro.jpg,E,E,0.9976
+E/E_Polos Gelap_Samsung_A53 5G.jpg,E,S,0.9109
+E/E_Polos Terang_Oppo_Reno 11f.jpg,E,E,0.9918
+E/E_Polos Terang_Realme_7i.jpg,E,E,0.9242
+E/E_Polos Terang_Samsung_A22.jpg,E,O,0.4645
+E/E_PolosGelap_Xiaomi_Poco X3.jpg,E,E,0.9569
+E/E_Putih_Samsung_M51 (2).jpg,E,E,0.8713
+E/E_polos gelap_Samsung_A33.jpg,E,E,0.8579
+F/F_BAJU_Apple_Iphone 12.JPG,F,F,0.9227
+F/F_Background Baju_Iphone 14 Pro.jpg,F,F,0.9897
+F/F_Background Baju_Oppo_A95.jpg,F,F,0.9582
+F/F_Baju_Apple_Iphone 7+.JPG,F,V,0.8192
+F/F_Baju_Oppo_A Series.jpg.jpg,F,K,0.9423
+F/F_Baju_Oppo_Reno 11f.jpg,F,F,0.9319
+F/F_Baju_Xiaomi _Note 8 Pro.jpg,F,F,0.9796
+F/F_Bebas_Apple_Iphone XS.jpg,F,F,0.9999
+F/F_Bebas_Realme_7i.jpg,F,F,0.6385
+F/F_Bebas_Xiaomi _Note 8 Pro.jpg,F,F,0.6507
+F/F_Body_Infinix_Note 30.jpg,F,F,0.6158
+F/F_POLOS TERANG_SAMSUNG_S22 ULTRA.jpg,F,F,0.9825
+F/F_Polos Gelap_Apple_Iphone 7+.JPG,F,F,0.9863
+F/F_Polos Gelap_Redmi_Note 12 Pro_.jpg,F,F,0.9981
+F/F_Polos Gelap_Samsung_A23.jpeg,F,F,0.622
+F/F_Polos Gelap_Samsung_Galaxy A32 5G.jpg,F,F,0.6643
+F/F_Polos Terang_Apple_Iphone 7+.JPG,F,F,0.9901
+F/F_Polos Terang_Oppo_Reno 11f.jpg,F,K,0.4593
+F/F_Polos Terang_ROG_Phone5.jpg,F,F,0.9824
+F/F_Polos Terang_Samsung_A21S.jpeg,F,F,0.9401
+F/F_Polos Terang_Samsung_A22.jpg,F,D,0.4418
+F/F_Polos Terang_Samsung_A53 5G.jpg,F,F,0.9903
+F/F_Polos Terang_Xiaomi _Note 8 Pro.jpg,F,F,0.998
+F/F_Polos gelap_Oppo_A53.jpg,F,F,0.9887
+F/F_PolosGelap_Xiaomi_Poco X3.jpg,F,F,0.9972
+F/F_bebas_Iph_Iph15.jpg,F,F,0.8794
+G/G _Baju_Iphone_14Pro.jpg,G,G,1.0
+G/G_Background Baju (Garis)_Samsung_A53.jpg,G,G,0.9956
+G/G_Background Bebas (Tirai)_Samsung_A53 5G.jpg,G,G,0.9919
+G/G_Background_Baju_POCO_F4.jpg,G,G,0.9835
+G/G_Baju_Apple_Iphone 7+.JPG,G,G,0.9992
+G/G_Baju_Infinix_Hot 11s NFC.jpg,G,G,0.9936
+G/G_Baju_Redmi_9 Pro.jpg,G,G,0.9985
+G/G_Baju_Samsung_A51.jpg,G,I,0.9595
+G/G_Baju_Vivo_V21.jpg,G,G,1.0
+G/G_Baju_Vivo_V23 5G.jpg,G,J,0.6556
+G/G_Baju_Xiaomi_Redmi Note 11.jpg,G,G,0.9997
+G/G_Baju_iPhone_XR.jpeg,G,G,0.8886
+G/G_Bebas_Apple_Iphone 7+.JPG,G,K,0.8717
+G/G_Bebas_Oppo_A Series.jpg.jpg,G,G,0.8711
+G/G_Bebas_Samsung_Galaxy M14 5G.jpg,G,G,0.9999
+G/G_Bebas_Vivo_V23 5G.jpg,G,G,0.9999
+G/G_Bebas_Xiaomi _Note 8 Pro.jpg,G,G,0.9718
+G/G_Polos Gelap_Apple_Iphone 11.jpg,G,G,0.998
+G/G_Polos Gelap_Samsung_Galaxy M14 5G.jpg,G,G,1.0
+G/G_Polos Gelap_Vivo_V23 5G.jpg,G,G,0.9999
+G/G_Polos Terang_Iphone_14 Pro.jpg,G,G,0.9532
+G/G_Polos Terang_Samsung_Galaxy A32 5G.jpg,G,J,0.704
+G/G_Polos terang_Apple_Iphone 12.JPG,G,G,0.9689
+G/G_background baju_Samsung_A33.jpg,G,G,0.9997
+G/G_backgroundbebas_VIVO_V20.jpeg,G,G,0.9775
+G/G_baju_Iph_Iph15.jpg,G,G,0.9957
+H/20240509_184035.jpg,H,H,0.6878
+H/H _Baju_Iphone_14Pro.jpg,H,H,0.9992
+H/H_Background Bebas_Apple_Iphone 15.jpg,H,H,0.8762
+H/H_Background Bebas_Oppo_A95.jpg,H,H,0.9982
+H/H_Background Terang_Iphone 14 Pro.jpg,H,H,0.991
+H/H_Baju_Apple_Iphone 11.jpg,H,L,0.6684
+H/H_Baju_Iphone_14 Pro.jpg,H,H,0.9803
+H/H_Baju_Oppo_A53.jpg,H,H,0.3043
+H/H_Baju_Samsung_A22.jpg,H,T,0.5559
+H/H_Baju_iPhone_XR.jpeg,H,H,0.9563
+H/H_Bebas_Iphone_14 Pro.jpg,H,H,0.9964
+H/H_Bebas_Vivo_V21.jpg,H,H,0.9961
+H/H_Body White_Xiaomi_Redmi Note 9.jpg,H,H,0.4402
+H/H_Polos Gelap_Iphone_14 Pro.jpg,H,H,0.9999
+H/H_Polos Gelap_Samsung_A53 5G.jpg,H,H,0.6739
+H/H_Polos Gelap_Samsung_A55.jpg,H,H,0.9998
+H/H_Polos Terang_Apple_Iphone 7+.JPG,H,H,0.7754
+H/H_Polos Terang_Redmi_9 Pro.jpg,H,H,0.9808
+H/H_Polos Terang_Samsung_A22.jpg,H,H,0.4304
+H/H_Polos Terang_Samsung_A55.jpg,H,H,0.8133
+H/H_Polos Terang_Xiaomi_Redmi Note 11.jpg,H,H,0.993
+H/H_Polos gelap_Apple_Iphone 12.JPG,H,H,0.9999
+H/H_PolosTerang_Xiaomi_Poco X3.jpg,H,H,0.9997
+H/H_STRIPE_SAMSUNG_S22 ULTRA.jpg,H,H,0.9739
+H/H_polos gelap_Iphone_13promax.jpg,H,H,0.9997
+H/H_polos gelap_Samsung_A33.jpg,H,W,0.5233
+I/20240509_184133.jpg,I,I,0.5413
+I/I_Background Baju_Oppo_A95.jpg,I,Z,0.6258
+I/I_Background Polos Terang_Oppo_A95.jpg,I,I,0.5262
+I/I_Background_Polos_Gelap_POCO_F4.jpg,I,I,0.9981
+I/I_Baju_Apple_Iphone 7+.JPG,I,I,0.9879
+I/I_Baju_Apple_Iphone XS.jpg,I,L,0.3309
+I/I_Baju_Xiaomi_Poco X3.jpg,I,I,0.9946
+I/I_Baju_Xiaomi_Redmi Note 11.jpg,I,R,0.9197
+I/I_Bebas_Infinix_Note 30.jpg,I,I,0.9988
+I/I_Bebas_Redmi_9 Pro.jpg,I,I,0.998
+I/I_Bebas_Xiaomi _Note 8 Pro.jpg,I,I,0.8276
+I/I_Bebas_Xiaomi_Redmi Note 11.jpg,I,R,0.5185
+I/I_Bebas_iPhone_14 Pro (2).jpg,I,I,0.9925
+I/I_Body Red_Xiaomi_Redmi Note 9.jpg,I,J,0.5763
+I/I_Gelap_Apple_Iphone XS.jpg,I,I,0.7222
+I/I_Gelap_Xiaomi_MI T10.jpg,I,I,0.9915
+I/I_Polos Gelap_Realme_7i.jpg,I,I,0.9841
+I/I_Polos Gelap_Redmi_9 Pro.jpg,I,I,0.617
+I/I_Polos Gelap_Xiaomi _Note 8 Pro.jpg,I,I,0.996
+I/I_Polos Gelap_Xiaomi_Redmi Note 11.jpg,I,I,0.9958
+I/I_Polos Terang_iPhone_XR.jpeg,I,I,0.5884
+I/I_Polos gelap_Apple_Iphone 12.JPG,I,I,0.9945
+I/I_PolosHitam_Sony_A7C.JPG,I,I,0.8849
+I/I_Wall Gray_Xiaomi_Redmi Note 9.jpg,I,I,0.9939
+I/I_backgroundbebas_VIVO_V20.jpeg,I,I,0.8518
+I/I_baju_Iph_Iph15.jpg,I,K,0.4976
+J/20240509_184309.jpg,J,J,0.9881
+J/J_Background Terang_Iphone 14 Pro.jpg,J,J,0.7141
+J/J_Background _Bebas_POCO_F4.jpg,J,J,0.8843
+J/J_Background_Polos_Gelap_POCO_F4.jpg,J,J,0.9998
+J/J_Bebas_Apple_Iphone XS.jpg,J,L,0.9985
+J/J_Bebas_Samsung_Galaxy M14 5G.jpg,J,J,0.9996
+J/J_Bebas_Samsung_M51.jpg,J,I,0.844
+J/J_Bebas_Xiaomi_MI T10.jpg,J,J,0.989
+J/J_Body White_Xiaomi_Redmi Note 9.jpg,J,J,0.7887
+J/J_Polos Gelap_Apple_Iphone 11.jpg,J,J,0.912
+J/J_Polos Gelap_Oppo_Reno 11f.jpg,J,J,0.9776
+J/J_Polos Gelap_Realme_7i.jpg,J,J,0.9649
+J/J_Polos Gelap_Samsung_Galaxy A32 5G.jpg,J,I,0.9569
+J/J_Polos Terang_Oppo_A Series.jpg.jpg,J,J,0.9951
+J/J_Polos Terang_Samsung_A21S.jpeg,J,J,0.86
+J/J_Polos Terang_Samsung_A55.jpg,J,I,0.9245
+J/J_Polos Terang_Samsung_Galaxy A32 5G.jpg,J,I,0.5272
+J/J_Polos terang_Apple_Iphone 12.JPG,J,J,0.844
+J/J_STRIPE_SAMSUNG_S22 ULTRA.jpg,J,J,0.997
+J/J_Terang_Xiaomi_MI T10.jpg,J,J,0.6291
+J/J_background bebas_Samsung_A33.jpg,J,J,0.6244
+J/J_backgroundhitam_VIVO_V20.jpeg,J,I,0.9362
+J/J_baju_Iph_Iph15.jpg,J,J,0.9941
+J/J_baju_ROG_Phone5.jpg,J,J,0.9989
+J/J_polos gelap_Iphone_13promax.jpg,J,J,0.7827
+J/J_polos terang_Samsung_A33.jpg,J,I,0.6041
+K/K_Background Polos Gelap_Oppo_A95.jpg,K,K,0.9998
+K/K_Baju_Apple_Iphone 7+.JPG,K,J,0.2784
+K/K_Baju_Realme_7i.jpg,K,K,0.8005
+K/K_Baju_Redmi_Note 12 Peo.jpg,K,K,0.9986
+K/K_Baju_Samsung_A22.jpg,K,B,0.6062
+K/K_Baju_Sony_A7C.JPG,K,K,0.9998
+K/K_Baju_Vivo_V21.jpg,K,K,0.5078
+K/K_Baju_Xiaomi_Poco X3.jpg,K,K,0.8423
+K/K_Bebas_Infinix_Note 30.jpg,K,K,0.9998
+K/K_Bebas_Oppo_A Series.jpg.jpg,K,K,0.9995
+K/K_Bebas_Samsung_A51.jpg,K,K,0.8518
+K/K_Bebas_iPhone_14 Pro (2).jpg,K,K,0.671
+K/K_Gelap_Samsung_A22.jpg,K,K,0.3664
+K/K_Polos Gelap_Apple_Iphone 7+.JPG,K,K,0.9704
+K/K_Polos Gelap_Iphone_14 Pro.jpg,K,K,0.9828
+K/K_Polos Gelap_Samsung_A32.jpg,K,Y,0.7725
+K/K_Polos Terang_Infinix_Note 30.jpg,K,K,0.9995
+K/K_Polos Terang_Oppo_A Series.jpg.jpg,K,K,0.9976
+K/K_Polos Terang_Oppo_Reno 11f.jpg,K,K,0.9937
+K/K_Polos Terang_Realme_7i.jpg,K,K,0.9718
+K/K_Polos Terang_Samsung_A55.jpg,K,K,0.943
+K/K_Polos Terang_Xiaomi_Redmi Note 11.jpg,K,K,0.9908
+K/K_PolosGelap_Xiaomi_Poco X3.jpg,K,K,0.9926
+K/K_backgroundbaju_VIVO_V20.jpeg,K,K,0.9888
+K/K_polos gelap_Iphone_13promax.jpg,K,K,0.9916
+K/K_terang_Iph_Iph15.jpg,K,K,0.966
+L/L_BAJU_Apple_Iphone 12.JPG,L,L,0.8313
+L/L_BEBAS_Apple_Iphone 12.JPG,L,L,0.7582
+L/L_Background Baju_Samsung_A55.jpg,L,L,0.9443
+L/L_Background Bebas (Tirai)_Samsung_A53 5G.jpg,L,I,0.9482
+L/L_Background _Bebas_POCO_F4.jpg,L,L,0.9993
+L/L_Background_Polos_Gelap_POCO_F4.jpg,L,L,0.9988
+L/L_Baju_Apple_Iphone 7+.JPG,L,Y,0.4062
+L/L_Baju_Infinix_Hot 11s NFC.jpg,L,L,0.9955
+L/L_Baju_Xiaomi_Poco X3.jpg,L,L,0.9983
+L/L_Body_Infinix_Note 30.jpg,L,L,0.8409
+L/L_Polos Gelap_Samsung_A53 5G.jpg,L,L,0.7987
+L/L_Polos Gelap_iPhone_14 Pro (2).jpg,L,L,0.9744
+L/L_Polos Gelap_iPhone_XR.jpeg,L,L,0.9919
+L/L_Polos Terang_Apple_Iphone 7+.JPG,L,L,0.7645
+L/L_Polos Terang_Samsung_A22.jpg,L,L,0.9816
+L/L_Polos Terang_Samsung_A51.jpg,L,L,0.9998
+L/L_Polos Terang_Samsung_A55.jpg,L,L,0.9974
+L/L_Polos Terang_Samsung_Galaxy A32 5G.jpg,L,L,0.8238
+L/L_Polos Terang_Xiaomi_Redmi Note 11.jpg,L,L,0.9998
+L/L_PolosTerang_Sony_A7C.JPG,L,L,0.9892
+L/L_PolosTerang_Xiaomi_Poco X3.jpg,L,L,0.9997
+L/L_Putih_Samsung_M51.jpg,L,L,0.957
+L/L_Terang_Apple_Iphone XS.jpg,L,L,0.9973
+L/L_background baju_Samsung_A33.jpg,L,L,0.9017
+L/L_baju_Iph_Iph15.jpg,L,L,0.9972
+L/L_terang_Iph_Iph15.jpg,L,L,0.9726
+M/20240509_184853.jpg,M,M,0.7091
+M/M_Background _Bebas_POCO_F4.jpg,M,Q,0.3787
+M/M_Baju_Oppo_A Series.jpg.jpg,M,N,0.9758
+M/M_Baju_Samsung_Galaxy M14 5G.jpg,M,M,0.7441
+M/M_Baju_Vivo_V21.jpg,M,N,0.8437
+M/M_Baju_Vivo_V23 5G.jpg,M,N,0.8747
+M/M_Baju_iPhone_14 Pro (2).jpg,M,N,0.9373
+M/M_Bebas_Apple_Iphone 11.jpg,M,M,0.4402
+M/M_Bebas_ROG_Phone5.jpg,M,N,0.9655
+M/M_Bebas_Realme_7i.jpg,M,N,0.6087
+M/M_Bebas_Redmi_9 Pro.jpg,M,N,0.3788
+M/M_Bebas_Samsung_A32.jpg,M,N,0.6991
+M/M_Bebas_Vivo_V21.jpg,M,M,0.759
+M/M_Bebas_Vivo_V23 5G.jpg,M,N,0.5761
+M/M_Polos Gelap_ROG_Phone5.jpg,M,M,0.5326
+M/M_Polos Gelap_Redmi_Note 12 Pro.jpg,M,M,0.6504
+M/M_Polos Gelap_Samsung_A23.jpeg,M,M,0.9551
+M/M_Polos Terang_ROG_Phone5.jpg,M,N,0.9254
+M/M_Polos terang_Oppo_A53.jpg,M,M,0.6444
+M/M_PolosGelap_Xiaomi_Poco X3.jpg,M,M,0.975
+M/M_PolosTerang_Xiaomi_Poco X3.jpg,M,N,0.7918
+M/M_Putih_Iphone_14Pro.jpg,M,N,0.6906
+M/M_Terang_Apple_Iphone XS.jpg,M,M,0.8245
+M/M_Terang_Xiaomi_MI T10.jpg,M,N,0.9024
+M/M_Wall White_Xiaomi_Redmi Note 9.jpg,M,N,0.697
+M/M_backgroundbebas_VIVO_V20.jpeg,M,M,0.9123
+N/20240509_184947.jpg,N,N,0.7989
+N/N_Background Baju_Oppo_A95.jpg,N,N,0.872
+N/N_Background Bebas_Samsung_A55.jpg,N,N,0.9958
+N/N_Background _Bebas_POCO_F4.jpg,N,Y,0.8355
+N/N_Baju_Redmi_Note 12 Pro.jpg,N,N,0.8431
+N/N_Baju_iPhone_XR.jpeg,N,N,0.9411
+N/N_Bebas_Oppo_A53.jpg,N,N,0.8886
+N/N_Bebas_Samsung_Galaxy A32 5G.jpg,N,M,0.6195
+N/N_Bebas_Xiaomi _Note 8 Pro.jpg,N,N,0.6412
+N/N_Bebas_iPhone_XR.jpeg,N,M,0.7479
+N/N_Hitam_Iphone_14Pro.jpg,N,N,0.7215
+N/N_POLOS TERANG_SAMSUNG_S22 ULTRA.jpg,N,N,0.8514
+N/N_Polos Gelap_Oppo_Reno 11f.jpg,N,N,0.9603
+N/N_Polos Gelap_Redmi_Note 12 Pro.jpg,N,N,0.8023
+N/N_Polos Gelap_Vivo_V23 5G.jpg,N,N,0.9769
+N/N_Polos Gelap_Xiaomi_Redmi Note 11.jpg,N,N,0.8541
+N/N_Polos Terang_Apple_Iphone 11(1).jpg,N,N,0.4181
+N/N_Polos Terang_Apple_Iphone 15.jpg,N,N,0.8537
+N/N_Polos Terang_Oppo_Reno 11f.jpg,N,N,0.9375
+N/N_Polos Terang_ROG_Phone5.jpg,N,N,0.9896
+N/N_Polos Terang_Redmi_Note 12 Pro.jpg,N,N,0.9408
+N/N_Polos Terang_Samsung_A22.jpg,N,M,0.8166
+N/N_Polos Terang_Samsung_Galaxy A32 5G.jpg,N,N,0.803
+N/N_Polos terang_Infinix_Hot 11s NFC.jpg,N,M,0.6777
+N/N_Wall White_Xiaomi_Redmi Note 9.jpg,N,N,0.9682
+N/N_backgroundbebas_VIVO_V20.jpeg,N,N,0.8943
+O/0_BEBAS_Apple_Iphone 12.JPG,O,I,0.6688
+O/20240509_185058.jpg,O,O,0.9911
+O/O_Background Polos Gelap_Oppo_A95.jpg,O,O,0.9777
+O/O_Background Terang_Iphone 14 Pro.jpg,O,O,0.9942
+O/O_Baju_Apple_Iphone 11.jpg,O,O,0.9907
+O/O_Baju_Apple_Iphone 7+.JPG,O,N,0.561
+O/O_Baju_Redmi_9 Pro.jpg,O,O,0.9363
+O/O_Baju_Samsung_A22.jpg,O,Q,0.78
+O/O_Baju_Samsung_Galaxy A32 5G.jpg,O,C,0.5749
+O/O_Baju_Samsung_Galaxy M14 5G.jpg,O,O,0.9698
+O/O_Bebas_Oppo_A Series.jpg.jpg,O,O,0.6718
+O/O_Body Red_Xiaomi_Redmi Note 9.jpg,O,C,0.4841
+O/O_Hitam_Iphone_14Pro.jpg,O,O,0.9995
+O/O_Polos Gelap_Apple_Iphone 7+.JPG,O,O,0.9976
+O/O_Polos Gelap_iPhone_14 Pro (2).jpg,O,O,0.9735
+O/O_Polos Terang_Apple_Iphone 15.jpg,O,O,1.0
+O/O_Polos Terang_Infinix_Note 30.jpg,O,O,0.9987
+O/O_Polos Terang_Oppo_A Series.jpg.jpg,O,O,0.9827
+O/O_Polos Terang_Redmi_Note 12 Pro.jpg,O,O,0.7739
+O/O_Polos Terang_Samsung_A32.jpg,O,O,0.3349
+O/O_Polos Terang_Vivo_V21.jpg,O,O,0.957
+O/O_Polos gelap_Infinix_Hot 11s NFC.jpg,O,O,0.9937
+O/O_PolosTerang_Sony_A7C.JPG,O,O,0.999
+O/O_PolosTerang_Xiaomi_Poco X3.jpg,O,O,0.9999
+O/O_Putih_Samsung_M51 (2).jpg,O,R,0.9574
+O/O_polos gelap_Samsung_A33.jpg,O,O,0.9955
+P/20240509_185239.jpg,P,P,0.866
+P/20240509_185306.jpg,P,D,0.5613
+P/IMG_7995.jpg,P,P,0.9979
+P/P_Background Baju_Oppo_A95.jpg,P,S,0.9315
+P/P_Background Bebas_Oppo_A95.jpg,P,P,0.6938
+P/P_Background Gelap_Iphone 14 Pro.jpg,P,P,0.9027
+P/P_Baju_Infinix_Hot 11s NFC.jpg,P,P,0.8171
+P/P_Baju_Samsung_Galaxy A32 5G.jpg,P,P,0.7648
+P/P_Baju_Vivo_V21.jpg,P,D,0.7322
+P/P_Baju_Xiaomi _Note 8 Pro.jpg,P,P,0.8727
+P/P_Bebas_Apple_Iphone 11.jpg,P,P,0.9151
+P/P_Bebas_Iphone_14 Pro.jpg,P,P,0.9895
+P/P_Bebas_ROG_Phone5.jpg,P,B,0.4
+P/P_Bebas_Redmi_9 Pro.jpg,P,P,0.8811
+P/P_Bebas_Samsung_A32.jpg,P,Q,0.6849
+P/P_Bebas_Samsung_A51.jpg,P,P,0.6137
+P/P_Bebas_Xiaomi_Poco X3.jpg,P,P,0.8476
+P/P_POLOS GELAP_SAMSUNG_S22 ULTRA.jpg,P,P,0.8903
+P/P_Polos Gelap_Apple_Iphone 11.jpg,P,P,0.4345
+P/P_Polos Gelap_Infinix_Note 30.jpg,P,P,0.9778
+P/P_Polos Gelap_ROG_Phone5.jpg,P,D,0.6431
+P/P_Polos Gelap_Redmi_9 Pro.jpg,P,P,0.988
+P/P_Polos Gelap_Samsung_A53 5G.jpg,P,P,0.8472
+P/P_Polos Gelap_Samsung_Galaxy M14 5G.jpg,P,P,0.9295
+P/P_Polos Terang_iPhone_14 Pro (2).jpg,P,P,0.8773
+P/P_polos gelap_Iphone_13promax.jpg,P,P,0.5757
+Q/20240509_185326.jpg,Q,Q,0.9996
+Q/Q_Background Baju (Garis)_Samsung_A53.jpg,Q,Q,0.6477
+Q/Q_Background Baju_Iphone 14 Pro.jpg,Q,Q,0.9978
+Q/Q_Background Baju_Oppo_A95.jpg,Q,Q,0.336
+Q/Q_Background Bebas_Apple_Iphone 15.jpg,Q,Q,0.9119
+Q/Q_Background Gelap_Iphone 14 Pro.jpg,Q,Q,0.9969
+Q/Q_Background_Polos_Gelap_POCO_F4.jpg,Q,Q,0.9998
+Q/Q_Baju_Apple_Iphone 11.jpg,Q,Q,0.9984
+Q/Q_Baju_Vivo_V23 5G.jpg,Q,Q,0.9374
+Q/Q_Baju_iPhone_14 Pro (2).jpg,Q,Q,0.8645
+Q/Q_Bebas_Apple_Iphone 11.jpg,Q,Q,0.9782
+Q/Q_Bebas_Infinix_Hot 11s NFC.jpg,Q,Q,0.9453
+Q/Q_Bebas_Oppo_Reno 11f.jpg,Q,Q,0.9998
+Q/Q_Bebas_Samsung_Galaxy M14 5G.jpg,Q,Q,0.9997
+Q/Q_Body White_Xiaomi_Redmi Note 9.jpg,Q,Q,0.9866
+Q/Q_Polos Gelap_Samsung_Galaxy A32 5G.jpg,Q,Q,0.9993
+Q/Q_Polos Terang_Apple_Iphone 11.jpg,Q,Q,0.9687
+Q/Q_Polos Terang_Samsung_A53 5G.jpg,Q,Q,0.7125
+Q/Q_Polos terang_Infinix_Hot 11s NFC.jpg,Q,Q,0.9189
+Q/Q_PolosTerang_Sony_A7C.JPG,Q,Q,0.9965
+Q/Q_Putih_Samsung_M51.jpg,Q,Q,0.6495
+Q/Q_STRIPE_SAMSUNG_S22 ULTRA.jpg,Q,Q,0.9963
+Q/Q_Terang_Xiaomi_MI T10.jpg,Q,Q,0.9157
+Q/Q_background gelap_Samsung_A33.jpg,Q,Q,0.8714
+Q/Q_backgroundputih_VIVO_V20.jpeg,Q,Q,0.9979
+Q/Q_baju_ROG_Phone5.jpg,Q,Q,1.0
+R/20240509_185515.jpg,R,O,0.763
+R/R_BAJU PUTIH_SAMSUNG_S22 ULTRA.jpg,R,R,0.9999
+R/R_Background Baju_Iphone 14 Pro.jpg,R,R,0.9951
+R/R_Background Baju_Oppo_A95.jpg,R,H,0.7426
+R/R_Background Baju_Samsung_A55.jpg,R,R,0.9516
+R/R_Background Bebas_Iphone 14 Pro.jpg,R,R,0.5638
+R/R_Baju_Oppo_A53.jpg,R,R,0.6994
+R/R_Baju_Oppo_Reno 11f.jpg,R,R,0.8969
+R/R_Baju_Samsung_A51.jpg,R,R,0.9899
+R/R_Baju_Sony_A7C.JPG,R,R,0.8686
+R/R_Baju_Xiaomi_MI T10.jpg,R,R,0.6169
+R/R_Baju_Xiaomi_Poco X3.jpg,R,R,0.9878
+R/R_Baju_iPhone_14 Pro (2).jpg,R,R,0.4615
+R/R_Bebas_Apple_Iphone XS.jpg,R,Q,0.9822
+R/R_Bebas_Iphone_14 Pro.jpg,R,R,0.9221
+R/R_Bebas_Realme_7i.jpg,R,Y,0.2941
+R/R_Body Red_Xiaomi_Redmi Note 9.jpg,R,B,0.9011
+R/R_Polos Gelap_Samsung_A51.jpg,R,R,0.4254
+R/R_Polos Gelap_Samsung_A55.jpg,R,R,0.9979
+R/R_Polos Terang_Redmi_9 Pro.jpg,R,R,0.8074
+R/R_Polos Terang_Samsung_A21S.jpeg,R,R,0.9656
+R/R_Polos Terang_Samsung_A22.jpg,R,R,0.8557
+R/R_Polos Terang_Samsung_A32.jpg,R,Z,0.5831
+R/R_Polos terang_Apple_Iphone 12.JPG,R,R,0.9976
+R/R_backgroundbaju_VIVO_V20.jpeg,R,R,0.7817
+R/R_backgroundbebas_VIVO_V20.jpeg,R,R,0.9848
+S/S_Background Baju_Samsung_A55.jpg,S,Q,0.6053
+S/S_Background Gelap_Iphone 14 Pro.jpg,S,S,0.9974
+S/S_Background_Polos_Terang_POCO_F4.jpg,S,S,0.9955
+S/S_Baju_Iphone_14Pro (2).jpg,S,S,0.6358
+S/S_Baju_Redmi_9 Pro.jpg,S,S,0.9993
+S/S_Baju_Redmi_Note 12 Pro.jpg,S,S,0.9985
+S/S_Baju_Vivo_V21.jpg,S,S,0.2882
+S/S_Bebas_Oppo_Reno 11f.jpg,S,S,0.9955
+S/S_Bebas_Realme_7i.jpg,S,S,0.9734
+S/S_Bebas_Redmi_Note 12 Pro.jpg,S,S,0.984
+S/S_Bebas_Samsung_A22.jpg,S,W,0.6902
+S/S_Bebas_Samsung_Galaxy A32 5G.jpg,S,C,0.2383
+S/S_Bebas_Vivo_V21.jpg,S,S,0.6198
+S/S_Hitam_Samsung_M51.jpg,S,S,0.8961
+S/S_POLOS TERANG_SAMSUNG_S22 ULTRA.jpg,S,S,0.9777
+S/S_Polos Gelap_Realme_7i.jpg,S,S,0.9787
+S/S_Polos Gelap_Samsung_A23.jpeg,S,L,0.8439
+S/S_Polos Gelap_Samsung_A55.jpg,S,S,0.9952
+S/S_Polos Gelap_Xiaomi _Note 8 Pro.jpg,S,S,0.9878
+S/S_Polos Gelap_iPhone_XR.jpeg,S,S,0.955
+S/S_Polos Terang_Apple_Iphone 7+.JPG,S,Q,0.879
+S/S_Polos Terang_Realme_7i.jpg,S,S,0.4664
+S/S_Wall White_Xiaomi_Redmi Note 9.jpg,S,S,0.972
+S/S_background bebas_Samsung_A33.jpg,S,S,0.9744
+S/S_baju_Iph_Iph15.jpg,S,S,0.9473
+S/S_terang_Iph_Iph15.jpg,S,S,0.9924
+T/T_BAJU_Apple_Iphone 12.JPG,T,T,0.916
+T/T_Background Baju_Oppo_A95.jpg,T,P,0.4484
+T/T_Baju_Realme_7i.jpg,T,T,0.628
+T/T_Baju_Vivo_V21.jpg,T,T,0.9838
+T/T_Baju_Xiaomi_Poco X3.jpg,T,T,0.6833
+T/T_Baju_iPhone_XR.jpeg,T,T,1.0
+T/T_Bebas_Apple_Iphone 7+.JPG,T,Q,0.802
+T/T_Bebas_Iphone_14 Pro.jpg,T,T,0.9997
+T/T_Bebas_Samsung_A23.jpeg,T,P,0.3614
+T/T_Bebas_Xiaomi _Note 8 Pro.jpg,T,T,0.8601
+T/T_Bebas_iPhone_14 Pro (2).jpg,T,T,0.9761
+T/T_Body Red_Xiaomi_Redmi Note 9.jpg,T,K,0.3876
+T/T_Body White_Xiaomi_Redmi Note 9.jpg,T,K,0.652
+T/T_Polos Gelap_Realme_7i.jpg,T,T,0.9994
+T/T_Polos Gelap_Samsung_A23.jpeg,T,T,0.9874
+T/T_Polos Gelap_Xiaomi _Note 8 Pro.jpg,T,T,0.9557
+T/T_Polos Gelap_iPhone_14 Pro (2).jpg,T,T,0.9967
+T/T_Polos Gelap_iPhone_XR.jpeg,T,T,0.9997
+T/T_Polos Terang_Apple_Iphone 11.jpg,T,T,0.9999
+T/T_Polos Terang_Samsung_Galaxy M14 5G.jpg,T,T,0.9999
+T/T_Polos gelap_Infinix_Hot 11s NFC.jpg,T,T,0.9992
+T/T_PolosGelap_Xiaomi_Poco X3.jpg,T,T,0.9995
+T/T_PolosTerang_Sony_A7C.JPG,T,T,0.7226
+T/T_backgroundputih_VIVO_V20.jpeg,T,T,0.9999
+T/T_baju_Iph_Iph15.jpg,T,T,0.9999
+T/T_baju_ROG_Phone5.jpg,T,T,0.9996
+U/20240509_185750.jpg,U,U,0.8535
+U/20240509_185801.jpg,U,U,0.9861
+U/20240509_185815.jpg,U,U,0.9955
+U/U_Background_Polos_Gelap_POCO_F4.jpg,U,U,0.6464
+U/U_Background_Polos_Terang_POCO_F4.jpg,U,U,0.8662
+U/U_Baju_Realme_7i.jpg,U,C,0.6222
+U/U_Baju_Redmi_9 Pro.jpg,U,C,0.8334
+U/U_Baju_Xiaomi _Note 8 Pro.jpg,U,U,0.6368
+U/U_Baju_Xiaomi_Poco X3.jpg,U,V,0.7089
+U/U_Bebas_Samsung_A32.jpg,U,Z,0.8894
+U/U_Bebas_iPhone_14 Pro.jpg,U,U,0.7452
+U/U_Body Red_Xiaomi_Redmi Note 9.jpg,U,V,0.2901
+U/U_Gelap_Apple_Iphone XS.jpg,U,U,0.8965
+U/U_Polos Gelap_Realme_7i.jpg,U,U,0.9973
+U/U_Polos Gelap_Samsung_A32.jpg,U,U,0.5805
+U/U_Polos Gelap_Samsung_Galaxy M14 5G.jpg,U,C,0.5686
+U/U_Polos Gelap_iPhone_14 Pro (2).jpg,U,U,0.5997
+U/U_Polos Terang_Apple_Iphone 12.JPG,U,V,0.8336
+U/U_Polos Terang_Apple_Iphone 15.jpg,U,U,0.8723
+U/U_Polos Terang_Iphone_14 Pro.jpg,U,U,0.5098
+U/U_Polos Terang_Realme_7i.jpg,U,U,0.993
+U/U_Polos gelap_Oppo_A53.jpg,U,C,0.9321
+U/U_Terang_Apple_Iphone XS.jpg,U,U,0.9421
+U/U_Terang_Xiaomi_MI T10.jpg,U,U,0.9852
+U/U_backgroundbaju_VIVO_V20.jpeg,U,U,0.8925
+U/U_baju_ROG_Phone5.jpg,U,C,0.8485
+V/V_BAJU_Apple_Iphone 12.JPG,V,V,0.9611
+V/V_Background_Polos_Gelap_POCO_F4.jpg,V,V,0.7639
+V/V_Baju_Redmi_9 Pro.jpg,V,V,0.9987
+V/V_Baju_Samsung_A23.jpeg,V,V,0.7503
+V/V_Baju_Samsung_A51.jpg,V,V,0.9993
+V/V_Baju_Samsung_Galaxy M14 5G.jpg,V,V,0.9961
+V/V_Baju_Vivo_V21.jpg,V,E,0.8017
+V/V_Baju_Vivo_V23 5G.jpg,V,V,0.9985
+V/V_Baju_Xiaomi _Note 8 Pro.jpg,V,V,0.9853
+V/V_Baju_Xiaomi_Redmi Note 11.jpg,V,V,0.999
+V/V_Bebas_Samsung_A51.jpg,V,V,0.9993
+V/V_Bebas_Samsung_M51.jpg,V,V,0.6491
+V/V_Bebas_iPhone_14 Pro (2).jpg,V,V,0.9875
+V/V_Bebas_iPhone_XR.jpeg,V,V,0.6593
+V/V_POLOS TERANG_SAMSUNG_S22 ULTRA.jpg,V,V,0.9856
+V/V_Polos Gelap_Infinix_Note 30.jpg,V,V,0.9985
+V/V_Polos Gelap_Oppo_A Series.jpg.jpg,V,V,0.9697
+V/V_Polos Gelap_iPhone_XR.jpeg,V,V,0.9954
+V/V_Polos Terang_Infinix_Note 30.jpg,V,V,0.995
+V/V_Polos Terang_Oppo_A Series.jpg.jpg,V,V,0.9996
+V/V_Polos terang_Oppo_A53.jpg,V,V,0.8928
+V/V_STRIPE_SAMSUNG_S22 ULTRA.jpg,V,V,0.9676
+V/V_baju_ROG_Phone5.jpg,V,V,0.8596
+V/V_gelap_Iph_Iph15.jpg,V,V,0.7304
+V/V_polos terang_Samsung_A33.jpg,V,V,0.9072
+V/Y_Polos Gelap_Iphone_14 Pro.jpg,V,V,0.9325
+W/20240509_190029.jpg,W,W,0.9969
+W/W_Background Bebas (Tirai)_Samsung_A53 5G.jpg,W,W,0.9995
+W/W_Background Bebas_Oppo_A95.jpg,W,W,0.9952
+W/W_Background Polos Gelap_Oppo_A95.jpg,W,W,0.6438
+W/W_Background_Polos_Gelap_POCO_F4.jpg,W,W,0.9999
+W/W_Baju_Apple_Iphone XS.jpg,W,W,0.9946
+W/W_Baju_Infinix_Hot 11s NFC.jpg,W,W,0.9768
+W/W_Baju_Iphone_14 Pro.jpg,W,W,0.9803
+W/W_Baju_Iphone_14Pro.jpg,W,W,0.9388
+W/W_Bebas_Apple_iPhone 13.jpg,W,W,0.9789
+W/W_Bebas_Infinix_Note 30.jpg,W,W,0.998
+W/W_Bebas_Oppo_A Series.jpg.jpg,W,W,0.8699
+W/W_Bebas_Redmi_Note 12 Pro.jpg,W,W,0.9673
+W/W_Bebas_Samsung_Galaxy M14 5G.jpg,W,W,0.9994
+W/W_Bebas_iPhone_14 Pro (2).jpg,W,W,0.9992
+W/W_Body Red_Xiaomi_Redmi Note 9.jpg,W,Q,0.4468
+W/W_Hitam Polos_Vivo_V21.jpg,W,W,0.975
+W/W_Hitam_Iphone_14Pro.jpg,W,W,0.9828
+W/W_Polos Gelap_Samsung_A55.jpg,W,W,0.9999
+W/W_Polos Gelap_iPhone_XR.jpeg,W,W,0.8727
+W/W_Polos Terang_Redmi_9 Pro.jpg,W,W,0.9997
+W/W_Polos Terang_Samsung_A51.jpg,W,W,0.9986
+W/W_Polos terang_Apple_Iphone 12.JPG,W,W,0.9913
+W/W_PolosTerang_Xiaomi_Poco X3.jpg,W,W,0.819
+W/W_Terang_Xiaomi_MI T10.jpg,W,W,0.9997
+W/W_backgorundputih_VIVO_V20.jpeg,W,W,0.9999
+X/20240509_190121.jpg,X,X,0.9996
+X/X_BAJU_Apple_Iphone 12.JPG,X,X,1.0
+X/X_Background Baju_Oppo_A95.jpg,X,X,0.6718
+X/X_Background Polos Gelap_Oppo_A95.jpg,X,X,0.9977
+X/X_Background_Baju_POCO_F4.jpg,X,X,0.9996
+X/X_Background_Polos_Gelap_POCO_F4.jpg,X,X,0.9999
+X/X_Baju_Oppo_A Series.jpg.jpg,X,X,0.9718
+X/X_Baju_Realme_7i.jpg,X,X,0.9998
+X/X_Baju_Samsung_A22.jpg,X,X,0.9949
+X/X_Baju_Vivo_V23 5G.jpg,X,X,0.9989
+X/X_Baju_Xiaomi _Note 8 Pro.jpg,X,X,0.9736
+X/X_Batik_Sony_A7C.JPG,X,X,0.929
+X/X_Bebas_Samsung_A51.jpg,X,X,0.9997
+X/X_Bebas_Vivo_V23 5G.jpg,X,X,1.0
+X/X_Polos Gelap_Apple_Iphone 15.jpg,X,X,0.994
+X/X_Polos Gelap_Apple_Iphone 7+.JPG,X,X,0.9997
+X/X_Polos Gelap_Infinix_Note 30.jpg,X,X,0.9997
+X/X_Polos Gelap_Iphone_14 Pro.jpg,X,X,0.9998
+X/X_Polos Gelap_Oppo_Reno 11f.jpg,X,X,1.0
+X/X_Polos Gelap_Samsung_Galaxy M14 5G.jpg,X,X,0.9768
+X/X_Polos Gelap_Xiaomi _Note 8 Pro.jpg,X,X,0.9998
+X/X_Polos Terang_Oppo_Reno 11f.jpg,X,X,0.9981
+X/X_Polos Terang_Redmi_Note 12 Pro.jpg,X,X,0.9695
+X/X_Polos Terang_Samsung_A32.jpg,X,X,0.9972
+X/X_Polos gelap_Oppo_A53.jpg,X,X,0.9999
+X/X_background bebas_Samsung_A33.jpg,X,X,0.9981
+Y/Y_BAJU PUTIH_SAMSUNG_S22 ULTRA.jpg,Y,Y,0.9698
+Y/Y_Background Baju_Iphone 14 Pro.jpg,Y,Y,0.958
+Y/Y_Background Baju_Samsung_A55.jpg,Y,X,0.5676
+Y/Y_Background Gelap_Iphone 14 Pro.jpg,Y,X,0.8851
+Y/Y_Background_Bebas_POCO_F4.jpg,Y,Y,0.9973
+Y/Y_Baju_Samsung_A51.jpg,Y,Y,0.9881
+Y/Y_Baju_Xiaomi_MI T10 (50).jpg,Y,Q,0.6272
+Y/Y_Bebas_Oppo_A53.jpg,Y,Y,0.9409
+Y/Y_Bebas_Oppo_Reno 11f.jpg,Y,Y,0.8845
+Y/Y_Bebas_Vivo_V21.jpg,Y,Y,0.646
+Y/Y_Bebas_Xiaomi_Redmi Note 11.jpg,Y,Y,0.3637
+Y/Y_POLOS TERANG_SAMSUNG_S22 ULTRA.jpg,Y,Y,0.9393
+Y/Y_Polos Gelap_Apple_Iphone 15.jpg,Y,Y,0.9996
+Y/Y_Polos Gelap_Oppo_A Series.jpg.jpg,Y,Y,0.665
+Y/Y_Polos Gelap_Oppo_Reno 11f.jpg,Y,Y,1.0
+Y/Y_Polos Terang_Infinix_Note 30.jpg,Y,L,0.4938
+Y/Y_Polos Terang_Oppo_Reno 11f.jpg,Y,Y,0.5011
+Y/Y_Polos Terang_ROG_Phone5.jpg,Y,Y,0.9989
+Y/Y_Polos Terang_Samsung_A21S.jpeg,Y,Y,0.9534
+Y/Y_Polos Terang_Samsung_A51.jpg,Y,Y,0.999
+Y/Y_Polos Terang_Vivo_V21.jpg,Y,Y,0.934
+Y/Y_Polos Terang_Xiaomi _Note 8 Pro.jpg,Y,Y,0.6062
+Y/Y_Polos gelap_Oppo_A53.jpg,Y,Y,0.9985
+Y/Y_Putih_Samsung_M51 (2).jpg,Y,Y,0.8685
+Y/Y_gelap_Iph_Iph15.jpg,Y,Y,0.6629
+Y/Y_polos terang_Samsung_A33.jpg,Y,Y,0.3236
+Z/Z_Background Bebas_Iphone 14 Pro.jpg,Z,Z,0.9964
+Z/Z_Background Polos Gelap_Oppo_A95.jpg,Z,Z,0.9736
+Z/Z_Background Terang_Iphone 14 Pro.jpg,Z,Z,0.9143
+Z/Z_Baju_Redmi_9 Pro.jpg,Z,Z,0.9555
+Z/Z_Baju_Samsung_Galaxy M14 5G.jpg,Z,Z,0.7976
+Z/Z_Bebas_Apple_iPhone 13.jpg,Z,Z,0.9637
+Z/Z_Bebas_Infinix_Hot 11s NFC.jpg,Z,Z,0.9998
+Z/Z_Bebas_Oppo_A53.jpg,Z,Z,0.969
+Z/Z_Bebas_Xiaomi _Note 8 Pro.jpg,Z,Z,0.7917
+Z/Z_Body White_Xiaomi_Redmi Note 9.jpg,Z,Z,0.9999
+Z/Z_Polos Gelap_Apple_Iphone 15.jpg,Z,Z,0.9907
+Z/Z_Polos Gelap_Samsung_A23.jpeg,Z,Z,0.9997
+Z/Z_Polos Gelap_Xiaomi _Note 8 Pro.jpg,Z,Z,0.999
+Z/Z_Polos Terang_Oppo_Reno 11f.jpg,Z,Z,1.0
+Z/Z_Polos Terang_Samsung_A21S.jpeg,Z,Z,0.9999
+Z/Z_Polos Terang_Samsung_A22.jpg,Z,Z,0.9194
+Z/Z_Polos Terang_Xiaomi _Note 8 Pro.jpg,Z,Z,0.9987
+Z/Z_Polos Terang_iPhone_XR.jpeg,Z,Z,0.9993
+Z/Z_Polos gelap_Iphone_13promax.jpg,Z,Z,0.7307
+Z/Z_Polos terang_Oppo_A53.jpg,Z,Z,0.9955
+Z/Z_Putih_Samsung_M51 (2).jpg,Z,Z,0.9997
+Z/Z_Terang_Apple_Iphone XS.jpg,Z,S,0.8814
+Z/Z_backgorundputih_VIVO_V20.jpeg,Z,Z,0.986
+Z/Z_background baju_Samsung_A33.jpg,Z,Z,0.8895
+Z/Z_background bebas_Samsung_A33.jpg,Z,Z,0.922
+Z/Z_gelap_Iph_Iph15.jpg,Z,Z,0.99
