@@ -1,0 +1,29 @@
+Preload 4462 gambar ke RAM (256px, 16 threads) selesai dalam 19.6s
+Run: v3_head | mode=head | device=cpu | torch 2.7.0+cpu
+Split: splits/split_v3.csv (md5 2769336b) | {'train': 3052, 'val': 720, 'test': 690}
+Parameter: total 1,544,506 | dilatih 26,650 (1.73%)
+Epoch 01/20 | train loss 2.9374 acc 0.180 | val loss 2.5981 acc 0.308 f1 0.287 | 82.2s
+Epoch 02/20 | train loss 2.3254 acc 0.414 | val loss 2.2839 acc 0.394 f1 0.379 | 44.7s
+Epoch 03/20 | train loss 2.0307 acc 0.467 | val loss 2.1054 acc 0.389 f1 0.374 | 39.8s
+Epoch 04/20 | train loss 1.8414 acc 0.519 | val loss 1.9784 acc 0.442 f1 0.431 | 38.7s
+Epoch 05/20 | train loss 1.7093 acc 0.548 | val loss 1.8961 acc 0.450 f1 0.440 | 38.5s
+Epoch 06/20 | train loss 1.5986 acc 0.575 | val loss 1.8649 acc 0.444 f1 0.438 | 38.5s
+Epoch 07/20 | train loss 1.5368 acc 0.577 | val loss 1.8072 acc 0.454 f1 0.449 | 39.6s
+Epoch 08/20 | train loss 1.4548 acc 0.599 | val loss 1.7649 acc 0.472 f1 0.466 | 39.4s
+Epoch 09/20 | train loss 1.3998 acc 0.617 | val loss 1.7346 acc 0.479 f1 0.473 | 41.7s
+Epoch 10/20 | train loss 1.3596 acc 0.618 | val loss 1.6945 acc 0.469 f1 0.460 | 37.6s
+Epoch 11/20 | train loss 1.3088 acc 0.635 | val loss 1.6735 acc 0.485 f1 0.477 | 37.8s
+Epoch 12/20 | train loss 1.2747 acc 0.649 | val loss 1.6622 acc 0.494 f1 0.491 | 40.8s
+Epoch 13/20 | train loss 1.2348 acc 0.646 | val loss 1.6522 acc 0.485 f1 0.481 | 40.4s
+Epoch 14/20 | train loss 1.2002 acc 0.663 | val loss 1.6304 acc 0.490 f1 0.479 | 40.8s
+Epoch 15/20 | train loss 1.1653 acc 0.673 | val loss 1.6197 acc 0.496 f1 0.492 | 41.8s
+Epoch 16/20 | train loss 1.1466 acc 0.684 | val loss 1.5984 acc 0.490 f1 0.488 | 44.8s
+Epoch 17/20 | train loss 1.1265 acc 0.680 | val loss 1.5991 acc 0.496 f1 0.491 | 44.3s
+Epoch 18/20 | train loss 1.1298 acc 0.673 | val loss 1.5921 acc 0.489 f1 0.485 | 39.7s
+Epoch 19/20 | train loss 1.0993 acc 0.695 | val loss 1.5751 acc 0.493 f1 0.488 | 40.2s
+Early stopping: val macro-F1 tidak naik 4 epoch berturut-turut.
+
+Model terbaik: epoch 15 (val macro-F1 0.492)
+[test] accuracy 0.5377 | macro-F1 0.5346
+Latency median: 61.7 ms total, 20.8 ms forward saja
+Hasil: results/transfer/v3_head

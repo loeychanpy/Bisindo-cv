@@ -70,7 +70,16 @@ def infer_label(parts, label_regex):
     return None
 
 
-def scan_images(data_dir, exts, label_regex, group_regex):
+def load_exclusions(exclude_file, data_dir):
+    """Daftar file buangan dari sanitary_check.py -> set path relatif ke data_dir."""
+    if not exclude_file or not Path(exclude_file).exists():
+        return set()
+    prefix = Path(data_dir).name + "/"  # excluded_files.txt memakai path relatif ke folder induk varian
+    lines = Path(exclude_file).read_text(encoding="utf-8").splitlines()
+    return {l.strip()[len(prefix):] for l in lines if l.strip().startswith(prefix)}
+
+
+def scan_images(data_dir, exts, label_regex, group_regex, exclude=frozenset()):
     recs, skipped = [], []
     for root, dirs, files in os.walk(data_dir):
         dirs.sort()  # urutan tetap -> hasil deterministik
@@ -78,6 +87,8 @@ def scan_images(data_dir, exts, label_regex, group_regex):
             if Path(f).suffix.lower() not in exts:
                 continue
             rel = (Path(root) / f).relative_to(data_dir).as_posix()
+            if rel in exclude or f.startswith("._"):  # buangan sanitary_check + file sampah macOS
+                continue
             label = infer_label(rel.split("/"), label_regex)
             if label is None:
                 skipped.append(rel)
@@ -89,6 +100,18 @@ def scan_images(data_dir, exts, label_regex, group_regex):
                     group = m.group("group")
             recs.append({"path": rel, "label": label, "group": group, "sha256": ""})
     return recs, skipped
+
+
+def apply_group_file(recs, group_file):
+    """Ganti group dan label tiap gambar dengan isi group_file (hasil src/group_keys.py), lalu tambah 'background'."""
+    gf = {r["path"]: r for r in read_csv(group_file)}
+    missing = [r["path"] for r in recs if r["path"] not in gf]
+    if missing:
+        sys.exit(f"{len(missing)} gambar tidak ada di {group_file}, mis. {missing[:3]}. "
+                 "Jalankan ulang src/group_keys.py dengan --exclude yang sama.")
+    for r in recs:
+        g = gf[r["path"]]
+        r["group"], r["label"], r["background"] = g["group"], g["label"], g["background"]
 
 
 def sha256_file(p):
@@ -210,6 +233,7 @@ def do_split(recs, ratios, seed, group_mode):
 def leakage_checks(recs):
     """Return (lines_laporan, jumlah_masalah)."""
     lines, problems = [], 0
+    strict_groups = any(r.get("background") for r in recs)  # split berbasis group_file: irisan grup harus 0
     by_split = {s: [r for r in recs if r["split"] == s] for s in SPLITS}
 
     lines.append("== Jumlah gambar per kelas per split ==")
@@ -235,7 +259,13 @@ def leakage_checks(recs):
             ga = {r["group"] for r in by_split[a] if r["group"]}
             gb = {r["group"] for r in by_split[b] if r["group"]}
             n = len(ga & gb)
-            lines.append(f"{a} & {b}: {n} grup sama {'OK' if n == 0 else '(cek: wajar kalau mode per_class)'}")
+            if strict_groups:
+                problems += n > 0
+                lines.append(f"{a} & {b}: {n} grup sama {'OK' if n == 0 else 'BOCOR!'}")
+            else:
+                lines.append(f"{a} & {b}: {n} grup sama {'OK' if n == 0 else '(cek: wajar kalau mode per_class)'}")
+        lines.append(f"jumlah grup per split: " + ", ".join(
+            f"{s}={len({r['group'] for r in by_split[s]})}" for s in SPLITS))
     else:
         lines.append("\n[CATATAN] Metadata signer/latar nggak ada -> split cuma stratifikasi per kelas. "
                      "Tulis ini sebagai keterbatasan di README.")
@@ -253,6 +283,14 @@ def leakage_checks(recs):
         lines.append(f"(info) gambar duplikat di dalam split yang sama: {n_inner}")
     else:
         lines.append("\n[CATATAN] Hash file nggak dihitung -> cek duplikat dilewati.")
+
+    if strict_groups:
+        lines.append("\n== Jumlah gambar per bucket latar per split ==")
+        buckets = sorted({r["background"] for r in recs})
+        lines.append(f"{'latar':<14}" + "  ".join(f"{s:>6}" for s in SPLITS))
+        for b in buckets:
+            c = [sum(1 for r in by_split[s] if r["background"] == b) for s in SPLITS]
+            lines.append(f"{b:<14}" + "  ".join(f"{x:>6}" for x in c))
     return lines, problems
 
 
@@ -294,11 +332,13 @@ COLS = ["path", "label", "group", "sha256", "split"]
 
 def write_csv(recs, out):
     out.parent.mkdir(parents=True, exist_ok=True)
+    cols = COLS + (["background"] if any(r.get("background") for r in recs) else [])  # hanya split berbasis group_file
     with open(out, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        w.writerow(COLS)
+        w.writerow(cols)
         for r in sorted(recs, key=lambda r: r["path"]):
-            w.writerow([r["path"], r["label"], r["group"] or "", r["sha256"], r["split"]])
+            w.writerow([r["path"] if c == "path" else (r["group"] or "") if c == "group" else r.get(c, "") or ""
+                        for c in cols])
 
 
 def read_csv(p):
@@ -345,7 +385,8 @@ def main():
     args = ap.parse_args()
 
     cfg = yaml.safe_load(open(args.config, encoding="utf-8"))
-    seed = cfg.get("seed", 42)
+    seed = cfg.get("split_seed", cfg.get("seed", 42))   # split_seed opsional: seed split terpisah dari seed training
+    group_file = cfg.get("group_file")                   # CSV group/label/background dari src/group_keys.py
     data_dir = resolve_data_dir(cfg["data_dir"])
     if "val_frac" in cfg or "test_frac" in cfg:
         val_f, test_f = cfg.get("val_frac", 0.15), cfg.get("test_frac", 0.15)
@@ -382,7 +423,9 @@ def main():
         sys.exit(f"{out} sudah ada & dibekukan. Kalau perlu split baru: --version v2 (catat alasannya).")
 
     set_seed(seed)
-    recs, skipped = scan_images(data_dir, exts, label_regex, group_regex)
+    exclude = load_exclusions(cfg.get("exclude_file"), data_dir)
+    print(f"[INFO] {len(exclude)} file dibuang berdasarkan {cfg.get('exclude_file')}")
+    recs, skipped = scan_images(data_dir, exts, label_regex, group_regex, exclude)
     if not recs:
         sys.exit("Nggak ada gambar berlabel. Jalankan --inspect dulu.")
     print(f"[INFO] {len(recs)} gambar, {len({r['label'] for r in recs})} kelas, {len(skipped)} di-skip")
@@ -390,8 +433,10 @@ def main():
         print("[INFO] hitung sha256 (agak lama buat dataset gede) ...")
         add_hashes(recs, data_dir)
 
+    if group_file:
+        apply_group_file(recs, group_file)
     assign_group_ids(recs)
-    mode = do_split(recs, ratios, seed, cfg.get("group_mode", "auto"))
+    mode = do_split(recs, ratios, seed, "global" if group_file else cfg.get("group_mode", "auto"))
     write_csv(recs, out)
     write_label_map(recs, label_map_path)
 

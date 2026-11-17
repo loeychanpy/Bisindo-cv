@@ -1,0 +1,721 @@
+path,true,pred,conf
+A/20240509_182656.jpg,A,A,0.9926
+A/20240509_182720.jpg,A,A,0.9739
+A/20240509_182802.jpg,A,A,0.9878
+A/20240509_182838.jpg,A,A,0.9989
+A/A_Baju_Infinix_Hot 11s NFC.jpg,A,D,0.7109
+A/A_Baju_Redmi_9 Pro.jpg,A,A,0.9983
+A/A_Baju_Redmi_Note 12 Pro.jpg,A,A,0.8973
+A/A_Baju_Samsung_Galaxy A32 5G.jpg,A,A,0.9303
+A/A_Baju_Sony_A7C.JPG,A,A,0.9988
+A/A_Batik_Sony_A7C.JPG,A,A,0.9112
+A/A_Bebas_Infinix_Hot 11s NFC.jpg,A,X,0.7936
+A/A_Bebas_Redmi_9 Pro.jpg,A,A,0.9961
+A/A_Bebas_Redmi_Note 12 Pro.jpg,A,A,0.9979
+A/A_Bebas_Samsung_Galaxy A32 5G.jpg,A,A,0.8209
+A/A_Polos Gelap_Infinix_Hot 11s NFC.jpg,A,H,0.4628
+A/A_Polos Gelap_Redmi_9 Pro.jpg,A,A,0.9728
+A/A_Polos Gelap_Redmi_Note 12 Pro.jpg,A,A,0.9927
+A/A_Polos Gelap_Samsung_Galaxy A32 5G.jpg,A,P,0.3693
+A/A_Polos Terang_Infinix_Hot 11s NFC.jpg,A,A,0.2353
+A/A_Polos Terang_Redmi_9 Pro.jpg,A,A,0.998
+A/A_Polos Terang_Redmi_Note 12 Pro.jpg,A,A,0.9985
+A/A_Polos Terang_Samsung_Galaxy A32 5G.jpg,A,A,0.6783
+A/A_PolosHitam_Sony_A7C.JPG,A,A,0.9999
+A/A_PolosTerang_Sony_A7C.JPG,A,A,0.9987
+B/20240509_182924.jpg,B,B,0.9622
+B/20240509_183003.jpg,B,B,0.973
+B/20240509_183031.jpg,B,B,0.8669
+B/20240509_183056.jpg,B,B,0.9943
+B/B_Baju Hitam_Samsung_A32.jpg,B,B,0.7334
+B/B_Baju_Infinix_Hot 11s NFC.jpg,B,B,0.9788
+B/B_Baju_Redmi_9 Pro.jpg,B,B,0.9814
+B/B_Baju_Redmi_Note 12 Pro.jpg,B,B,0.9972
+B/B_Baju_Samsung_Galaxy A32 5G.jpg,B,B,0.9882
+B/B_Baju_Sony_A7C.JPG,B,B,0.9765
+B/B_Batik_Sony_A7C.JPG,B,B,0.9929
+B/B_Bebas_Infinix_Hot 11s NFC.jpg,B,B,0.8112
+B/B_Bebas_Redmi_9 Pro.jpg,B,B,0.7122
+B/B_Bebas_Redmi_Note 12 Pro.jpg,B,B,0.9475
+B/B_Bebas_Samsung_A32.jpg,B,B,0.9717
+B/B_Bebas_Samsung_Galaxy A32 5G.jpg,B,S,0.1555
+B/B_Polos Gelap_Infinix_Hot 11s NFC.jpg,B,B,0.8505
+B/B_Polos Gelap_Redmi_9 Pro.jpg,B,B,0.9302
+B/B_Polos Gelap_Redmi_Note 12 Pro.jpg,B,B,0.7521
+B/B_Polos Gelap_Samsung_A32.jpg,B,B,0.9399
+B/B_Polos Gelap_Samsung_Galaxy A32 5G.jpg,B,B,0.291
+B/B_Polos Terang_Infinix_Hot 11s NFC.jpg,B,B,0.9955
+B/B_Polos Terang_Redmi_9 Pro.jpg,B,B,0.9808
+B/B_Polos Terang_Redmi_Note 12 Pro.jpg,B,B,0.9986
+B/B_Polos Terang_Samsung_A32.jpg,B,B,0.4449
+B/B_Polos Terang_Samsung_Galaxy A32 5G.jpg,B,B,0.9896
+B/B_PolosHitam_Sony_A7C.JPG,B,B,0.8718
+B/B_PolosTerang_Sony_A7C.JPG,B,B,0.9343
+C/20240509_183146.jpg,C,C,0.9846
+C/20240509_183154.jpg,C,C,0.4625
+C/20240509_183205.jpg,C,C,0.9848
+C/20240509_183224.jpg,C,U,0.9441
+C/C_Baju Hitam_Samsung_A32.jpg,C,C,0.9821
+C/C_Baju_Infinix_Hot 11s NFC.jpg,C,C,1.0
+C/C_Baju_Redmi_9 Pro.jpg,C,C,1.0
+C/C_Baju_Redmi_Note 12 Pro.jpg,C,C,0.9964
+C/C_Baju_Samsung_Galaxy A32 5G.jpg,C,C,0.9757
+C/C_Baju_Sony_A7C.JPG,C,L,0.8912
+C/C_Batik_Sony_A7C.JPG,C,C,0.6789
+C/C_Bebas_Infinix_Hot 11s NFC.jpg,C,C,0.9998
+C/C_Bebas_Redmi_9 Pro.jpg,C,C,0.9504
+C/C_Bebas_Samsung_A32.jpg,C,C,0.6063
+C/C_Bebas_Samsung_Galaxy A32 5G.jpg,C,P,0.2203
+C/C_Polos Gelap_Infinix_Hot 11s NFC.jpg,C,C,0.9934
+C/C_Polos Gelap_Redmi_9 Pro.jpg,C,C,0.957
+C/C_Polos Gelap_Redmi_Note 12 Pro.jpg,C,C,0.9983
+C/C_Polos Gelap_Samsung_A32.jpg,C,C,0.7346
+C/C_Polos Gelap_Samsung_Galaxy A32 5G.jpg,C,U,0.7763
+C/C_Polos Terang_Infinix_Hot 11s NFC.jpg,C,C,0.9735
+C/C_Polos Terang_Redmi_9 Pro.jpg,C,C,0.9977
+C/C_Polos Terang_Redmi_Note 12 Pro.jpg,C,C,0.9963
+C/C_Polos Terang_Samsung_A32.jpg,C,C,0.9758
+C/C_Polos Terang_Samsung_Galaxy A32 5G.jpg,C,C,0.693
+C/C_PolosHitam_Sony_A7C.JPG,C,U,0.6355
+C/C_PolosTerang_Sony_A7C.JPG,C,C,0.9492
+C/D_Bebas_Redmi_Note 12 Pro.jpg,D,C,0.997
+D/20240509_183310.jpg,D,D,0.9618
+D/20240509_183319.jpg,D,D,0.9806
+D/20240509_183340.jpg,D,D,0.9773
+D/20240509_183353.jpg,D,D,0.9908
+D/D_Baju Hitam_Samsung_A32.jpg,D,Q,0.3818
+D/D_Baju_Infinix_Hot 11s NFC.jpg,D,D,0.956
+D/D_Baju_Redmi_9 Pro.jpg,D,D,0.8059
+D/D_Baju_Samsung_Galaxy A32 5G.jpg,D,D,0.6411
+D/D_Baju_Sony_A7C.JPG,D,D,0.9325
+D/D_Batik_Sony_A7C.JPG,D,S,0.9013
+D/D_Bebas_Infinix_Hot 11s NFC.jpg,D,D,0.9126
+D/D_Bebas_Redmi_9 Pro.jpg,D,P,0.5442
+D/D_Bebas_Samsung_A32.jpg,D,P,0.4535
+D/D_Bebas_Samsung_Galaxy A32 5G.jpg,D,D,0.2736
+D/D_Polos Gelap_Infinix_Hot 11s NFC.jpg,D,D,0.9971
+D/D_Polos Gelap_Redmi_9 Pro.jpg,D,D,0.8878
+D/D_Polos Gelap_Samsung_A32.jpg,D,D,0.8495
+D/D_Polos Gelap_Samsung_Galaxy A32 5G.jpg,D,D,0.9635
+D/D_Polos Terang_Infinix_Hot 11s NFC.jpg,D,D,0.9649
+D/D_Polos Terang_Redmi_9 Pro.jpg,D,D,0.993
+D/D_Polos Terang_Samsung_A32.jpg,D,D,0.5634
+D/D_Polos Terang_Samsung_Galaxy A32 5G.jpg,D,D,0.9079
+D/D_PolosHitam_Sony_A7C.JPG,D,D,0.9911
+D/D_PolosTerang_Sony_A7C.JPG,D,D,0.9944
+E/20240509_183416.jpg,E,V,0.9957
+E/20240509_183422.jpg,E,V,0.9595
+E/20240509_183434.jpg,E,V,0.8489
+E/20240509_183442.jpg,E,E,0.8889
+E/E_Baju Hitam_Samsung_A32.jpg,E,Z,0.6554
+E/E_Baju_Infinix_Hot 11s NFC.jpg,E,E,0.9996
+E/E_Baju_Redmi_9 Pro.jpg,E,E,0.9984
+E/E_Baju_Redmi_Note 12 Pro.jpg,E,E,0.998
+E/E_Baju_Samsung_Galaxy A32 5G.jpg,E,E,0.9077
+E/E_Baju_Sony_A7C.JPG,E,E,0.9432
+E/E_Batik_Sony_A7C.JPG,E,E,0.9999
+E/E_Bebas_Infinix_Hot 11s NFC.jpg,E,E,0.9878
+E/E_Bebas_Redmi_9 Pro.jpg,E,E,0.8852
+E/E_Bebas_Redmi_Note 12 Pro.jpg,E,E,0.979
+E/E_Bebas_Samsung_A32.jpg,E,V,0.9397
+E/E_Bebas_Samsung_Galaxy A32 5G.jpg,E,Z,0.3153
+E/E_Polos Gelap_Infinix_Hot 11s NFC.jpg,E,E,0.9856
+E/E_Polos Gelap_Redmi_9 Pro.jpg,E,E,0.985
+E/E_Polos Gelap_Redmi_Note 12 Pro.jpg,E,E,0.9932
+E/E_Polos Gelap_Samsung_A32.jpg,E,E,0.6734
+E/E_Polos Gelap_Samsung_Galaxy A32 5G.jpg,E,E,0.8522
+E/E_Polos Terang_Infinix_Hot 11s NFC.jpg,E,E,0.8202
+E/E_Polos Terang_Redmi_9 Pro.jpg,E,E,0.8171
+E/E_Polos Terang_Redmi_Note 12 Pro.jpg,E,E,0.9928
+E/E_Polos Terang_Samsung_A32.jpg,E,V,0.9576
+E/E_Polos Terang_Samsung_Galaxy A32 5G.jpg,E,E,0.9312
+E/E_PolosHitam_Sony_A7C.JPG,E,E,0.96
+E/E_PolosTerang_Sony_A7C.JPG,E,E,0.8524
+F/20240509_183520.jpg,F,F,0.9163
+F/20240509_183609.jpg,F,F,0.9681
+F/20240509_183624.jpg,F,F,0.9711
+F/20240509_183634.jpg,F,F,0.9648
+F/F_Baju Hitam_Samsung_A32.jpg,F,F,0.7713
+F/F_Baju_Infinix_Hot 11s NFC.jpg,F,F,0.9938
+F/F_Baju_Redmi_9 Pro.jpg,F,F,0.9964
+F/F_Baju_Redmi_Note 12 Pro.jpg,F,F,0.9967
+F/F_Baju_Samsung_Galaxy A32 5G.jpg,F,F,0.9517
+F/F_Baju_Sony_A7C.JPG,F,F,0.9795
+F/F_Batik_Sony_A7C.JPG,F,F,0.9835
+F/F_Bebas_Infinix_Hot 11s NFC.jpg,F,F,0.882
+F/F_Bebas_Redmi_9 Pro.jpg,F,F,0.7445
+F/F_Bebas_Redmi_Note 12 Pro.jpg,F,F,0.8474
+F/F_Bebas_Samsung_A32.jpg,F,F,0.825
+F/F_Bebas_Samsung_Galaxy A32 5G.jpg,F,S,0.4441
+F/F_Polos Gelap_Infinix_Hot 11s NFC.jpg,F,F,0.9763
+F/F_Polos Gelap_Redmi_9 Pro.jpg,F,F,0.845
+F/F_Polos Gelap_Redmi_Note 12 Pro.jpg,F,D,0.5024
+F/F_Polos Gelap_Redmi_Note 12 Pro_.jpg,F,F,0.967
+F/F_Polos Gelap_Samsung_A32.jpg,F,F,0.7985
+F/F_Polos Gelap_Samsung_Galaxy A32 5G.jpg,F,F,0.545
+F/F_Polos Terang_Infinix_Hot 11s NFC.jpg,F,F,0.9923
+F/F_Polos Terang_Redmi_9 Pro.jpg,F,F,0.9996
+F/F_Polos Terang_Samsung_A32.jpg,F,F,0.6593
+F/F_Polos Terang_Samsung_Galaxy A32 5G.jpg,F,B,0.9823
+F/F_PolosHitam_Sony_A7C.JPG,F,F,0.9981
+F/F_PolosTerang_Sony_A7C.JPG,F,F,0.9808
+G/20240509_183809.jpg,G,Z,0.735
+G/20240509_183926.jpg,G,G,0.9947
+G/20240509_183937.jpg,G,G,0.9446
+G/20240509_183955.jpg,G,G,0.9309
+G/G_Baju Hitam_Samsung_A32.jpg,G,G,0.825
+G/G_Baju_Infinix_Hot 11s NFC.jpg,G,G,0.9861
+G/G_Baju_Redmi_9 Pro.jpg,G,G,0.9962
+G/G_Baju_Redmi_Note 12 Pro.jpg,G,G,0.9997
+G/G_Baju_Samsung_Galaxy A32 5G.jpg,G,J,0.8968
+G/G_Baju_Sony_A7C.JPG,G,G,0.9995
+G/G_Batik_Sony_A7C.JPG,G,G,0.9424
+G/G_Bebas_Infinix_Hot 11s NFC.jpg,G,Y,0.8502
+G/G_Bebas_Redmi_9 Pro.jpg,G,G,0.9813
+G/G_Bebas_Redmi_Note 12 Pro.jpg,G,G,0.9775
+G/G_Bebas_Samsung_A32.jpg,G,G,0.9785
+G/G_Bebas_Samsung_Galaxy A32 5G.jpg,G,O,0.8114
+G/G_Polos Gelap_Redmi_9 Pro.jpg,G,G,0.9995
+G/G_Polos Gelap_Redmi_Note 12 Pro.jpg,G,K,0.8814
+G/G_Polos Gelap_Samsung_A32.jpg,G,G,0.9381
+G/G_Polos Gelap_Samsung_Galaxy A32 5G.jpg,G,G,0.9929
+G/G_Polos Terang_Infinix_Hot 11s NFC.jpg,G,G,0.9997
+G/G_Polos Terang_Redmi_9 Pro.jpg,G,G,0.9989
+G/G_Polos Terang_Redmi_Note 12 Pro.jpg,G,G,0.9937
+G/G_Polos Terang_Samsung_A32.jpg,G,G,0.3086
+G/G_Polos Terang_Samsung_Galaxy A32 5G.jpg,G,G,0.9666
+G/G_Polos gelap_Infinix_Hot 11s NFC.jpg,G,G,0.9907
+G/G_PolosHitam_Sony_A7C.JPG,G,G,0.9781
+G/G_PolosTerang_Sony_A7C.JPG,G,G,0.9997
+H/20240509_184035.jpg,H,H,0.9471
+H/20240509_184043.jpg,H,H,0.8158
+H/20240509_184055.jpg,H,H,0.9524
+H/20240509_184102.jpg,H,H,0.9686
+H/H_Baju Hitam_Samsung_A32.jpg,H,H,0.5708
+H/H_Baju_Infinix_Hot 11s NFC.jpg,H,H,0.9988
+H/H_Baju_Redmi_9 Pro.jpg,H,H,0.9996
+H/H_Baju_Redmi_Note 12 Pro.jpg,H,H,0.9923
+H/H_Baju_Samsung_Galaxy A32 5G.jpg,H,H,0.9707
+H/H_Baju_Sony_A7C.JPG,H,H,0.9874
+H/H_Batik_Sony_A7C.JPG,H,H,0.998
+H/H_Bebas_Infinix_Hot 11s NFC.jpg,H,H,0.5816
+H/H_Bebas_Redmi_9 Pro.jpg,H,H,0.8285
+H/H_Bebas_Redmi_Note 12 Pro.jpg,H,H,0.9181
+H/H_Bebas_Samsung_A32.jpg,H,D,0.9233
+H/H_Bebas_Samsung_Galaxy A32 5G.jpg,H,W,0.4204
+H/H_Polos Gelap_Redmi_9 Pro.jpg,H,H,0.9287
+H/H_Polos Gelap_Redmi_Note 12 Pro.jpg,H,K,0.797
+H/H_Polos Gelap_Samsung_A32.jpg,H,H,0.9743
+H/H_Polos Gelap_Samsung_Galaxy A32 5G.jpg,H,H,0.6862
+H/H_Polos Terang_Redmi_9 Pro.jpg,H,H,0.8896
+H/H_Polos Terang_Redmi_Note 12 Pro_.jpg,H,H,0.919
+H/H_Polos Terang_Samsung_A32.jpg,H,H,0.9887
+H/H_Polos Terang_Samsung_Galaxy A32 5G.jpg,H,Q,0.7375
+H/H_Polos gelap_Infinix_Hot 11s NFC.jpg,H,H,0.9704
+H/H_Polos terang_Infinix_Hot 11s NFC.jpg,H,H,0.9974
+H/H_PolosHitam_Sony_A7C.JPG,H,H,0.7869
+H/H_PolosTerang_Sony_A7C.JPG,H,H,0.8989
+I/20240509_184133.jpg,I,J,0.812
+I/20240509_184142.jpg,I,J,0.7557
+I/20240509_184154.jpg,I,J,0.9166
+I/20240509_184212.jpg,I,R,0.9033
+I/I_Baju Hitam_Samsung_A32.jpg,I,C,0.4737
+I/I_Baju_Infinix_Hot 11s NFC.jpg,I,I,0.7813
+I/I_Baju_Redmi_9 Pro.jpg,I,I,0.944
+I/I_Baju_Redmi_Note 12 Pro.jpg,I,I,0.5661
+I/I_Baju_Samsung_Galaxy A32 5G.jpg,I,I,0.6538
+I/I_Baju_Sony_A7C.JPG,I,I,0.9588
+I/I_Batik_Sony_A7C.JPG,I,U,0.2994
+I/I_Bebas_Infinix_Hot 11s NFC.jpg,I,I,0.8558
+I/I_Bebas_Redmi_9 Pro.jpg,I,I,0.9418
+I/I_Bebas_Redmi_Note 12 Pro.jpg,I,J,0.9092
+I/I_Bebas_Samsung_A32.jpg,I,Z,0.9578
+I/I_Bebas_Samsung_Galaxy A32 5G.jpg,I,C,0.6708
+I/I_Polos Gelap_Redmi_9 Pro.jpg,I,I,0.9642
+I/I_Polos Gelap_Redmi_Note 12 Pro.jpg,I,J,0.9403
+I/I_Polos Gelap_Samsung_A32.jpg,I,J,0.9891
+I/I_Polos Gelap_Samsung_Galaxy A32 5G.jpg,I,J,0.8933
+I/I_Polos Terang_Redmi_9 Pro.jpg,I,I,0.9859
+I/I_Polos Terang_Redmi_Note 12 Pro.jpg,I,I,0.4871
+I/I_Polos Terang_Samsung_A32.jpg,I,I,0.6653
+I/I_Polos Terang_Samsung_Galaxy A32 5G.jpg,I,C,0.7915
+I/I_Polos gelap_Infinix_Hot 11s NFC.jpg,I,I,0.6301
+I/I_Polos terang_Infinix_Hot 11s NFC.jpg,I,I,0.6079
+I/I_PolosHitam_Sony_A7C.JPG,I,V,0.5504
+I/I_PolosTerang_Sony_A7C.JPG,I,I,0.9278
+J/20240509_184302.jpg,J,J,0.9525
+J/20240509_184309.jpg,J,J,0.8982
+J/20240509_184321.jpg,J,J,0.9773
+J/20240509_184335.jpg,J,J,0.9781
+J/J_Baju Hitam_Samsung_A32.jpg,J,Z,0.7652
+J/J_Baju_Infinix_Hot 11s NFC.jpg,J,J,0.9947
+J/J_Baju_Redmi_9 Pro.jpg,J,J,0.9747
+J/J_Baju_Redmi_Note 12 Pro.jpg,J,J,0.9992
+J/J_Baju_Samsung_Galaxy A32 5G.jpg,J,J,0.6084
+J/J_Baju_Sony_A7C.JPG,J,J,0.9638
+J/J_Batik_Sony_A7C.JPG,J,J,0.8493
+J/J_Bebas_Infinix_Hot 11s NFC.jpg,J,C,0.6184
+J/J_Bebas_Redmi_9 Pro.jpg,J,Z,0.8369
+J/J_Bebas_Redmi_Note 12 Pro.jpg,J,C,0.7626
+J/J_Bebas_Samsung_A32.jpg,J,R,0.7256
+J/J_Bebas_Samsung_Galaxy A32 5G.jpg,J,C,0.6511
+J/J_Polos Gelap_Redmi_9 Pro.jpg,J,J,0.7949
+J/J_Polos Gelap_Redmi_Note 12 Pro.jpg,J,J,0.3753
+J/J_Polos Gelap_Samsung_A32.jpg,J,J,0.7637
+J/J_Polos Gelap_Samsung_Galaxy A32 5G.jpg,J,I,0.7368
+J/J_Polos Terang_Redmi_9 Pro.jpg,J,J,0.9999
+J/J_Polos Terang_Redmi_Note 12 Pro.jpg,J,C,0.673
+J/J_Polos Terang_Samsung_A32.jpg,J,J,0.5591
+J/J_Polos Terang_Samsung_Galaxy A32 5G.jpg,J,C,0.7569
+J/J_Polos gelap_Infinix_Hot 11s NFC.jpg,J,J,0.6542
+J/J_Polos terang_Infinix_Hot 11s NFC.jpg,J,J,0.8626
+J/J_PolosHitam_Sony_A7C.JPG,J,J,0.9061
+J/J_PolosTerang_Sony_A7C.JPG,J,J,0.6078
+K/20240509_184600.jpg,K,K,0.7686
+K/20240509_184613.jpg,K,K,0.8922
+K/20240509_184629.jpg,K,K,0.8379
+K/20240509_184638.jpg,K,K,0.9453
+K/K_Baju Hitam_Samsung_A32.jpg,K,C,0.3834
+K/K_Baju_Infinix_Hot 11s NFC.jpg,K,K,0.9994
+K/K_Baju_Redmi_9 Pro.jpg,K,K,0.5236
+K/K_Baju_Redmi_Note 12 Peo.jpg,K,K,0.9978
+K/K_Baju_Samsung_Galaxy A32 5G.jpg,K,T,0.4421
+K/K_Baju_Sony_A7C.JPG,K,K,0.9711
+K/K_Batik_Sony_A7C.JPG,K,K,0.9926
+K/K_Bebas_Infinix_Hot 11s NFC.jpg,K,K,0.9646
+K/K_Bebas_Redmi_9 Pro.jpg,K,Q,0.6406
+K/K_Bebas_Redmi_Note 12 Pro.jpg,K,K,0.7701
+K/K_Bebas_Samsung_A32.jpg,K,Y,0.5609
+K/K_Bebas_Samsung_Galaxy A32 5G.jpg,K,O,0.2669
+K/K_Polos Gelap_Redmi_9 Pro.jpg,K,K,0.5642
+K/K_Polos Gelap_Redmi_Note 12 Pro.jpg,K,K,0.9447
+K/K_Polos Gelap_Samsung_A32.jpg,K,N,0.8716
+K/K_Polos Gelap_Samsung_Galaxy A32 5G.jpg,K,F,0.3361
+K/K_Polos Terang_Redmi_9 Pro.jpg,K,P,0.6196
+K/K_Polos Terang_Redmi_Note 12 Pro.jpg,K,K,0.95
+K/K_Polos Terang_Samsung_A32.jpg,K,N,0.2861
+K/K_Polos Terang_Samsung_Galaxy A32 5G.jpg,K,B,0.3011
+K/K_Polos gelap_Infinix_Hot 11s NFC.jpg,K,K,0.848
+K/K_Polos terang_Infinix_Hot 11s NFC.jpg,K,K,0.826
+K/K_PolosHitam_Sony_A7C.JPG,K,K,0.9577
+K/K_PolosTerang_Sony_A7C.JPG,K,K,0.9813
+L/20240509_184658.jpg,L,L,0.9916
+L/20240509_184704.jpg,L,L,0.9727
+L/20240509_184714.jpg,L,L,0.6901
+L/20240509_184751.jpg,L,L,0.9964
+L/L_Baju Hitam_Samsung_A32.jpg,L,L,0.9181
+L/L_Baju_Infinix_Hot 11s NFC.jpg,L,L,0.9739
+L/L_Baju_Redmi_9 Pro.jpg,L,L,0.9994
+L/L_Baju_Redmi_Note 12 Pro.jpg,L,L,0.9953
+L/L_Baju_Samsung_Galaxy A32 5G.jpg,L,L,0.5787
+L/L_Baju_Sony_A7C.JPG,L,L,0.9931
+L/L_Batik_Sony_A7C.JPG,L,U,0.4416
+L/L_Bebas_Infinix_Hot 11s NFC.jpg,L,U,0.3743
+L/L_Bebas_Redmi_9 Pro.jpg,L,L,0.9968
+L/L_Bebas_Redmi_Note 12 Pro.jpg,L,L,0.9926
+L/L_Bebas_Samsung_A32.jpg,L,L,0.9998
+L/L_Bebas_Samsung_Galaxy A32 5G.jpg,L,R,0.3917
+L/L_Polos Gelap_Redmi_9 Pro.jpg,L,L,0.9575
+L/L_Polos Gelap_Redmi_Note 12 Pro.jpg,L,L,0.9992
+L/L_Polos Gelap_Samsung_A32.jpg,L,L,0.6172
+L/L_Polos Gelap_Samsung_Galaxy A32 5G.jpg,L,L,0.999
+L/L_Polos Terang_Redmi_9 Pro.jpg,L,L,0.9931
+L/L_Polos Terang_Redmi_Note 12 Pro.jpg,L,L,0.9878
+L/L_Polos Terang_Samsung_A32.jpg,L,L,0.9991
+L/L_Polos Terang_Samsung_Galaxy A32 5G.jpg,L,L,0.604
+L/L_Polos gelap_Infinix_Hot 11s NFC.jpg,L,L,0.9671
+L/L_Polos terang_Infinix_Hot 11s NFC.jpg,L,L,0.4067
+L/L_PolosHitam_Sony_A7C.JPG,L,L,0.9982
+L/L_PolosTerang_Sony_A7C.JPG,L,L,0.9769
+M/20240509_184846.jpg,M,M,0.6698
+M/20240509_184853.jpg,M,N,0.6515
+M/20240509_184906.jpg,M,M,0.6998
+M/20240509_184924.jpg,M,N,0.6772
+M/M_Baju Hitam_Samsung_A32.jpg,M,M,0.852
+M/M_Baju_Infinix_Hot 11s NFC.jpg,M,N,0.7531
+M/M_Baju_Redmi_9 Pro.jpg,M,M,0.5425
+M/M_Baju_Redmi_Note 12 Pro.jpg,M,N,0.5365
+M/M_Baju_Samsung_Galaxy A32 5G.jpg,M,V,0.3681
+M/M_Baju_Sony_A7C.JPG,M,M,0.9617
+M/M_Batik_Sony_A7C.JPG,M,M,0.584
+M/M_Bebas_Infinix_Hot 11s NFC.jpg,M,M,0.9556
+M/M_Bebas_Redmi_9 Pro.jpg,M,M,0.8796
+M/M_Bebas_Redmi_Note 12 Pro.jpg,M,M,0.8778
+M/M_Bebas_Samsung_A32.jpg,M,M,0.6885
+M/M_Bebas_Samsung_Galaxy A32 5G.jpg,M,M,0.4086
+M/M_Polos Gelap_Redmi_9 Pro.jpg,M,M,0.544
+M/M_Polos Gelap_Redmi_Note 12 Pro.jpg,M,M,0.717
+M/M_Polos Gelap_Samsung_A32.jpg,M,N,0.5407
+M/M_Polos Gelap_Samsung_Galaxy A32 5G.jpg,M,N,0.6375
+M/M_Polos Terang_Redmi_9 Pro.jpg,M,M,0.9428
+M/M_Polos Terang_Redmi_Note 12 Pro.jpg,M,M,0.9038
+M/M_Polos Terang_Samsung_A32.jpg,M,M,0.9112
+M/M_Polos Terang_Samsung_Galaxy A32 5G.jpg,M,N,0.8693
+M/M_Polos gelap_Infinix_Hot 11s NFC.jpg,M,M,0.914
+M/M_Polos terang_Infinix_Hot 11s NFC.jpg,M,M,0.954
+M/M_PolosHitam_Sony_A7C.JPG,M,M,0.9411
+M/M_PolosTerang_Sony_A7C.JPG,M,M,0.8904
+N/20240509_184947.jpg,N,N,0.9419
+N/20240509_184953.jpg,N,N,0.8992
+N/20240509_185004.jpg,N,N,0.5921
+N/20240509_185019.jpg,N,F,0.3953
+N/N_Baju Hitam_Samsung_A32.jpg,N,M,0.8656
+N/N_Baju_Infinix_Hot 11s NFC.jpg,N,N,0.9273
+N/N_Baju_Redmi_9 Pro.jpg,N,N,0.94
+N/N_Baju_Redmi_Note 12 Pro.jpg,N,N,0.9174
+N/N_Baju_Samsung_Galaxy A32 5G.jpg,N,N,0.6145
+N/N_Baju_Sony_A7C.JPG,N,N,0.6853
+N/N_Batik_Sony_A7C.JPG,N,N,0.9356
+N/N_Bebas_Infinix_Hot 11s NFC.jpg,N,N,0.6872
+N/N_Bebas_Redmi_9 Pro.jpg,N,M,0.6376
+N/N_Bebas_Redmi_Note 12 Pro.jpg,N,M,0.6452
+N/N_Bebas_Samsung_A32.jpg,N,N,0.7283
+N/N_Bebas_Samsung_Galaxy A32 5G.jpg,N,N,0.3105
+N/N_Polos Gelap_Redmi_9 Pro.jpg,N,N,0.8324
+N/N_Polos Gelap_Redmi_Note 12 Pro.jpg,N,N,0.7129
+N/N_Polos Gelap_Samsung_A32.jpg,N,N,0.8142
+N/N_Polos Gelap_Samsung_Galaxy A32 5G.jpg,N,N,0.9765
+N/N_Polos Terang_Redmi_9 Pro.jpg,N,N,0.7868
+N/N_Polos Terang_Redmi_Note 12 Pro.jpg,N,N,0.7019
+N/N_Polos Terang_Samsung_A32.jpg,N,M,0.7906
+N/N_Polos Terang_Samsung_Galaxy A32 5G.jpg,N,N,0.9842
+N/N_Polos gelap_Infinix_Hot 11s NFC.jpg,N,N,0.5584
+N/N_Polos terang_Infinix_Hot 11s NFC.jpg,N,M,0.5268
+N/N_PolosHitam_Sony_A7C.JPG,N,N,0.5733
+N/N_PolosTerang_Sony_A7C.JPG,N,N,0.6168
+O/20240509_185040.jpg,O,O,0.9974
+O/20240509_185047.jpg,O,O,0.9909
+O/20240509_185058.jpg,O,O,0.9889
+O/20240509_185152.jpg,O,W,0.3786
+O/O_Baju Hitam_Samsung_A32.jpg,O,C,0.5075
+O/O_Baju_Infinix_Hot 11s NFC.jpg,O,O,0.9963
+O/O_Baju_Redmi_9 Pro.jpg,O,C,0.8052
+O/O_Baju_Redmi_Note 12 Pro.jpg,O,O,0.9984
+O/O_Baju_Samsung_Galaxy A32 5G.jpg,O,C,0.9202
+O/O_Baju_Sony_A7C.JPG,O,O,0.9982
+O/O_Batik_Sony_A7C.JPG,O,O,0.9279
+O/O_Bebas_Infinix_Hot 11s NFC.jpg,O,O,0.9679
+O/O_Bebas_Redmi_9 Pro.jpg,O,U,0.4832
+O/O_Bebas_Redmi_Note 12 Pro.jpg,O,Z,0.6655
+O/O_Bebas_Samsung_A32.jpg,O,O,0.5882
+O/O_Bebas_Samsung_Galaxy A32 5G.jpg,O,O,0.9028
+O/O_Polos Gelap_Redmi_9 Pro.jpg,O,C,0.7937
+O/O_Polos Gelap_Redmi_Note 12 Pro.jpg,O,O,0.9945
+O/O_Polos Gelap_Samsung_A32.jpg,O,O,0.9931
+O/O_Polos Gelap_Samsung_Galaxy A32 5G.jpg,O,O,0.9918
+O/O_Polos Terang_Redmi_9 Pro.jpg,O,C,0.9565
+O/O_Polos Terang_Redmi_Note 12 Pro.jpg,O,O,0.914
+O/O_Polos Terang_Samsung_A32.jpg,O,O,0.4368
+O/O_Polos Terang_Samsung_Galaxy A32 5G.jpg,O,O,0.8942
+O/O_Polos gelap_Infinix_Hot 11s NFC.jpg,O,O,0.9958
+O/O_Polos terang_Infinix_Hot 11s NFC.jpg,O,O,0.4216
+O/O_PolosHitam_Sony_A7C.JPG,O,O,0.9903
+O/O_PolosTerang_Sony_A7C.JPG,O,O,0.9872
+P/20240509_185233.jpg,P,D,0.8541
+P/20240509_185239.jpg,P,D,0.9298
+P/20240509_185250.jpg,P,D,0.8845
+P/20240509_185306.jpg,P,T,0.4447
+P/P_Baju Hitam_Samsung_A32.jpg,P,B,0.2002
+P/P_Baju_Infinix_Hot 11s NFC.jpg,P,D,0.549
+P/P_Baju_Redmi_9 Pro.jpg,P,D,0.9786
+P/P_Baju_Redmi_Note 12 Pro.jpg,P,P,0.7928
+P/P_Baju_Samsung_Galaxy A32 5G.jpg,P,K,0.6548
+P/P_Baju_Sony_A7C.JPG,P,P,0.9021
+P/P_Batik_Sony_A7C.JPG,P,P,0.9753
+P/P_Bebas_Infinix_Hot 11s NFC.jpg,P,D,0.9476
+P/P_Bebas_Redmi_9 Pro.jpg,P,D,0.6352
+P/P_Bebas_Redmi_Note 12 Pro.jpg,P,Q,0.8566
+P/P_Bebas_Samsung_A32.jpg,P,S,0.6889
+P/P_Bebas_Samsung_Galaxy A32 5G.jpg,P,D,0.4307
+P/P_Polos Gelap_Redmi_9 Pro.jpg,P,P,0.904
+P/P_Polos Gelap_Redmi_Note 12 Pro.jpg,P,P,0.5837
+P/P_Polos Gelap_Samsung_A32.jpg,P,T,0.8299
+P/P_Polos Gelap_Samsung_Galaxy A32 5G.jpg,P,D,0.8468
+P/P_Polos Terang_Redmi_9 Pro.jpg,P,P,0.9013
+P/P_Polos Terang_Redmi_Note 12 Pro.jpg,P,P,0.907
+P/P_Polos Terang_Samsung_A32.jpg,P,D,0.594
+P/P_Polos Terang_Samsung_Galaxy A32 5G.jpg,P,T,0.4353
+P/P_Polos gelap_Infinix_Hot 11s NFC.jpg,P,D,0.6082
+P/P_Polos terang_Infinix_Hot 11s NFC.jpg,P,D,0.7523
+P/P_PolosHitam_Sony_A7C.JPG,P,P,0.5558
+P/P_PolosTerang_Sony_A7C.JPG,P,D,0.9545
+Q/20240509_185326.jpg,Q,Q,0.9807
+Q/20240509_185344.jpg,Q,Q,0.9691
+Q/20240509_185356.jpg,Q,X,0.4112
+Q/20240509_185424.jpg,Q,Q,0.9658
+Q/Q_Baju Hitam_Samsung_A32.jpg,Q,S,0.3311
+Q/Q_Baju_Infinix_Hot 11s NFC.jpg,Q,Q,0.9948
+Q/Q_Baju_Redmi_9 Pro.jpg,Q,Q,0.9079
+Q/Q_Baju_Redmi_Note 12 Pro.jpg,Q,Q,0.9936
+Q/Q_Baju_Samsung_Galaxy A32 5G.jpg,Q,V,0.3754
+Q/Q_Baju_Sony_A7C.JPG,Q,Q,0.9951
+Q/Q_Batik_Sony_A7C.JPG,Q,Q,0.9987
+Q/Q_Bebas_Infinix_Hot 11s NFC.jpg,Q,Q,0.8049
+Q/Q_Bebas_Redmi_9 Pro.jpg,Q,Q,0.6844
+Q/Q_Bebas_Redmi_Note 12 Pro.jpg,Q,Q,0.9979
+Q/Q_Bebas_Samsung_A32.jpg,Q,Q,0.727
+Q/Q_Bebas_Samsung_Galaxy A32 5G.jpg,Q,W,0.7848
+Q/Q_Polos Gelap_Redmi_9 Pro.jpg,Q,Q,0.951
+Q/Q_Polos Gelap_Redmi_Note 12 Pro.jpg,Q,Q,0.9993
+Q/Q_Polos Gelap_Samsung_A32.jpg,Q,Q,0.4804
+Q/Q_Polos Gelap_Samsung_Galaxy A32 5G.jpg,Q,Q,0.983
+Q/Q_Polos Terang_Redmi_9 Pro.jpg,Q,G,0.3637
+Q/Q_Polos Terang_Redmi_Note 12 Pro.jpg,Q,Q,0.9432
+Q/Q_Polos Terang_Samsung_A32.jpg,Q,Q,0.5878
+Q/Q_Polos Terang_Samsung_Galaxy A32 5G.jpg,Q,B,0.5133
+Q/Q_Polos gelap_Infinix_Hot 11s NFC.jpg,Q,O,0.4283
+Q/Q_Polos terang_Infinix_Hot 11s NFC.jpg,Q,Q,0.9101
+Q/Q_PolosHitam_Sony_A7C.JPG,Q,Q,0.9749
+Q/Q_PolosTerang_Sony_A7C.JPG,Q,Q,0.9474
+R/20240509_185454.jpg,R,R,0.9877
+R/20240509_185506.jpg,R,R,0.8756
+R/20240509_185515.jpg,R,O,0.6991
+R/20240509_185532.jpg,R,R,0.9423
+R/R_Baju Hitam_Samsung_A32.jpg,R,S,0.4563
+R/R_Baju_Infinix_Hot 11s NFC.jpg,R,C,0.7097
+R/R_Baju_Redmi_9 Pro.jpg,R,R,0.9875
+R/R_Baju_Redmi_Note 12 Pro.jpg,R,C,0.9991
+R/R_Baju_Samsung_Galaxy A32 5G.jpg,R,C,0.6581
+R/R_Baju_Sony_A7C.JPG,R,V,0.4391
+R/R_Batik_Sony_A7C.JPG,R,R,0.9556
+R/R_Bebas_Infinix_Hot 11s NFC.jpg,R,C,0.9104
+R/R_Bebas_Redmi_9 Pro.jpg,R,R,0.9391
+R/R_Bebas_Redmi_Note 12 Pro.jpg,R,C,0.9776
+R/R_Bebas_Samsung_A32.jpg,R,R,0.9675
+R/R_Bebas_Samsung_Galaxy A32 5G.jpg,R,W,0.4139
+R/R_Polos Gelap_Redmi_9 Pro.jpg,R,R,0.6775
+R/R_Polos Gelap_Redmi_Note 12 Pro.jpg,R,C,0.9882
+R/R_Polos Gelap_Samsung_A32.jpg,R,I,0.5081
+R/R_Polos Gelap_Samsung_Galaxy A32 5G.jpg,R,R,0.9923
+R/R_Polos Terang_Redmi_9 Pro.jpg,R,C,0.6793
+R/R_Polos Terang_Redmi_Note 12 Pro.jpg,R,C,0.9852
+R/R_Polos Terang_Samsung_A32.jpg,R,Z,0.592
+R/R_Polos Terang_Samsung_Galaxy A32 5G.jpg,R,R,0.915
+R/R_Polos gelap_Infinix_Hot 11s NFC.jpg,R,C,0.8875
+R/R_Polos terang_Infinix_Hot 11s NFC.jpg,R,C,0.9968
+R/R_PolosHitam_Sony_A7C.JPG,R,R,0.9886
+R/R_PolosTerang_Sony_A7C.JPG,R,R,0.9348
+S/20240509_185610.jpg,S,S,0.9095
+S/20240509_185617.jpg,S,S,0.9983
+S/20240509_185635.jpg,S,Q,0.8499
+S/20240509_185642.jpg,S,D,0.5785
+S/S_ Polos Terang_Redmi_Note 12 Pro.jpg,S,S,0.931
+S/S_Baju Hitam_Samsung_A32.jpg,S,S,0.6076
+S/S_Baju_Infinix_Hot 11s NFC.jpg,S,S,0.8543
+S/S_Baju_Redmi_9 Pro.jpg,S,S,0.969
+S/S_Baju_Redmi_Note 12 Pro.jpg,S,S,0.9694
+S/S_Baju_Samsung_Galaxy A32 5G.jpg,S,S,0.9663
+S/S_Baju_Sony_A7C.JPG,S,S,0.9317
+S/S_Batik_Sony_A7C.JPG,S,S,0.8818
+S/S_Bebas_Infinix_Hot 11s NFC.jpg,S,S,0.8372
+S/S_Bebas_Redmi_9 Pro.jpg,S,S,0.9854
+S/S_Bebas_Redmi_Note 12 Pro.jpg,S,S,0.9412
+S/S_Bebas_Samsung_A32.jpg,S,S,0.638
+S/S_Bebas_Samsung_Galaxy A32 5G.jpg,S,S,0.4426
+S/S_Polos Gelap_Redmi_9 Pro.jpg,S,S,0.747
+S/S_Polos Gelap_Redmi_Note 12 Pro.jpg,S,S,0.9228
+S/S_Polos Gelap_Samsung_A32.jpg,S,D,0.9513
+S/S_Polos Gelap_Samsung_Galaxy A32 5G.jpg,S,S,0.9102
+S/S_Polos Terang_Redmi_9 Pro.jpg,S,S,0.9968
+S/S_Polos Terang_Samsung_A32.jpg,S,P,0.5778
+S/S_Polos Terang_Samsung_Galaxy A32 5G.jpg,S,F,0.6404
+S/S_Polos gelap_Infinix_Hot 11s NFC.jpg,S,S,0.9777
+S/S_Polos terang_Infinix_Hot 11s NFC.jpg,S,S,0.9931
+S/S_PolosHitam_Sony_A7C.JPG,S,S,0.9962
+S/S_PolosTerang_Sony_A7C.JPG,S,Q,0.333
+T/20240509_185700.jpg,T,T,0.9583
+T/20240509_185708.jpg,T,T,0.9886
+T/20240509_185721.jpg,T,T,0.9988
+T/20240509_185728.jpg,T,H,0.617
+T/T_Baju Hitam_Samsung_A32.jpg,T,Z,0.2769
+T/T_Baju_Infinix_Hot 11s NFC.jpg,T,T,0.9496
+T/T_Baju_Redmi_9 Pro.jpg,T,T,0.9886
+T/T_Baju_Redmi_Note 12 Pro_.jpg,T,T,0.5451
+T/T_Baju_Samsung_Galaxy A32 5G.jpg,T,T,0.9524
+T/T_Baju_Sony_A7C.JPG,T,T,0.9873
+T/T_Batik_Sony_A7C.JPG,T,T,0.9631
+T/T_Bebas_Infinix_Hot 11s NFC.jpg,T,T,0.9976
+T/T_Bebas_Redmi_9 Pro.jpg,T,T,0.955
+T/T_Bebas_Redmi_Note 12 Pro_.jpg,T,T,0.934
+T/T_Bebas_Samsung_A32.jpg,T,Q,0.6458
+T/T_Bebas_Samsung_Galaxy A32 5G.jpg,T,S,0.4982
+T/T_Polos Gelap_Redmi_9 Pro.jpg,T,T,0.9373
+T/T_Polos Gelap_Samsung_A32.jpg,T,Z,0.4767
+T/T_Polos Gelap_Samsung_Galaxy A32 5G.jpg,T,T,0.5631
+T/T_Polos Terang_Redmi_9 Pro.jpg,T,T,0.9726
+T/T_Polos Terang_Redmi_Note 12 Pro.jpg,T,T,0.9876
+T/T_Polos Terang_Redmi_Note 12 Pro_.jpg,T,T,0.8844
+T/T_Polos Terang_Samsung_A32.jpg,T,T,0.397
+T/T_Polos Terang_Samsung_Galaxy A32 5G.jpg,T,T,0.8011
+T/T_Polos gelap_Infinix_Hot 11s NFC.jpg,T,T,0.9967
+T/T_Polos terang_Infinix_Hot 11s NFC.jpg,T,D,0.8888
+T/T_PolosHitam_Sony_A7C.JPG,T,T,0.9982
+T/T_PolosTerang_Sony_A7C.JPG,T,F,0.6972
+U/20240509_185750.jpg,U,U,0.9204
+U/20240509_185801.jpg,U,U,0.9668
+U/20240509_185815.jpg,U,U,0.9766
+U/20240509_185842.jpg,U,C,0.5698
+U/U_Baju Hitam_Samsung_A32.jpg,U,C,0.2985
+U/U_Baju_Infinix_Hot 11s NFC.jpg,U,C,0.67
+U/U_Baju_Redmi_9 Pro.jpg,U,C,0.995
+U/U_Baju_Redmi_Note 12 Pro.jpg,U,C,0.8411
+U/U_Baju_Samsung_Galaxy A32 5G.jpg,U,C,0.626
+U/U_Baju_Sony_A7C.JPG,U,U,0.5921
+U/U_Batik_Sony_A7C.JPG,U,U,0.8869
+U/U_Bebas_Infinix_Hot 11s NFC.jpg,U,C,0.7955
+U/U_Bebas_Redmi_9 Pro.jpg,U,U,0.5851
+U/U_Bebas_Redmi_Note 12 Pro.jpg,U,U,0.8696
+U/U_Bebas_Samsung_A32.jpg,U,Z,0.991
+U/U_Bebas_Samsung_Galaxy A32 5G.jpg,U,L,0.437
+U/U_Polos Gelap_Redmi_9 Pro.jpg,U,U,0.7692
+U/U_Polos Gelap_Redmi_Note 12 Pro.jpg,U,C,0.9471
+U/U_Polos Gelap_Samsung_A32.jpg,U,R,0.3581
+U/U_Polos Gelap_Samsung_Galaxy A32 5G.jpg,U,U,0.4404
+U/U_Polos Terang_Redmi_9 Pro.jpg,U,U,0.7556
+U/U_Polos Terang_Redmi_Note 12 Pro.jpg,U,C,0.6797
+U/U_Polos Terang_Samsung_A32.jpg,U,U,0.8642
+U/U_Polos Terang_Samsung_Galaxy A32 5G.jpg,U,U,0.3616
+U/U_Polos gelap_Infinix_Hot 11s NFC.jpg,U,C,0.8894
+U/U_Polos terang_Infinix_Hot 11s NFC.jpg,U,U,0.7306
+U/U_PolosHitam_Sony_A7C.JPG,U,U,0.9888
+U/U_PolosTerang_Sony_A7C.JPG,U,U,0.5312
+V/20240509_185907.jpg,V,V,0.9946
+V/20240509_185911.jpg,V,V,0.995
+V/20240509_185922.jpg,V,E,0.6449
+V/20240509_185935.jpg,V,V,0.9755
+V/V_Baju Hitam_Samsung_A32.jpg,V,W,0.1693
+V/V_Baju_Infinix_Hot 11s NFC.jpg,V,V,0.9812
+V/V_Baju_Redmi_9 Pro.jpg,V,V,0.9869
+V/V_Baju_Redmi_Note 12 Pro.jpg,V,U,0.9273
+V/V_Baju_Samsung_Galaxy A32 5G.jpg,V,V,0.9952
+V/V_Baju_Sony_A7C.JPG,V,V,0.989
+V/V_Batik_Sony_A7C.JPG,V,V,0.961
+V/V_Bebas_Infinix_Hot 11s NFC.jpg,V,V,0.9373
+V/V_Bebas_Redmi_9 Pro.jpg,V,V,0.6574
+V/V_Bebas_Redmi_Note 12 Pro.jpg,V,V,0.8558
+V/V_Bebas_Samsung_A32.jpg,V,V,0.6556
+V/V_Bebas_Samsung_Galaxy A32 5G.jpg,V,Z,0.2626
+V/V_Polos Gelap_Redmi_9 Pro.jpg,V,V,0.8485
+V/V_Polos Gelap_Redmi_Note 12 Pro.jpg,V,V,0.9986
+V/V_Polos Gelap_Samsung_A32.jpg,V,E,0.9072
+V/V_Polos Gelap_Samsung_Galaxy A32 5G.jpg,V,V,0.8408
+V/V_Polos Terang_Redmi_9 Pro.jpg,V,O,0.7728
+V/V_Polos Terang_Redmi_Note 12 Pro.jpg,V,V,0.966
+V/V_Polos Terang_Samsung_A32.jpg,V,U,0.5336
+V/V_Polos Terang_Samsung_Galaxy A32 5G.jpg,V,V,0.9819
+V/V_Polos gelap_Infinix_Hot 11s NFC.jpg,V,V,0.9888
+V/V_Polos terang_Infinix_Hot 11s NFC.jpg,V,V,0.5919
+V/V_PolosHitam_Sony_A7C.JPG,V,V,0.999
+V/V_PolosTerang_Sony_A7C.JPG,V,V,0.9901
+W/20240509_190011.jpg,W,W,0.9628
+W/20240509_190018.jpg,W,W,0.9903
+W/20240509_190029.jpg,W,W,0.8141
+W/20240509_190035.jpg,W,H,0.6328
+W/W_Baju Hitam_Samsung_A32.jpg,W,W,0.7549
+W/W_Baju_Infinix_Hot 11s NFC.jpg,W,W,0.982
+W/W_Baju_Redmi_9 Pro.jpg,W,W,0.7413
+W/W_Baju_Redmi_Note 12 Pro.jpg,W,W,0.9983
+W/W_Baju_Samsung_Galaxy A32 5G.jpg,W,W,0.8576
+W/W_Baju_Sony_A7C.JPG,W,W,0.9785
+W/W_Batik_Sony_A7C.JPG,W,W,0.9996
+W/W_Bebas_Infinix_Hot 11s NFC.jpg,W,W,0.9989
+W/W_Bebas_Redmi_9 Pro.jpg,W,X,0.6284
+W/W_Bebas_Redmi_Note 12 Pro.jpg,W,W,0.9876
+W/W_Bebas_Samsung_A32.jpg,W,W,0.9788
+W/W_Bebas_Samsung_Galaxy A32 5G.jpg,W,W,0.8995
+W/W_Polos Gelap_Redmi_9 Pro.jpg,W,V,0.5261
+W/W_Polos Gelap_Redmi_Note 12 Pro.jpg,W,W,0.9947
+W/W_Polos Gelap_Samsung_A32.jpg,W,W,0.9967
+W/W_Polos Gelap_Samsung_Galaxy A32 5G.jpg,W,W,0.5137
+W/W_Polos Terang_Redmi_9 Pro.jpg,W,W,0.9994
+W/W_Polos Terang_Redmi_Note 12 Pro.jpg,W,D,0.4144
+W/W_Polos Terang_Samsung_A32.jpg,W,W,0.9979
+W/W_Polos Terang_Samsung_Galaxy A32 5G.jpg,W,W,0.5777
+W/W_Polos gelap_Infinix_Hot 11s NFC.jpg,W,W,0.9981
+W/W_Polos terang_Infinix_Hot 11s NFC.jpg,W,W,0.8857
+W/W_PolosHitam_Sony_A7C.JPG,W,W,0.9991
+W/W_PolosTerang_Sony_A7C.JPG,W,W,0.9987
+X/20240509_190100.jpg,X,X,0.9997
+X/20240509_190105.jpg,X,X,0.9999
+X/20240509_190116.jpg,X,X,0.9727
+X/20240509_190121.jpg,X,X,0.9859
+X/X_Baju Hitam_Samsung_A32.jpg,X,A,0.781
+X/X_Baju_Infinix_Hot 11s NFC.jpg,X,X,0.9998
+X/X_Baju_Redmi_9 Pro.jpg,X,X,0.9984
+X/X_Baju_Redmi_Note 12 Pro.jpg,X,X,0.8715
+X/X_Baju_Samsung_Galaxy A32 5G.jpg,X,V,0.6141
+X/X_Baju_Sony_A7C.JPG,X,X,0.5291
+X/X_Batik_Sony_A7C.JPG,X,H,0.334
+X/X_Bebas_Infinix_Hot 11s NFC.jpg,X,X,0.9787
+X/X_Bebas_Redmi_9 Pro.jpg,X,X,0.8469
+X/X_Bebas_Redmi_Note 12 Pro.jpg,X,Q,0.5163
+X/X_Bebas_Samsung_A32.jpg,X,X,0.8251
+X/X_Bebas_Samsung_Galaxy A32 5G.jpg,X,B,0.2092
+X/X_Gelap_Redmi_Note 12 Pro.jpg,X,X,0.8813
+X/X_Polos Gelap_Redmi_9 Pro.jpg,X,X,0.926
+X/X_Polos Gelap_Samsung_A32.jpg,X,X,0.9848
+X/X_Polos Gelap_Samsung_Galaxy A32 5G.jpg,X,X,0.9316
+X/X_Polos Terang_Redmi_9 Pro.jpg,X,X,0.9997
+X/X_Polos Terang_Redmi_Note 12 Pro.jpg,X,F,0.6762
+X/X_Polos Terang_Samsung_A32.jpg,X,X,0.9986
+X/X_Polos Terang_Samsung_Galaxy A32 5G.jpg,X,Q,0.6002
+X/X_Polos gelap_Infinix_Hot 11s NFC.jpg,X,X,0.9999
+X/X_Polos terang_Infinix_Hot 11s NFC.jpg,X,X,0.9999
+X/X_PolosHitam_Sony_A7C.JPG,X,X,1.0
+X/X_PolosTerang_Sony_A7C.JPG,X,X,0.9841
+Y/20240509_190204.jpg,Y,W,0.3184
+Y/20240509_190214.jpg,Y,Y,0.3895
+Y/20240509_190226.jpg,Y,X,0.9599
+Y/20240509_190233.jpg,Y,Y,0.9447
+Y/Y_Baju Hitam_Samsung_A32.jpg,Y,Y,0.5883
+Y/Y_Baju_Infinix_Hot 11s NFC.jpg,Y,L,0.6383
+Y/Y_Baju_Redmi_9 Pro.jpg,Y,V,0.6583
+Y/Y_Baju_Redmi_Note 12 Pro.jpg,Y,L,0.8172
+Y/Y_Baju_Samsung_Galaxy A32 5G.jpg,Y,C,0.8125
+Y/Y_Baju_Sony_A7C.JPG,Y,H,0.9828
+Y/Y_Batik_Sony_A7C.JPG,Y,Y,0.8327
+Y/Y_Bebas_Infinix_Hot 11s NFC.jpg,Y,Y,0.9929
+Y/Y_Bebas_Redmi_9 Pro.jpg,Y,R,0.699
+Y/Y_Bebas_Redmi_Note 12 Pro.jpg,Y,K,0.3591
+Y/Y_Bebas_Samsung_A32.jpg,Y,V,0.5758
+Y/Y_Bebas_Samsung_Galaxy A32 5G.jpg,Y,W,0.7159
+Y/Y_Polos Gelap_Redmi_9 Pro.jpg,Y,Y,0.9299
+Y/Y_Polos Gelap_Redmi_Note 12 Pro.jpg,Y,Y,0.5618
+Y/Y_Polos Gelap_Samsung_A32.jpg,Y,Y,0.9882
+Y/Y_Polos Gelap_Samsung_Galaxy A32 5G.jpg,Y,Y,0.9857
+Y/Y_Polos Terang_Redmi_9 Pro.jpg,Y,Y,0.8742
+Y/Y_Polos Terang_Redmi_Note 12 Pro.jpg,Y,Y,0.6145
+Y/Y_Polos Terang_Samsung_A32.jpg,Y,Y,0.8585
+Y/Y_Polos Terang_Samsung_Galaxy A32 5G.jpg,Y,Y,0.6311
+Y/Y_Polos gelap_Infinix_Hot 11s NFC.jpg,Y,Y,0.9789
+Y/Y_Polos terang_Infinix_Hot 11s NFC.jpg,Y,F,0.5184
+Y/Y_PolosHitam_Sony_A7C.JPG,Y,Y,0.9836
+Y/Y_PolosTerang_Sony_A7C.JPG,Y,Y,0.9788
+Z/20240509_190304.jpg,Z,Z,0.9987
+Z/20240509_190316.jpg,Z,Z,0.929
+Z/20240509_190332.jpg,Z,Z,0.9972
+Z/20240509_190348.jpg,Z,Z,0.9987
+Z/Z_Baju Hitam_Samsung_A32.jpg,Z,Z,0.8433
+Z/Z_Baju_Infinix_Hot 11s NFC.jpg,Z,Z,0.9982
+Z/Z_Baju_Redmi_9 Pro.jpg,Z,Z,0.9964
+Z/Z_Baju_Redmi_Note 12 Pro.jpg,Z,Z,0.969
+Z/Z_Baju_Samsung_Galaxy A32 5G.jpg,Z,Z,0.8166
+Z/Z_Baju_Sony_A7C.JPG,Z,Z,1.0
+Z/Z_Batik_Sony_A7C.JPG,Z,Z,1.0
+Z/Z_Bebas_Infinix_Hot 11s NFC.jpg,Z,Z,0.9982
+Z/Z_Bebas_Redmi_9 Pro.jpg,Z,Z,0.9987
+Z/Z_Bebas_Redmi_Note 12 Pro.jpg,Z,Z,0.9997
+Z/Z_Bebas_Samsung_A32.jpg,Z,Z,0.9646
+Z/Z_Bebas_Samsung_Galaxy A32 5G.jpg,Z,T,0.565
+Z/Z_Polos Gelap_Redmi_9 Pro.jpg,Z,Z,0.9994
+Z/Z_Polos Gelap_Redmi_Note 12 Pro.jpg,Z,Z,0.9999
+Z/Z_Polos Gelap_Samsung_A32.jpg,Z,Z,0.8183
+Z/Z_Polos Gelap_Samsung_Galaxy A32 5G.jpg,Z,Z,0.9993
+Z/Z_Polos Terang_Redmi_9 Pro.jpg,Z,Z,1.0
+Z/Z_Polos Terang_Redmi_Note 12 Pro.jpg,Z,Z,0.9727
+Z/Z_Polos Terang_Samsung_A32.jpg,Z,Z,0.5784
+Z/Z_Polos Terang_Samsung_Galaxy A32 5G.jpg,Z,Z,0.9988
+Z/Z_Polos gelap_Infinix_Hot 11s NFC.jpg,Z,Z,0.9999
+Z/Z_Polos terang_Infinix_Hot 11s NFC.jpg,Z,Z,0.9865
+Z/Z_PolosHitam_Sony_A7C.JPG,Z,Z,0.9995
+Z/Z_PolosTerang_Sony_A7C.JPG,Z,Z,1.0
