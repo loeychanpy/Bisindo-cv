@@ -576,7 +576,14 @@ def eval_only(cfg: dict, split_name: str = "test") -> dict:
     metrics = json.loads((out / "metrics.json").read_text(encoding="utf-8"))
     split_md5 = hashlib.md5(Path(cfg["split_path"]).read_bytes()).hexdigest()
     if metrics.get("split_md5") != split_md5:
-        raise ValueError(f"Split berbeda dari saat run dilatih (md5 {metrics.get('split_md5')} vs {split_md5}).")
+        cfg_run = json.loads((out / "config_used.json").read_text(encoding="utf-8")) \
+            if (out / "config_used.json").exists() else {}
+        match = [p.relative_to(ROOT).as_posix() for p in sorted((ROOT / "configs").glob("config*.yaml"))
+                 if (_load_yaml(p).get("split_path") or "") == cfg_run.get("split_path")]
+        hint = (f" Run ini dilatih dengan {cfg_run.get('split_path')}; tambahkan --config {match[0]}."
+                if match else f" Run ini dilatih dengan {cfg_run.get('split_path', '?')}.")
+        raise SystemExit(f"Split berbeda dari saat run dilatih (md5 {metrics.get('split_md5')} vs {split_md5})."
+                         + hint)
 
     set_seed(cfg["seed"])
     ckpt = torch.load(out / "best.pth", map_location=device, weights_only=True)

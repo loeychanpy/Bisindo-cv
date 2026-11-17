@@ -86,7 +86,8 @@ def main():
     out = _abs(a.results_dir) / "transfer" / a.run
     pred_csv = out / f"predictions_{a.split}.csv"
     if not pred_csv.exists():
-        sys.exit(f"{pred_csv} tidak ada. Evaluasi dulu: python src/train_transfer.py --eval-only --run {a.run}")
+        sys.exit(f"{pred_csv} tidak ada. Evaluasi dulu: python src/train_transfer.py --config {a.config} "
+                 f"--eval-only --run {a.run}")
 
     pred = pd.read_csv(pred_csv)
     split = pd.read_csv(_abs(cfg["split_path"]))
