@@ -329,7 +329,9 @@ def predict(model, loader, device, amp: bool = False) -> dict:
 
 @torch.no_grad()
 def measure_latency(model, df_split, root, tf, device, draft_size, seed, n=50, warmup=5) -> dict:
-    """Median ms per gambar: total (decode + preprocess + forward) dan forward saja, batch 1."""
+    """Median ms per gambar: total (decode + preprocess + forward) dan forward saja, batch 1.
+    Sama dengan cara demo/app memprediksi: inference_mode, model eager (tanpa TorchScript).
+    Angka paling bersih dari src/benchmark_latency.py (tanpa proses DataLoader yang masih hidup)."""
     model.eval()
     paths = df_split["path"].tolist()
     order = np.random.RandomState(seed).permutation(len(paths))[: n + warmup]
@@ -338,7 +340,8 @@ def measure_latency(model, df_split, root, tf, device, draft_size, seed, n=50, w
         t0 = time.perf_counter()
         x = tf(load_rgb(root / paths[idx], draft_size)).unsqueeze(0).to(device)
         t1 = time.perf_counter()
-        model(x)
+        with torch.inference_mode():
+            model(x)
         if device.type == "cuda":
             torch.cuda.synchronize()
         t2 = time.perf_counter()
@@ -536,8 +539,10 @@ def run(cfg: dict, evaluate_test: bool = True) -> dict:
     df_s = df[df["split"] == split_name].reset_index(drop=True)
     summary = _report(split_name, res, df_s, out)
     _save_samples(df_s, res, root, cfg["draft_size"], cfg["seed"], out / f"sample_predictions_{split_name}.png")
+    loaders = None  # hentikan worker DataLoader (persistent) agar tidak berebut CPU saat mengukur latensi
+    # draft = img_size: sama dengan demo/app (dekode JPEG langsung ke >= 224 px)
     lat = measure_latency(model, df_s, root, get_transforms(False, cfg["img_size"]), device,
-                          cfg["draft_size"], cfg["seed"])
+                          cfg["img_size"], cfg["seed"])
 
     metrics = dict(
         run_name=cfg["run_name"], mode=cfg["mode"], best_epoch=best_epoch, epochs_run=len(rows),

@@ -112,7 +112,7 @@ def predict_paths(run: str, dev: str, split_md5: str, data_dir: str, paths: tupl
     out = {}
     for p in paths:
         try:
-            img = load_rgb(ROOT / data_dir / p, 448)
+            img = load_rgb(ROOT / data_dir / p, inf.DRAFT)
         except (OSError, FileNotFoundError):
             continue
         top, _ = inf.demo.predict_topk(mdl, tfm, img, torch.device(dev), k=1)
@@ -198,7 +198,7 @@ with tab_up:
         results = []
         for f in files:
             try:
-                img = inf.prepare_image(f, draft=1024 if use_crop else 448)
+                img = inf.prepare_image(f, draft=inf.DRAFT_CROP if use_crop else inf.DRAFT)
                 res, err = classify(img)
             except inf.InputImageError as e:
                 img, res, err = None, None, str(e)
@@ -229,7 +229,7 @@ with tab_cam:
             st.info("Ambil foto dari kamera. Bila kamera tidak tersedia, pakai tab *Unggah Gambar*.")
         else:
             try:
-                img = inf.prepare_image(shot, mirror=mirror, draft=1024 if use_crop else 448)
+                img = inf.prepare_image(shot, mirror=mirror, draft=inf.DRAFT_CROP if use_crop else inf.DRAFT)
                 res, err = classify(img)
             except inf.InputImageError as e:
                 res, err = None, str(e)

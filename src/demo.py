@@ -24,6 +24,7 @@ import argparse
 import json
 import sys
 import time
+import warnings
 from collections import Counter, deque
 from pathlib import Path
 
@@ -59,15 +60,40 @@ class HandCropper:
         return img.crop(box), box, ms
 
 
-def load_model(run_dir: Path, device: torch.device):
+def optimize_for_device(model: torch.nn.Module, img_size: int, device: torch.device) -> torch.nn.Module:
+    """GPU: TorchScript trace + freeze (Conv+BN dilebur, lebih sedikit kernel; batch 1 ~5 ms -> ~2 ms di RTX 3050).
+    CPU: model eager dikembalikan apa adanya (freeze tidak mempercepat di CPU).
+    Bila gagal atau keluaran berbeda dari model asli, kembali ke model eager."""
+    if device.type != "cuda":
+        return model
+    try:
+        x = torch.randn(1, 3, img_size, img_size, device=device)
+        # torch.jit sudah deprecated, tetapi penggantinya (torch.compile) butuh Triton yang tidak ada di Windows
+        with torch.inference_mode(), warnings.catch_warnings():
+            warnings.simplefilter("ignore", FutureWarning)
+            ts = torch.jit.optimize_for_inference(torch.jit.freeze(torch.jit.trace(model, x)))
+            for _ in range(3):  # pemanasan: optimisasi JIT terjadi di panggilan awal
+                out_ts = ts(x)
+            if not torch.allclose(out_ts.float(), model(x).float(), atol=1e-3, rtol=1e-3):
+                raise RuntimeError("keluaran TorchScript berbeda dari model asli")
+        return ts
+    except Exception as e:  # noqa: BLE001 - optimisasi opsional, jangan gagalkan demo
+        print(f"[info] optimisasi TorchScript dilewati ({type(e).__name__}: {e}); memakai model biasa.")
+        return model
+
+
+def load_model(run_dir: Path, device: torch.device, optimize: bool = True):
     cfg = json.loads((run_dir / "config_used.json").read_text(encoding="utf-8"))
     ckpt = torch.load(run_dir / "best.pth", map_location=device, weights_only=True)
     model = build_model(cfg["mode"], cfg.get("unfreeze_blocks", 2), pretrained=False)
     model.load_state_dict(ckpt["state_dict"])
-    return model.to(device).eval(), cfg["img_size"], ckpt
+    model = model.to(device).eval()
+    if optimize:
+        model = optimize_for_device(model, cfg["img_size"], device)
+    return model, cfg["img_size"], ckpt
 
 
-@torch.no_grad()
+@torch.inference_mode()
 def predict_topk(model, tf, img: Image.Image, device, k: int = 3):
     """Return [(idx, prob), ...] top-k dan latency (ms) untuk preprocess + forward."""
     t0 = time.perf_counter()
@@ -104,10 +130,11 @@ class LetterStabilizer:
         return None
 
 
-def run_images(model, tf, device, paths, threshold, cropper=None):
+def run_images(model, tf, device, paths, threshold, cropper=None, img_size: int = 224):
     for p in paths:
         try:
-            img = load_rgb(p, 1024 if cropper else 448)
+            # tanpa crop: dekode JPEG langsung ke >= img_size (lebih cepat, akurasi val sama dengan 448)
+            img = load_rgb(p, 1024 if cropper else img_size)
         except (FileNotFoundError, OSError) as e:
             print(f"{Path(p).name}: gagal dibuka ({type(e).__name__}), dilewati")
             continue
@@ -220,7 +247,7 @@ def main(argv=None):
         print("[PERINGATAN] run ini dilatih tanpa crop; --crop mengubah distribusi masukan.")
     cropper = HandCropper() if a.crop else None
     if a.image:
-        run_images(model, tf, device, a.image, a.threshold, cropper)
+        run_images(model, tf, device, a.image, a.threshold, cropper, img_size)
     if a.webcam:
         word = run_webcam(model, tf, device, a, cropper)
         print(f"Kata terakhir: {word!r}")

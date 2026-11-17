@@ -21,6 +21,10 @@ from dataset import CLASSES, get_transforms  # noqa: E402
 
 RESULTS_DIR = ROOT / "results" / "transfer"   # dapat di-monkeypatch pada tes
 MIN_SIDE = 64
+# JPEG didekode langsung ke >= 224 px (sisi input model). Foto HP ~2 MB: ~24 ms (draft 448) -> ~18 ms,
+# akurasi val tidak berubah (cek: 98% prediksi identik, akurasi 0.806 vs 0.807).
+DRAFT = 224
+DRAFT_CROP = 1024  # crop tangan butuh resolusi lebih tinggi agar potongan tangan tetap >= 224 px
 
 
 class InputImageError(ValueError):
