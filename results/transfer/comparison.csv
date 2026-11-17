@@ -1,7 +1,0 @@
-run,mode,unfreeze,lr_head,lr_backbone,augment,class_w,seed,epochs,best_ep,val_f1,test_acc,test_f1,ms,trainable
-mnv3s_head2,head,,0.001,0.0001,True,False,42,20,18,0.4799,0.5275,0.5248,28.6,26650
-v3_full,full,,0.001,0.0001,True,False,42,12,11,0.7538,0.8406,0.8369,98.3,1544506
-v3_head,head,,0.001,0.0001,True,False,42,19,15,0.4925,0.5377,0.5346,61.7,26650
-v3_partial2,partial,2.0,0.001,0.0001,True,False,42,12,10,0.6398,,,62.1,968042
-v3_partial4,partial,4.0,0.001,0.0001,True,False,42,12,11,0.7281,0.787,0.7845,64.4,1353986
-v3_partial6,partial,6.0,0.001,0.0001,True,False,42,12,11,0.7327,,,122.5,1405754
