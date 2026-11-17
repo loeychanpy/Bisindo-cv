@@ -153,63 +153,143 @@ def run_images(model, tf, device, paths, threshold, cropper=None, img_size: int 
         print(f"{Path(p).name}: {CLASSES[best_i]} ({best_p:.2f}){flag} | top-3: {alts} | {lat}")
 
 
+def open_camera(index: int, width: int, height: int, fps: int):
+    """Buka webcam di resolusi/fps yang diminta. Di Windows memakai DirectShow + MJPG: banyak webcam laptop
+    hanya memberi 720p@30 dalam MJPG (format mentah YUY2 di 720p sering turun ke 5-10 fps).
+    Cahaya redup juga menurunkan fps (kamera memperpanjang exposure)."""
+    import cv2
+    cap = cv2.VideoCapture(index, cv2.CAP_DSHOW) if sys.platform == "win32" else cv2.VideoCapture(index)
+    if not cap.isOpened() and sys.platform == "win32":
+        cap = cv2.VideoCapture(index)  # cadangan: backend bawaan (MSMF)
+    if not cap.isOpened():
+        raise SystemExit("Kamera tidak bisa dibuka. Coba --camera 1 dan tutup aplikasi lain yang memakai kamera.")
+    cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*"MJPG"))
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+    cap.set(cv2.CAP_PROP_FPS, fps)
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)  # jangan menumpuk frame lama (mengurangi delay)
+    return cap
+
+
+class _InferenceWorker:
+    """Prediksi di thread latar pada frame terbaru saja, agar tampilan video tidak menunggu model/MediaPipe."""
+
+    def __init__(self, model, tf, device, cropper):
+        import threading
+        self.model, self.tf, self.device, self.cropper = model, tf, device, cropper
+        self.lock, self.wake = threading.Lock(), threading.Event()
+        self.latest, self.result, self.running = None, None, True
+        self.n_done, self.thread = 0, threading.Thread(target=self._loop, daemon=True)
+        self.thread.start()
+
+    def submit(self, rgb: np.ndarray):
+        with self.lock:
+            self.latest = rgb  # frame yang belum sempat diprediksi dibuang
+        self.wake.set()
+
+    def get(self):
+        with self.lock:
+            return self.result
+
+    def stop(self):
+        self.running = False
+        self.wake.set()
+        self.thread.join(timeout=2)
+
+    def _loop(self):
+        while self.running:
+            self.wake.wait(0.1)
+            self.wake.clear()
+            with self.lock:
+                rgb, self.latest = self.latest, None
+            if rgb is None:
+                continue
+            h, w = rgb.shape[:2]
+            side = min(h, w)
+            x0, y0 = (w - side) // 2, (h - side) // 2
+            if self.cropper:
+                hand, box, _ = self.cropper.crop(Image.fromarray(rgb))
+                if hand is None:
+                    res = dict(found=False, t=time.perf_counter())
+                    with self.lock:
+                        self.result, self.n_done = res, self.n_done + 1
+                    continue
+                x0, y0, side, crop_img = box[0], box[1], box[2] - box[0], hand
+            else:
+                crop_img = Image.fromarray(np.ascontiguousarray(rgb[y0:y0 + side, x0:x0 + side]))
+            top, ms = predict_topk(self.model, self.tf, crop_img, self.device, k=1)
+            res = dict(found=True, idx=top[0][0], conf=top[0][1], ms=ms, box=(x0, y0, side), t=time.perf_counter())
+            with self.lock:
+                self.result, self.n_done = res, self.n_done + 1
+
+
 def run_webcam(model, tf, device, args, cropper=None):
     import cv2  # impor di sini agar mode --image tidak butuh OpenCV
 
-    cap = cv2.VideoCapture(args.camera)
-    if not cap.isOpened():
-        raise SystemExit("Kamera tidak bisa dibuka. Coba --camera 1 dan tutup aplikasi lain yang memakai kamera.")
+    cap = open_camera(args.camera, args.width, args.height, args.fps)
+    ok, frame = cap.read()
+    if not ok:
+        cap.release()
+        raise SystemExit("Kamera terbuka tetapi tidak mengirim frame (dipakai aplikasi lain / shutter tertutup?).")
+    print(f"Kamera: {frame.shape[1]}x{frame.shape[0]} (diminta {args.width}x{args.height}@{args.fps})")
+    win = "BISINDO demo (q=keluar, c=hapus)"
+    cv2.namedWindow(win, cv2.WINDOW_NORMAL)  # jendela bisa diperbesar tanpa kehilangan resolusi asli
+    cv2.resizeWindow(win, frame.shape[1], frame.shape[0])
+    worker = _InferenceWorker(model, tf, device, cropper)
     stab = LetterStabilizer(args.window, 0.8, args.threshold, 1.0)
-    word, t_prev, fps = "", time.perf_counter(), 0.0
+    word, t_prev, fps, last_t = "", time.perf_counter(), 0.0, None
+    n_prev, t_pred, pred_fps = 0, time.perf_counter(), 0.0
     try:
         while True:
             ok, frame = cap.read()
             if not ok:
                 print("Frame gagal dibaca, berhenti.")
                 break
+            if args.mirror:
+                frame = cv2.flip(frame, 1)
+            worker.submit(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+            res = worker.get()
             h, w = frame.shape[:2]
-            side = min(h, w)
-            x0, y0 = (w - side) // 2, (h - side) // 2
-            if cropper:
-                hand, box, _ = cropper.crop(Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)))
-                if hand is None:
-                    cv2.putText(frame, "tangan tidak terdeteksi", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8,
-                                (0, 0, 255), 2)
-                    cv2.imshow("BISINDO demo (q=keluar, c=hapus)", frame)
+
+            if res is not None and res["t"] != last_t:  # hasil baru -> masukkan ke stabilizer sekali saja
+                last_t = res["t"]
+                if res["found"]:
+                    locked = stab.update(res["idx"], res["conf"], time.perf_counter())
+                    if locked is not None:
+                        word += CLASSES[locked]
+                else:
                     stab.preds.clear()
                     stab.confs.clear()
-                    key = cv2.waitKey(1) & 0xFF
-                    if key == ord("q"):
-                        break
-                    if key == ord("c"):
-                        word = ""
-                    continue
-                x0, y0, side = box[0], box[1], box[2] - box[0]
-                crop_img = hand
+
+            if res is None:
+                cv2.putText(frame, "memuat ...", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
+            elif not res["found"]:
+                cv2.putText(frame, "tangan tidak terdeteksi", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
             else:
-                crop_img = Image.fromarray(cv2.cvtColor(frame[y0:y0 + side, x0:x0 + side], cv2.COLOR_BGR2RGB))
-            top, ms = predict_topk(model, tf, crop_img, device, k=1)
-            idx, conf = top[0]
-            locked = stab.update(idx, conf, time.perf_counter())
-            if locked is not None:
-                word += CLASSES[locked]
+                x0, y0, side = res["box"]
+                shown = CLASSES[res["idx"]] if res["conf"] >= args.threshold else "?"
+                cv2.rectangle(frame, (x0, y0), (x0 + side, y0 + side), (0, 255, 0), 2)
+                cv2.putText(frame, f"Huruf: {shown} ({res['conf']:.2f})", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8,
+                            (0, 255, 0), 2)
 
             now = time.perf_counter()
             fps = 0.9 * fps + 0.1 * (1.0 / max(now - t_prev, 1e-6))
             t_prev = now
-            shown = CLASSES[idx] if conf >= args.threshold else "?"
-            cv2.rectangle(frame, (x0, y0), (x0 + side, y0 + side), (0, 255, 0), 2)
-            cv2.putText(frame, f"Huruf: {shown} ({conf:.2f})", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+            if now - t_pred >= 1.0:  # laju prediksi per detik
+                n = worker.n_done
+                pred_fps, n_prev, t_pred = (n - n_prev) / (now - t_pred), n, now
+            ms = res.get("ms", 0.0) if res else 0.0
             cv2.putText(frame, f"Kata: {word}", (10, 65), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 0), 2)
-            cv2.putText(frame, f"{fps:.1f} FPS | {ms:.0f} ms", (10, h - 12), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
-                        (255, 255, 255), 2)
-            cv2.imshow("BISINDO demo (q=keluar, c=hapus)", frame)
+            cv2.putText(frame, f"video {fps:.0f} FPS | prediksi {pred_fps:.0f}/s, {ms:.0f} ms",
+                        (10, h - 12), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+            cv2.imshow(win, frame)
             key = cv2.waitKey(1) & 0xFF
             if key == ord("q"):
                 break
             if key == ord("c"):
                 word = ""
     finally:
+        worker.stop()
         cap.release()
         cv2.destroyAllWindows()
     return word
@@ -222,6 +302,10 @@ def main(argv=None):
     ap.add_argument("--webcam", action="store_true")
     ap.add_argument("--crop", action="store_true", help="deteksi tangan (MediaPipe) lalu crop sebelum klasifikasi")
     ap.add_argument("--camera", type=int, default=0)
+    ap.add_argument("--width", type=int, default=1280, help="resolusi webcam yang diminta (default 1280x720)")
+    ap.add_argument("--height", type=int, default=720)
+    ap.add_argument("--fps", type=int, default=30)
+    ap.add_argument("--mirror", action="store_true", help="cerminkan video (model dilatih tanpa flip)")
     ap.add_argument("--threshold", type=float, default=0.8)
     ap.add_argument("--window", type=int, default=15)
     ap.add_argument("--results-dir", default="results")

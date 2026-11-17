@@ -16,6 +16,18 @@ from app import inference as inf
 
 CLASSES = inf.CLASSES
 
+# Video yang tampil di tab Live adalah salinan yang di-encode ulang oleh aiortc (VP8) di Python.
+# Bawaan aiortc: mulai 500 kbps, maks 1.5 Mbps -> buram di 720p; encoder juga dibuat ulang setiap
+# bitrate berubah >10% (keyframe baru -> patah-patah saat bitrate naik). Aplikasi ini hanya lokal
+# (localhost, tanpa STUN), jadi bandwidth bukan masalah: kunci bitrate di satu nilai tinggi.
+LIVE_BITRATE = 4_000_000  # bps
+
+
+def fix_encoder_bitrate(bps: int = LIVE_BITRATE) -> None:
+    from aiortc.codecs import h264, vpx
+    for mod in (vpx, h264):
+        mod.MIN_BITRATE = mod.DEFAULT_BITRATE = mod.MAX_BITRATE = bps
+
 
 def live_available() -> tuple[bool, str]:
     for mod, pip in (("streamlit_webrtc", "streamlit-webrtc"), ("av", "av"), ("cv2", "opencv-python")):
@@ -29,6 +41,8 @@ def make_processor_class():
     import av
     import cv2
     from streamlit_webrtc import VideoProcessorBase
+
+    fix_encoder_bitrate()
 
     class LiveProcessor(VideoProcessorBase):
         def __init__(self):
@@ -60,23 +74,27 @@ def make_processor_class():
         def _worker(self):
             while time.time() - self._last_recv < 5:           # berhenti sendiri bila stream mati
                 with self.lock:
-                    rgb, self._latest = self._latest, None
-                if rgb is None or self.model is None:
+                    frame, self._latest = self._latest, None
+                if frame is None or self.model is None:
                     time.sleep(0.01)
                     continue
                 try:
+                    # konversi warna dilakukan di sini (hanya untuk frame yang benar-benar diprediksi),
+                    # bukan di recv() untuk setiap frame video
+                    rgb = frame.to_ndarray(format="rgb24")
+                    if self.mirror:
+                        rgb = rgb[:, ::-1]
                     h, w = rgb.shape[:2]
                     side = min(h, w)
                     x0, y0 = (w - side) // 2, (h - side) // 2
-                    img = Image.fromarray(rgb)
                     found = True
                     if self.cropper is not None:
-                        crop_img, box, _ = self.cropper.crop(img)
+                        crop_img, box, _ = self.cropper.crop(Image.fromarray(np.ascontiguousarray(rgb)))
                         found = crop_img is not None
                         if found:
                             x0, y0, side = box[0], box[1], box[2] - box[0]
                     else:
-                        crop_img = img.crop((x0, y0, x0 + side, y0 + side))
+                        crop_img = Image.fromarray(np.ascontiguousarray(rgb[y0:y0 + side, x0:x0 + side]))
                     if not found:
                         self.stab.preds.clear()
                         self.stab.confs.clear()
@@ -98,13 +116,13 @@ def make_processor_class():
         def recv(self, frame):
             bgr = frame.to_ndarray(format="bgr24")
             if self.mirror:
-                bgr = np.ascontiguousarray(bgr[:, ::-1])
+                bgr = cv2.flip(bgr, 1)
             self._last_recv = time.time()
             if self._thread is None or not self._thread.is_alive():
                 self._thread = threading.Thread(target=self._worker, daemon=True)
                 self._thread.start()
             with self.lock:
-                self._latest = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)   # frame lama dibuang (selalu terbaru)
+                self._latest = frame   # frame lama dibuang (selalu terbaru); dikonversi di worker
                 letter, conf, box = self.letter, self.conf, self.box
             h, w = bgr.shape[:2]
             if self.cropper is None or box is not None:
