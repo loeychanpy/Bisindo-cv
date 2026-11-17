@@ -52,28 +52,36 @@ def _scan(results_dir: str) -> list[dict]:
         if not ((d / "best.pth").exists() and (d / "config_used.json").exists()):
             continue
         m = _read_json(d / "metrics.json") or {}
-        test, val = m.get("test") or {}, m.get("val") or {}
+        cfg = _read_json(d / "config_used.json") or {}
+        test = m.get("test") or {}
         runs.append(dict(
             name=d.name,
             test_f1=test.get("macro_f1"), test_acc=test.get("accuracy"),
-            val_f1=val.get("macro_f1", m.get("best_val_macro_f1")),
+            val_f1=m.get("best_val_macro_f1", (m.get("val") or {}).get("macro_f1")),
+            split=Path(cfg.get("split_path", "")).stem or None,
         ))
-    runs.sort(key=lambda r: (r["test_f1"] if r["test_f1"] is not None else -1,
-                             r["val_f1"] if r["val_f1"] is not None else -1), reverse=True)
+    # Urut val macro-F1 (kriteria pemilihan model). Test hanya untuk laporan akhir: mengurutkan dengan test
+    # membuat run yang kebetulan sudah dievaluasi test (dan run split_v2 yang bocor) selalu di atas.
+    # Split terbaru (v3, tanpa kebocoran ponsel) didahulukan; skor split_v2 tidak sebanding.
+    runs.sort(key=lambda r: (r["split"] != "split_v2", r["val_f1"] if r["val_f1"] is not None else -1),
+              reverse=True)
     return runs
 
 
 def list_runs() -> list[dict]:
-    """Run yang punya best.pth DAN config_used.json, terurut test macro-F1 lalu val macro-F1."""
+    """Run yang punya best.pth DAN config_used.json, terurut val macro-F1 (split_v2 paling bawah)."""
     return _scan(str(RESULTS_DIR))
 
 
 def run_label(r: dict) -> str:
-    if r["test_f1"] is not None:
-        return f"{r['name']} — test F1 {r['test_f1']:.2f}"
+    parts = [r["name"]]
     if r["val_f1"] is not None:
-        return f"{r['name']} — val F1 {r['val_f1']:.2f}"
-    return r["name"]
+        parts.append(f"val F1 {r['val_f1']:.3f}")
+    if r["test_f1"] is not None:
+        parts.append(f"test F1 {r['test_f1']:.3f}")
+    if r.get("split"):
+        parts.append(r["split"])
+    return " · ".join(parts)
 
 
 def run_dir(run_name: str) -> Path:

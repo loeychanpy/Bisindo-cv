@@ -19,7 +19,7 @@ with st.spinner("Memuat PyTorch dan model (pertama kali bisa ~20 detik) ..."):
     from app import inference as inf  # noqa: E402
     from app import ui_parts as ui  # noqa: E402
     from dataset import CLASSES  # noqa: E402
-    from train_transfer import load_rgb  # noqa: E402
+    from train_transfer import compare_runs, load_rgb  # noqa: E402
 
 ROOT = inf.ROOT
 ui.inject_css()
@@ -45,7 +45,9 @@ with st.sidebar:
         st.stop()
     names = [r["name"] for r in runs]
     run_name = st.selectbox("Model", names, format_func=lambda n: inf.run_label(runs[names.index(n)]))
-    device_name = st.selectbox("Perangkat", inf.device_options())
+    device_name = st.selectbox("Perangkat", inf.device_options(),
+                               help="CPU sudah dioptimasi (2 thread + TorchScript) dan cukup cepat untuk live. "
+                                    "CUDA sedikit lebih cepat bila ada GPU NVIDIA.")
 
     def _suggested_threshold(run: str) -> float:
         p = inf.run_dir(run) / "error_analysis.md"
@@ -118,6 +120,34 @@ def predict_paths(run: str, dev: str, split_md5: str, data_dir: str, paths: tupl
         top, _ = inf.demo.predict_topk(mdl, tfm, img, torch.device(dev), k=1)
         out[p] = top[0]
     return out
+
+
+@st.cache_data(show_spinner=False, max_entries=4)
+def _comparison(stamp: tuple) -> pd.DataFrame:
+    """Tabel perbandingan langsung dari metrics.json; stamp (nama run, mtime) membuat cache ikut berubah."""
+    df = compare_runs(save=False)
+    if df.empty:
+        return df
+    split = {r: Path((inf._read_json(inf.run_dir(r) / "config_used.json") or {}).get("split_path", "")).stem or None
+             for r in df["run"]}
+    df.insert(1, "split", df["run"].map(split))
+    # sama dengan daftar model: split_v2 (bocor antar split) paling bawah, lalu val macro-F1 tertinggi
+    order = df.assign(_v2=df["split"].eq("split_v2")).sort_values(["_v2", "val_f1"], ascending=[True, False])
+    return order.drop(columns="_v2")
+
+
+def comparison_df() -> pd.DataFrame:
+    files = (ROOT / "results" / "transfer").glob("*/metrics.json")
+    return _comparison(tuple(sorted((p.parent.name, p.stat().st_mtime) for p in files)))
+
+
+def benchmark_latency(rd: Path, dev: str) -> dict | None:
+    """Hasil src/benchmark_latency.py untuk perangkat ini (atau perangkat lain bila belum ada)."""
+    for d in dict.fromkeys([dev, "cpu", "cuda"]):
+        j = inf._read_json(rd / f"latency_{d}.json")
+        if j:
+            return j
+    return None
 
 
 def all_test_preds(rows: pd.DataFrame, bar) -> dict:
@@ -255,7 +285,8 @@ with tab_cam:
               width="stretch")
     b4.button("Reset", on_click=lambda: st.session_state.update(word=""), width="stretch")
     st.markdown(f'<div class="big-word">{st.session_state.word or "&nbsp;"}</div>', unsafe_allow_html=True)
-    st.caption("Video real-time tetap lewat terminal: `python src/demo.py --run <run> --webcam`.")
+    st.caption("Untuk video real-time pakai tab **Live**, atau jendela OpenCV yang paling mulus: "
+               "`python src/demo.py --run <run> --webcam`.")
 
 with tab_test:
     rows = _test_rows(split_path)
@@ -309,8 +340,19 @@ with tab_res:
         c[0].metric("Akurasi", f"{part.get('accuracy', float('nan')):.3f}")
         c[1].metric("Macro-F1", f"{part.get('macro_f1', float('nan')):.3f}")
         c[2].metric("Weighted-F1", f"{part.get('weighted_f1', float('nan')):.3f}")
-        lat = (m.get("latency_ms") or {}).get("total_ms_median")
-        c[3].metric("Latensi (median)", f"{lat:.1f} ms" if lat else "—")
+        bench = benchmark_latency(rd, device_name)
+        if bench:
+            c[3].metric(f"Latensi ({bench['device']})", f"{bench['total_ms']:.1f} ms",
+                        help="Median per foto, batch 1, dari src/benchmark_latency.py.")
+            load = f" · beban CPU saat diukur {bench['cpu_load_percent']:.0f}%" if "cpu_load_percent" in bench else ""
+            st.caption(f"Latensi per tahap ({bench['device']}): decode {bench['decode_ms']:.1f} ms · "
+                       f"preprocess {bench['preprocess_ms']:.1f} ms · model {bench['forward_optimized_ms']:.1f} ms "
+                       f"(tanpa optimasi {bench['forward_eager_ms']:.1f} ms){load}")
+        else:
+            lat = (m.get("latency_ms") or {}).get("total_ms_median")
+            c[3].metric("Latensi (saat training)", f"{lat:.1f} ms" if lat else "—",
+                        help="Diukur di akhir training sehingga bisa terlalu tinggi. Untuk angka bersih jalankan "
+                             f"python src/benchmark_latency.py --config configs/config_v3.yaml --run {run_name}")
     imgs = [rd / "curves.png"] + sorted(rd.glob("confusion_matrix_*.png")) + sorted(rd.glob("sample_predictions_*.png"))
     for p in [p for p in imgs if p.exists()]:
         st.image(str(p), caption=p.name, width="stretch")
@@ -321,10 +363,10 @@ with tab_res:
             df = pd.read_csv(p)
             st.dataframe(df.sort_values(sort) if sort and sort in df else df,
                          width="stretch", hide_index=True)
-    comp = ROOT / "results" / "transfer" / "comparison.csv"
-    if comp.exists():
+    cdf = comparison_df()
+    if not cdf.empty:
         st.subheader("Perbandingan semua run")
-        cdf = pd.read_csv(comp)
+        st.caption("Dibaca langsung dari metrics.json setiap run, diurutkan val macro-F1. Baris kuning = model terpilih.")
         st.dataframe(cdf.style.apply(
             lambda r: ["background-color: #fff3b0; color: #000" if r.iloc[0] == run_name else "" for _ in r], axis=1),
             width="stretch", hide_index=True)

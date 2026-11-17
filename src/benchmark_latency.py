@@ -62,7 +62,6 @@ def main(argv=None):
     sync = torch.cuda.synchronize if device.type == "cuda" else (lambda: None)
 
     eager, img_size, _ = load_model(run_dir, device, optimize=False)
-    fast = optimize_for_device(eager, img_size, device)
     tf = get_transforms(False, img_size)
 
     paths = split[split["split"] == "val"]["path"].tolist()
@@ -77,6 +76,11 @@ def main(argv=None):
                 m(x)
         return f
 
+    # eager diukur DULU dengan jumlah thread bawaan torch: optimize_for_device mengubah thread CPU
+    threads_default = torch.get_num_threads()
+    forward_eager = _median_ms(fwd(eager), xs, a.warmup, sync)
+    fast = optimize_for_device(eager, img_size, device)
+
     def total(p):
         with torch.inference_mode():
             fast(tf(load_rgb(p, img_size)).unsqueeze(0).to(device))
@@ -84,18 +88,26 @@ def main(argv=None):
     res = dict(
         run=a.run, device=str(device), n=len(files) - a.warmup, torch=torch.__version__,
         optimized=type(fast).__name__ != type(eager).__name__,
+        cpu_threads_eager=threads_default, cpu_threads_optimized=torch.get_num_threads(),
         decode_ms=_median_ms(lambda p: load_rgb(p, img_size), files, a.warmup, lambda: None),
         preprocess_ms=_median_ms(tf, imgs, a.warmup, lambda: None),
-        forward_eager_ms=_median_ms(fwd(eager), xs, a.warmup, sync),
+        forward_eager_ms=forward_eager,
         forward_optimized_ms=_median_ms(fwd(fast), xs, a.warmup, sync),
         total_ms=_median_ms(total, files, a.warmup, sync),
     )
+    try:
+        import psutil  # opsional: catat beban CPU agar angka bisa ditafsirkan
+        res["cpu_load_percent"] = psutil.cpu_percent(interval=0.5)
+    except ImportError:
+        pass
     if device.type == "cuda":
         res["gpu"] = torch.cuda.get_device_name(device)
     out = run_dir / f"latency_{device.type}.json"
     out.write_text(json.dumps(res, indent=2), encoding="utf-8")
 
-    print(f"Run {a.run} | {device} | n={res['n']} | TorchScript: {'ya' if res['optimized'] else 'tidak'}")
+    print(f"Run {a.run} | {device} | n={res['n']} | TorchScript: {'ya' if res['optimized'] else 'tidak'}"
+          + (f" | thread CPU {res['cpu_threads_eager']} -> {res['cpu_threads_optimized']}" if device.type == "cpu" else "")
+          + (f" | beban CPU {res['cpu_load_percent']:.0f}%" if "cpu_load_percent" in res else ""))
     for k in ("decode_ms", "preprocess_ms", "forward_eager_ms", "forward_optimized_ms", "total_ms"):
         print(f"  {k:22s} {res[k]:7.2f} ms")
     print(f"  ~{1000 / res['total_ms']:.0f} gambar/detik (foto dari disk) | "

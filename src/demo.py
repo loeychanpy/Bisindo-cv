@@ -21,6 +21,7 @@ Catatan penting:
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import sys
 import time
@@ -60,23 +61,47 @@ class HandCropper:
         return img.crop(box), box, ms
 
 
-def optimize_for_device(model: torch.nn.Module, img_size: int, device: torch.device) -> torch.nn.Module:
-    """GPU: TorchScript trace + freeze (Conv+BN dilebur, lebih sedikit kernel; batch 1 ~5 ms -> ~2 ms di RTX 3050).
-    CPU: model eager dikembalikan apa adanya (freeze tidak mempercepat di CPU).
+CPU_THREADS = 2  # batch 1: 2 thread paling cepat; 8 thread saling berebut saat CPU sibuk (22.9 -> 8.2 ms)
+
+
+class _ChannelsLast(torch.nn.Module):
+    """Ubah input ke channels_last sebelum masuk model yang ditrace dalam format itu."""
+
+    def __init__(self, m):
+        super().__init__()
+        self.m = m
+
+    def forward(self, x):
+        return self.m(x.contiguous(memory_format=torch.channels_last))
+
+
+def optimize_for_device(model: torch.nn.Module, img_size: int, device: torch.device,
+                        cpu_threads: int | None = CPU_THREADS) -> torch.nn.Module:
+    """Siapkan model untuk inferensi batch 1 (demo/app). Model asli tidak diubah.
+    GPU: TorchScript trace + freeze (Conv+BN dilebur, lebih sedikit kernel): ~5 -> ~2 ms di RTX 3050.
+    CPU: torch.set_num_threads(cpu_threads) + channels_last + TorchScript freeze. Saat CPU sibuk
+         (aplikasi lain jalan): ~23 -> ~8 ms; saat CPU kosong kira-kira sama (~6 ms).
+         Catatan: set_num_threads berlaku untuk seluruh proses (cukup untuk demo/app).
     Bila gagal atau keluaran berbeda dari model asli, kembali ke model eager."""
-    if device.type != "cuda":
-        return model
+    if device.type == "cpu" and cpu_threads:
+        torch.set_num_threads(cpu_threads)
     try:
         x = torch.randn(1, 3, img_size, img_size, device=device)
-        # torch.jit sudah deprecated, tetapi penggantinya (torch.compile) butuh Triton yang tidak ada di Windows
+        # torch.jit sudah deprecated, tetapi penggantinya (torch.compile) butuh Triton/compiler C++ yang
+        # tidak ada di Windows ini
         with torch.inference_mode(), warnings.catch_warnings():
             warnings.simplefilter("ignore", FutureWarning)
-            ts = torch.jit.optimize_for_inference(torch.jit.freeze(torch.jit.trace(model, x)))
+            if device.type == "cpu":
+                cl = copy.deepcopy(model).to(memory_format=torch.channels_last)
+                xcl = x.contiguous(memory_format=torch.channels_last)
+                fast = _ChannelsLast(torch.jit.optimize_for_inference(torch.jit.freeze(torch.jit.trace(cl, xcl))))
+            else:
+                fast = torch.jit.optimize_for_inference(torch.jit.freeze(torch.jit.trace(model, x)))
             for _ in range(3):  # pemanasan: optimisasi JIT terjadi di panggilan awal
-                out_ts = ts(x)
-            if not torch.allclose(out_ts.float(), model(x).float(), atol=1e-3, rtol=1e-3):
-                raise RuntimeError("keluaran TorchScript berbeda dari model asli")
-        return ts
+                out = fast(x)
+            if not torch.allclose(out.float(), model(x).float(), atol=1e-3, rtol=1e-3):
+                raise RuntimeError("keluaran model teroptimasi berbeda dari model asli")
+        return fast
     except Exception as e:  # noqa: BLE001 - optimisasi opsional, jangan gagalkan demo
         print(f"[info] optimisasi TorchScript dilewati ({type(e).__name__}: {e}); memakai model biasa.")
         return model
