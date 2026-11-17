@@ -1,0 +1,13 @@
+{
+  "run": "v3_full_cos30_ls_strong",
+  "device": "cuda",
+  "n": 5,
+  "torch": "2.14.1+cu126",
+  "optimized": true,
+  "decode_ms": 18.922400020528585,
+  "preprocess_ms": 1.3051999849267304,
+  "forward_eager_ms": 5.220599996391684,
+  "forward_optimized_ms": 2.611400035675615,
+  "total_ms": 22.15770003385842,
+  "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU"
+}
