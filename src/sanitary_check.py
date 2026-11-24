@@ -8,12 +8,12 @@ Yang diperiksa:
   - duplikat: exact (MD5) dan near-duplicate (dHash), termasuk duplikat lintas kelas (indikasi label noise)
   - subject/session: apakah terdeteksi dari path (penting untuk split anti-leakage)
 
-Output (folder --out, default reports/):
+Output (folder --out, default results/sanitary):
   sanitary_report.json, class_counts.csv, issues.csv, duplicates_exact.csv,
   near_duplicates.csv, excluded_files.txt  (dibaca otomatis oleh dataset.py)
 
 Contoh:
-  python sanitary_check.py --root data/raw
+  python sanitary_check.py --root "data/BISINDO Indonesian Sign Language Alphabet Image Data"
 """
 from __future__ import annotations
 
@@ -92,7 +92,7 @@ def near_duplicate_pairs(hashes: np.ndarray, thr: int, chunk: int = 256):
 def main():
     ap = argparse.ArgumentParser(description="Sanity check dataset BISINDO")
     ap.add_argument("--root", required=True)
-    ap.add_argument("--out", default="reports")
+    ap.add_argument("--out", default="results/sanitary")
     ap.add_argument("--group-regex", default=None)
     ap.add_argument("--min-side", type=int, default=32, help="sisi terpendek minimum (px)")
     ap.add_argument("--blank-std", type=float, default=1.0, help="std piksel di bawah ini = gambar kosong")

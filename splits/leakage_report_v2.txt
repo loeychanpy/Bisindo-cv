@@ -1,0 +1,44 @@
+split_v2 | seed=42 | ratio={'train': 0.7, 'val': 0.15, 'test': 0.15} | mode=per_class | gambar=4462
+
+== Jumlah gambar per kelas per split ==
+kelas   train     val    test
+A         115      25      25
+B         117      26      25
+C         117      26      26
+D         117      26      26
+E         117      26      25
+F         121      26      26
+G         121      26      26
+H         121      26      26
+I         121      26      26
+J         117      26      26
+K         121      26      26
+L         120      26      26
+M         121      26      26
+N         121      26      26
+O         121      26      26
+P         119      26      26
+Q         121      26      26
+R         119      26      26
+S         121      26      26
+T         121      26      26
+U         121      26      26
+V         120      26      26
+W         118      26      26
+X         122      26      26
+Y         122      26      26
+Z         122      26      26
+total    3114     675     673
+
+== Irisan path antar split (harus 0) ==
+train & val: 0 OK
+train & test: 0 OK
+val & test: 0 OK
+
+[CATATAN] Metadata signer/latar nggak ada -> split cuma stratifikasi per kelas. Tulis ini sebagai keterbatasan di README.
+
+== Duplikat file (hash sama) lintas split (harus 0) ==
+hash yang muncul di >1 split: 0 OK
+(info) gambar duplikat di dalam split yang sama: 0
+
+HASIL: BERSIH

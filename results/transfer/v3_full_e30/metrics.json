@@ -1,0 +1,51 @@
+{
+  "run_name": "v3_full_e30",
+  "mode": "full",
+  "best_epoch": 11,
+  "epochs_run": 19,
+  "best_val_macro_f1": 0.7765111555507631,
+  "best_val_accuracy": 0.7736111111111111,
+  "report_split": "test",
+  "test": {
+    "accuracy": 0.8623188405797102,
+    "macro_f1": 0.8630243298561949,
+    "weighted_f1": 0.8640346182573364
+  },
+  "val": {
+    "accuracy": 0.7736111111111111,
+    "macro_f1": 0.7765111555507631,
+    "weighted_f1": 0.7768134749824727
+  },
+  "latency_ms": {
+    "total_ms_median": 75.33469999907538,
+    "forward_ms_median": 20.75110000441782,
+    "n": 50
+  },
+  "device": "cuda",
+  "train_seconds": 752.2,
+  "params_total": 1544506,
+  "params_trainable": 1544506,
+  "split_md5": "2769336bff6371ed4bc184fb95e8bba8",
+  "n": {
+    "train": 3052,
+    "val": 720,
+    "test": 690
+  },
+  "hparams": {
+    "unfreeze_blocks": 2,
+    "lr_head": 0.001,
+    "lr_backbone": 0.0001,
+    "weight_decay": 0.0001,
+    "batch_size": 32,
+    "augment": true,
+    "class_weights": false,
+    "pretrained": true,
+    "seed": 42,
+    "epochs": 30,
+    "patience": 8,
+    "scheduler": "none",
+    "warmup_epochs": 0,
+    "min_lr_factor": 0.01,
+    "label_smoothing": 0.0
+  }
+}

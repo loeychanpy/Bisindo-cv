@@ -1,0 +1,21 @@
+Preload 4462 gambar ke RAM (256px, 16 threads) selesai dalam 15.5s
+Run: v3_partial2 | mode=partial | device=cpu | torch 2.7.0+cpu
+Split: splits/split_v3.csv (md5 2769336b) | {'train': 3052, 'val': 720, 'test': 690}
+Parameter: total 1,544,506 | dilatih 968,042 (62.68%)
+Epoch 01/12 | train loss 2.8392 acc 0.238 | val loss 2.3757 acc 0.340 f1 0.315 | 51.0s
+Epoch 02/12 | train loss 1.8557 acc 0.510 | val loss 1.7632 acc 0.456 f1 0.456 | 41.9s
+Epoch 03/12 | train loss 1.3400 acc 0.608 | val loss 1.5028 acc 0.514 f1 0.501 | 41.9s
+Epoch 04/12 | train loss 1.0780 acc 0.673 | val loss 1.3408 acc 0.579 f1 0.575 | 41.7s
+Epoch 05/12 | train loss 0.9355 acc 0.723 | val loss 1.2693 acc 0.585 f1 0.582 | 41.9s
+Epoch 06/12 | train loss 0.7885 acc 0.761 | val loss 1.2528 acc 0.592 f1 0.590 | 40.1s
+Epoch 07/12 | train loss 0.7177 acc 0.782 | val loss 1.2486 acc 0.613 f1 0.606 | 42.0s
+Epoch 08/12 | train loss 0.6389 acc 0.804 | val loss 1.2229 acc 0.603 f1 0.601 | 40.6s
+Epoch 09/12 | train loss 0.5872 acc 0.816 | val loss 1.1849 acc 0.619 f1 0.611 | 40.8s
+Epoch 10/12 | train loss 0.5327 acc 0.837 | val loss 1.1393 acc 0.646 f1 0.640 | 40.9s
+Epoch 11/12 | train loss 0.4708 acc 0.854 | val loss 1.1681 acc 0.633 f1 0.628 | 42.1s
+Epoch 12/12 | train loss 0.4373 acc 0.863 | val loss 1.2163 acc 0.636 f1 0.633 | 45.4s
+
+Model terbaik: epoch 10 (val macro-F1 0.640)
+[val] accuracy 0.6458 | macro-F1 0.6398
+Latency median: 62.1 ms total, 19.3 ms forward saja
+Hasil: results/transfer/v3_partial2

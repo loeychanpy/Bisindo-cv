@@ -10,12 +10,12 @@ Isi:
   6. get_dataloaders()  : DataLoader + class weights
 
 Contoh pemakaian CLI:
-  python dataset.py --root data/raw --out data/splits.csv
-  python dataset.py --root data/raw --variants background --group-regex "(subject_\\d+)"
+  python src/dataset.py --root "data/BISINDO Indonesian Sign Language Alphabet Image Data" --variants original
 """
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import warnings
 from pathlib import Path
@@ -143,7 +143,7 @@ def build_manifest(
     root: str | Path,
     variants: list[str] | None = None,
     group_regex: str | None = None,
-    exclude_file: str | Path | None = "reports/excluded_files.txt",
+    exclude_file: str | Path | None = "results/sanitary/excluded_files.txt",
 ) -> pd.DataFrame:
     """Manifest siap split. File di exclude_file (hasil sanitary_check) dibuang."""
     df = scan_images(root, group_regex)
@@ -214,9 +214,33 @@ def make_splits(df: pd.DataFrame, val_size: float = 0.15, test_size: float = 0.1
 # --------------------------------------------------------------------------- #
 # Transform
 # --------------------------------------------------------------------------- #
-def get_transforms(train: bool, img_size: int = IMG_SIZE) -> T.Compose:
-    """Catatan: TIDAK memakai horizontal flip karena bisa mengubah makna isyarat (kiri/kanan)."""
+AUG_LEVELS = ("base", "strong")
+_MEAN_RGB = [round(255 * v) for v in IMAGENET_MEAN]
+
+
+def get_transforms(train: bool, img_size: int = IMG_SIZE, aug: str = "base") -> T.Compose:
+    """Catatan: TIDAK memakai horizontal flip karena bisa mengubah makna isyarat (kiri/kanan).
+    aug="base"  : augmentasi awal (dipakai semua run sebelum opsi ini ada).
+    aug="strong": crop/rotasi/warna lebih kuat + perspektif + grayscale + random erasing kecil.
+                  Crop minimal 60% area karena tangan sering memenuhi bingkai (ujung jari di tepi)."""
+    if aug not in AUG_LEVELS:
+        raise ValueError(f"aug harus salah satu dari {AUG_LEVELS}, bukan {aug!r}")
     norm = T.Normalize(IMAGENET_MEAN, IMAGENET_STD)
+    if train and aug == "strong":
+        return T.Compose(
+            [
+                T.RandomResizedCrop(img_size, scale=(0.6, 1.0), ratio=(0.8, 1.25)),
+                # sudut kosong diisi abu-abu rata-rata ImageNet (bukan hitam) agar tidak jadi petunjuk palsu
+                T.RandomAffine(degrees=20, translate=(0.08, 0.08), scale=(0.9, 1.1), shear=8, fill=_MEAN_RGB),
+                T.RandomPerspective(distortion_scale=0.2, p=0.3, fill=_MEAN_RGB),
+                T.ColorJitter(brightness=0.3, contrast=0.35, saturation=0.3, hue=0.04),
+                T.RandomGrayscale(p=0.1),
+                T.RandomApply([T.GaussianBlur(5, sigma=(0.1, 2.0))], p=0.3),
+                T.ToTensor(),
+                norm,
+                T.RandomErasing(p=0.25, scale=(0.02, 0.08), ratio=(0.3, 3.3), value=0),  # oklusi kecil
+            ]
+        )
     if train:
         return T.Compose(
             [
@@ -266,16 +290,16 @@ def get_dataloaders(
     splits_csv: str | Path | None = None,
     num_workers: int = 2,
     seed: int = 42,
-    exclude_file: str | Path | None = "reports/excluded_files.txt",
+    exclude_file: str | Path | None = "results/sanitary/excluded_files.txt",
+    label_map_path: str | Path = "splits/label_map.json",
 ):
     """Return (loaders: dict, class_weights: Tensor, df: DataFrame)."""
-    if splits_csv and Path(splits_csv).exists():
-        df = pd.read_csv(splits_csv)                                  # pakai split yang sudah tersimpan
-    else:
-        df = make_splits(build_manifest(root, variants, group_regex, exclude_file), seed=seed)
-        if splits_csv:
-            Path(splits_csv).parent.mkdir(parents=True, exist_ok=True)
-            df.to_csv(splits_csv, index=False)
+    if not splits_csv or not Path(splits_csv).exists():
+        raise FileNotFoundError(f"Split tidak ditemukan: {splits_csv}. Buat dulu dengan src/make_split.py")
+    df = pd.read_csv(splits_csv)                                      # loader hanya membaca split beku
+    if "label_idx" not in df.columns:                                 # make_split.py tidak menulis label_idx
+        label_map = json.loads(Path(label_map_path).read_text(encoding="utf-8"))
+        df["label_idx"] = df["label"].map(label_map)
 
     pin = torch.cuda.is_available()
     loaders = {}
@@ -295,11 +319,11 @@ def get_dataloaders(
 def main():
     ap = argparse.ArgumentParser(description="Bangun manifest & split dataset BISINDO")
     ap.add_argument("--root", required=True, help="folder dataset hasil ekstrak")
-    ap.add_argument("--out", default="data/splits.csv")
+    ap.add_argument("--out", default="splits/split_v2.csv")
     ap.add_argument("--variants", nargs="*", default=None,
                     help="pilih varian: background background_removed binary (default: semua)")
     ap.add_argument("--group-regex", default=None, help="regex (1 capture group) untuk subject/session")
-    ap.add_argument("--exclude-file", default="reports/excluded_files.txt")
+    ap.add_argument("--exclude-file", default="results/sanitary/excluded_files.txt")
     ap.add_argument("--val-size", type=float, default=0.15)
     ap.add_argument("--test-size", type=float, default=0.15)
     ap.add_argument("--seed", type=int, default=42)

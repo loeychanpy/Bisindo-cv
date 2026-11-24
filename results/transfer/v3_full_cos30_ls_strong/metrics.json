@@ -1,0 +1,52 @@
+{
+  "run_name": "v3_full_cos30_ls_strong",
+  "mode": "full",
+  "best_epoch": 30,
+  "epochs_run": 30,
+  "best_val_macro_f1": 0.8082897190245538,
+  "best_val_accuracy": 0.8097222222222222,
+  "report_split": "test",
+  "test": {
+    "accuracy": 0.9,
+    "macro_f1": 0.897856466802086,
+    "weighted_f1": 0.8995114464049779
+  },
+  "val": {
+    "accuracy": 0.8097222222222222,
+    "macro_f1": 0.8082897190245538,
+    "weighted_f1": 0.8081932748251633
+  },
+  "latency_ms": {
+    "total_ms_median": 34.49525000178255,
+    "forward_ms_median": 5.781800020486116,
+    "n": 50
+  },
+  "device": "cuda",
+  "train_seconds": 891.8,
+  "params_total": 1544506,
+  "params_trainable": 1544506,
+  "split_md5": "2769336bff6371ed4bc184fb95e8bba8",
+  "n": {
+    "train": 3052,
+    "val": 720,
+    "test": 690
+  },
+  "hparams": {
+    "unfreeze_blocks": 2,
+    "lr_head": 0.001,
+    "lr_backbone": 0.0001,
+    "weight_decay": 0.0001,
+    "batch_size": 32,
+    "augment": true,
+    "class_weights": false,
+    "pretrained": true,
+    "seed": 42,
+    "epochs": 30,
+    "patience": 8,
+    "scheduler": "cosine",
+    "warmup_epochs": 2,
+    "min_lr_factor": 0.01,
+    "label_smoothing": 0.1,
+    "aug": "strong"
+  }
+}
