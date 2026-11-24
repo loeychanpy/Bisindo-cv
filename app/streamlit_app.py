@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import re
 import sys
+import time
 from pathlib import Path
 
 import streamlit as st
@@ -17,12 +18,15 @@ with st.spinner("Memuat PyTorch dan model (pertama kali bisa ~20 detik) ..."):
     import pandas as pd  # noqa: E402
     import torch  # noqa: E402
     from app import inference as inf  # noqa: E402
+    from app import diagnostics as diag  # noqa: E402
     from app import ui_parts as ui  # noqa: E402
     from dataset import CLASSES  # noqa: E402
     from train_transfer import compare_runs, load_rgb  # noqa: E402
 
 ROOT = inf.ROOT
 ui.inject_css()
+diag.setup_logging()
+diag.log_environment()
 
 st.session_state.setdefault("word", "")
 st.session_state.setdefault("sample_seed", 0)
@@ -180,6 +184,14 @@ with tab_live:
                    "(tengah bingkai). Huruf yang stabil otomatis masuk ke kata.")
         live_mirror = st.checkbox("Cerminkan gambar (live)", value=False,
                                   help="Model dilatih tanpa flip; aktifkan hanya bila gambar kamera terbalik.")
+        ice_names = list(diag.ICE_PRESETS)
+        ice_choice = st.selectbox(
+            "Jalur koneksi", ice_names, index=ice_names.index(diag.DEFAULT_ICE),
+            help="Ubah sebelum klik START. Bawaan (lokal) tidak butuh internet. Bila video tidak mau tersambung "
+                 "('Connection is taking longer than expected'), coba 'STUN Google' (butuh internet).")
+        if st.session_state.get("_ice_logged") != ice_choice:   # catat tiap pilihan berubah
+            diag.logger.info("Jalur koneksi live: %s", ice_choice)
+            st.session_state["_ice_logged"] = ice_choice
         cropper, crop_err = None, None
         if use_crop:
             try:
@@ -188,36 +200,61 @@ with tab_live:
                 crop_err = str(e)
         if crop_err:
             st.error(crop_err)
-        ctx = webrtc_streamer(
-            key="live", video_processor_factory=live.make_processor_class(),
-            rtc_configuration={"iceServers": []},  # lokal saja, tanpa STUN
-            media_stream_constraints={"video": {"width": {"ideal": 1280}, "height": {"ideal": 720},
-                                                "frameRate": {"ideal": 30}}, "audio": False},
-            async_processing=True,
-        )
-        proc = ctx.video_processor
-        if proc is not None:
-            proc.configure(model, tf, device, cropper, threshold, live_mirror)
+        try:
+            ctx = webrtc_streamer(
+                key="live", video_processor_factory=live.make_processor_class(),
+                rtc_configuration=diag.rtc_configuration(ice_choice),
+                media_stream_constraints={"video": {"width": {"ideal": 1280}, "height": {"ideal": 720},
+                                                    "frameRate": {"ideal": 30}}, "audio": False},
+                async_processing=True,
+            )
+        except Exception as e:  # komponen/aiortc gagal dimulai: tab lain tetap jalan
+            diag.logger.exception("webrtc_streamer gagal dibuat")
+            st.error(f"Komponen live gagal dimulai ({type(e).__name__}: {e}). Pakai tab **Kamera** atau jalankan "
+                     f"`python src/demo.py --run <model> --webcam`. Rincian ada di `{diag.LOG_REL}`.")
+            ctx = None
 
-        @st.fragment(run_every=0.5)
-        def live_panel():
-            if proc is None:
-                st.info("Klik **START**, lalu izinkan akses kamera di browser.")
-                return
-            word, letter, conf, ms = proc.state()
-            c1, c2 = st.columns(2)
-            c1.metric("Huruf saat ini", letter, f"{conf:.0%} · {ms:.0f} ms", delta_color="off")
-            c2.markdown(f'<div class="big-word">{word or "&nbsp;"}</div>', unsafe_allow_html=True)
+        if ctx is not None:
+            proc = ctx.video_processor
+            if proc is not None:
+                proc.configure(model, tf, device, cropper, threshold, live_mirror)
+            # "started" = START ditekan; koneksi dianggap terbentuk hanya bila frame video benar-benar masuk
+            cstate = getattr(ctx, "state", None)
+            started = bool(getattr(cstate, "playing", False) or getattr(cstate, "signalling", False))
+            watch = st.session_state.setdefault("live_watch", diag.ConnectionWatch())
+            watch.update(started, live.frames_seen(), time.time())
 
-        live_panel()
-        if proc is not None:
-            b1, b2, b3 = st.columns(3)
-            if b1.button("Spasi", key="live_space", width="stretch"):
-                proc.edit_word("space")
-            if b2.button("Hapus", key="live_back", width="stretch"):
-                proc.edit_word("back")
-            if b3.button("Reset", key="live_reset", width="stretch"):
-                proc.edit_word("reset")
+            @st.fragment(run_every=0.5)
+            def live_panel():
+                watch.update(started, live.frames_seen(), time.time())
+                hint = watch.hint(time.time())
+                if hint:
+                    (st.warning if hint[0] == "warning" else st.error)(hint[1])
+                if proc is None:
+                    if not hint:
+                        st.info("Klik **START**, lalu izinkan akses kamera di browser.")
+                    return
+                err = proc.get_error()
+                if err:
+                    st.warning(f"Kesalahan saat inferensi ({err}). Rincian di `{diag.LOG_REL}`.")
+                word, letter, conf, ms = proc.state()
+                c1, c2 = st.columns(2)
+                c1.metric("Huruf saat ini", letter, f"{conf:.0%} · {ms:.0f} ms", delta_color="off")
+                c2.markdown(f'<div class="big-word">{word or "&nbsp;"}</div>', unsafe_allow_html=True)
+
+            live_panel()
+            if proc is not None:
+                b1, b2, b3 = st.columns(3)
+                if b1.button("Spasi", key="live_space", width="stretch"):
+                    proc.edit_word("space")
+                if b2.button("Hapus", key="live_back", width="stretch"):
+                    proc.edit_word("back")
+                if b3.button("Reset", key="live_reset", width="stretch"):
+                    proc.edit_word("reset")
+            with st.expander("Bantuan koneksi live (kamera tidak muncul atau berhenti sendiri)",
+                             expanded=watch.fails > 0):
+                st.markdown(diag.GUIDE_MD)
+                st.markdown(diag.environment_markdown())
 
 with tab_up:
     files = st.file_uploader("Unggah foto isyarat (JPG/PNG)", type=["jpg", "jpeg", "png"],

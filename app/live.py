@@ -12,6 +12,7 @@ import numpy as np
 import torch
 from PIL import Image
 
+from app import diagnostics as diag
 from app import inference as inf
 
 CLASSES = inf.CLASSES
@@ -21,6 +22,15 @@ CLASSES = inf.CLASSES
 # bitrate berubah >10% (keyframe baru -> patah-patah saat bitrate naik). Aplikasi ini hanya lokal
 # (localhost, tanpa STUN), jadi bandwidth bukan masalah: kunci bitrate di satu nilai tinggi.
 LIVE_BITRATE = 4_000_000  # bps
+
+
+# Jumlah frame video yang pernah diterima server (bertambah hanya bila koneksi WebRTC benar-benar terbentuk).
+# Dibaca app/streamlit_app.py untuk mendeteksi "START diklik tapi tidak ada video".
+_FRAMES = {"n": 0}
+
+
+def frames_seen() -> int:
+    return _FRAMES["n"]
 
 
 def fix_encoder_bitrate(bps: int = LIVE_BITRATE) -> None:
@@ -55,6 +65,7 @@ def make_processor_class():
             self.letter, self.conf, self.ms = "?", 0.0, 0.0
             self.box = None
             self._latest, self._thread, self._last_recv = None, None, 0.0
+            self.last_error, self._err_counts = None, {}   # (waktu, pesan) kesalahan inferensi terakhir
 
         # ---- dipanggil dari thread utama Streamlit ----
         def configure(self, model, tf, device, cropper, threshold, mirror):
@@ -69,6 +80,21 @@ def make_processor_class():
         def state(self):
             with self.lock:
                 return self.word, self.letter, self.conf, self.ms
+
+        def _note_error(self, e: Exception):
+            """Catat kesalahan inferensi ke log (tidak membanjiri: log ke-1 dan tiap 200) dan simpan untuk UI."""
+            key = f"{type(e).__name__}: {e}"
+            n = self._err_counts[key] = self._err_counts.get(key, 0) + 1
+            if n == 1 or n % 200 == 0:
+                diag.logger.error("Inferensi live gagal (%dx): %s", n, key, exc_info=e)
+            with self.lock:
+                self.last_error = (time.time(), key)
+
+        def get_error(self, max_age: float = 5.0):
+            """Pesan kesalahan inferensi bila terjadi dalam `max_age` detik terakhir, selain itu None."""
+            with self.lock:
+                err = self.last_error
+            return err[1] if err and time.time() - err[0] <= max_age else None
 
         # ---- inferensi di thread latar: video tidak menunggu model ----
         def _worker(self):
@@ -109,7 +135,8 @@ def make_processor_class():
                             self.word += CLASSES[locked]
                         self.letter = CLASSES[idx] if conf >= self.threshold else "?"
                         self.conf, self.ms, self.box = conf, ms, (x0, y0, side)
-                except Exception:
+                except Exception as e:
+                    self._note_error(e)
                     time.sleep(0.05)
 
         # ---- thread video: hanya menyimpan frame terbaru + menggambar hasil terakhir ----
@@ -118,6 +145,10 @@ def make_processor_class():
             if self.mirror:
                 bgr = cv2.flip(bgr, 1)
             self._last_recv = time.time()
+            if _FRAMES["n"] == 0:
+                diag.logger.info("Frame video pertama diterima (%dx%d): koneksi WebRTC terbentuk.",
+                                 bgr.shape[1], bgr.shape[0])
+            _FRAMES["n"] += 1
             if self._thread is None or not self._thread.is_alive():
                 self._thread = threading.Thread(target=self._worker, daemon=True)
                 self._thread.start()
