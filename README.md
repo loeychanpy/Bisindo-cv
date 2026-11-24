@@ -129,7 +129,7 @@ Aplikasi pengenalan BISINDO berbasis web lokal dapat dijalankan tanpa memerlukan
 
 ```powershell
 # Pasang dependensi GUI
-pip install -r requirements-app.txt
+pip install -r requirements.txt
 
 # Jalankan server aplikasi
 streamlit run app/streamlit_app.py
