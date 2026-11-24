@@ -1,0 +1,691 @@
+path,true,pred,conf
+A/A_Baju_Oppo_A53.jpg,A,A,0.9985
+A/A_Baju_Realme_7i.jpg,A,A,0.9595
+A/A_Baju_Samsung_A51.jpg,A,A,0.9552
+A/A_Baju_Vivo_V23 5G.jpg,A,A,0.9974
+A/A_Baju_iPhone_XR.jpeg,A,A,1.0
+A/A_Bebas_Iph_Iph15.jpg,A,A,0.9074
+A/A_Bebas_Oppo_A53.jpg,A,A,0.8929
+A/A_Bebas_Realme_7i.jpg,A,A,0.9994
+A/A_Bebas_Samsung_A51.jpg,A,A,0.9928
+A/A_Bebas_Vivo_V23 5G.jpg,A,A,0.9921
+A/A_Bebas_iPhone_XR.jpeg,A,A,0.9877
+A/A_Polos Gelap_Realme_7i.jpg,A,A,0.9879
+A/A_Polos Gelap_Samsung_A51.jpg,A,A,0.9918
+A/A_Polos Gelap_Vivo_V23 5G.jpg,A,A,0.993
+A/A_Polos Gelap_iPhone_XR.jpeg,A,A,0.9952
+A/A_Polos Terang_Realme_7i.jpg,A,A,0.9992
+A/A_Polos Terang_Vivo_V23 5G.jpg,A,A,0.9969
+A/A_Polos Terang_iPhone_XR.jpeg,A,A,0.9961
+A/A_Polos gelap_Oppo_A53.jpg,A,A,0.9977
+A/A_Polos terang_Oppo_A53.jpg,A,A,0.9469
+A/A_Terang Polos_Samsung_A51.jpg,A,A,0.9995
+A/A_baju_Iph_Iph15.jpg,A,A,0.94
+A/A_gelap_Iph_Iph15.jpg,A,A,0.9996
+A/A_terang_Iph_Iph15.jpg,A,A,0.9998
+B/B_Baju_Oppo_A53.jpg,B,B,0.8795
+B/B_Baju_Realme_7i.jpg,B,B,0.9329
+B/B_Baju_Samsung_A51.jpg,B,B,0.9977
+B/B_Baju_Vivo_V23 5G.jpg,B,B,0.9997
+B/B_Baju_iPhone_XR.jpeg,B,B,0.9971
+B/B_Bebas_Iph_Iph15.jpg,B,B,0.9896
+B/B_Bebas_Oppo_A53.jpg,B,B,0.5076
+B/B_Bebas_Realme_7i.jpg,B,B,0.8333
+B/B_Bebas_Samsung_A51.jpg,B,P,0.5205
+B/B_Bebas_Vivo_V23 5G.jpg,B,B,0.9068
+B/B_Bebas_iPhone_XR.jpeg,B,B,0.9849
+B/B_Polos Gelap_Realme_7i.jpg,B,B,0.8124
+B/B_Polos Gelap_Samsung_A51.jpg,B,B,0.9978
+B/B_Polos Gelap_Vivo_V23 5G.jpg,B,B,0.9947
+B/B_Polos Gelap_iPhone_XR.jpeg,B,B,0.9869
+B/B_Polos Terang_Realme_7i.jpg,B,B,0.9964
+B/B_Polos Terang_Samsung_A51.jpg,B,B,0.932
+B/B_Polos Terang_Vivo_V23 5G.jpg,B,B,0.9579
+B/B_Polos Terang_iPhone_XR.jpeg,B,B,0.9996
+B/B_Polos gelap_Oppo_A53.jpg,B,B,0.9999
+B/B_Polos terang_Oppo_A53.jpg,B,B,0.9128
+B/B_baju_Iph_Iph15.jpg,B,B,0.6027
+B/B_gelap_Iph_Iph15.jpg,B,B,0.9984
+B/B_terang_Iph_Iph15.jpg,B,B,0.9991
+C/C_Baju_Iph_Iph15.jpg,C,C,0.9797
+C/C_Baju_Oppo_A53.jpg,C,C,0.8608
+C/C_Baju_Realme_7i.jpg,C,C,0.9326
+C/C_Baju_Samsung_A51.jpg,C,C,0.2723
+C/C_Baju_Vivo_V23 5G.jpg,C,C,0.9299
+C/C_Baju_iPhone_XR.jpeg,C,C,0.9982
+C/C_Bebas_Oppo_A53.jpg,C,O,0.9646
+C/C_Bebas_Realme_7i.jpg,C,C,0.9867
+C/C_Bebas_Samsung_A51.jpg,C,C,0.5951
+C/C_Bebas_Vivo_V23 5G.jpg,C,C,0.9945
+C/C_Bebas_iPhone_XR.jpeg,C,C,0.5216
+C/C_Polos Gelap_Realme_7i.jpg,C,C,0.8928
+C/C_Polos Gelap_Samsung_A51.jpg,C,C,0.9126
+C/C_Polos Gelap_Vivo_V23 5G.jpg,C,C,0.9525
+C/C_Polos Gelap_iPhone_XR.jpeg,C,C,0.9988
+C/C_Polos Terang_Realme_7i.jpg,C,C,0.9794
+C/C_Polos Terang_Samsung_A51.jpg,C,C,0.9981
+C/C_Polos Terang_Vivo_V23 5G.jpg,C,C,0.7473
+C/C_Polos Terang_iPhone_XR.jpeg,C,C,1.0
+C/C_Polos gelap_Oppo_A53.jpg,C,C,0.6666
+C/C_Polos terang_Oppo_A53.jpg,C,C,0.9938
+C/C_bebas_Iph_Iph15.jpg,C,C,0.9992
+C/C_gelap_Iph_Iph15.jpg,C,C,0.9714
+C/C_terang_Iph_Iph15.jpg,C,C,0.997
+D/D_Baju_Oppo_A53.jpg,D,D,0.9856
+D/D_Baju_Realme_7i.jpg,D,P,0.9726
+D/D_Baju_Samsung_A51.jpg,D,P,0.8202
+D/D_Baju_Vivo_V23 5G.jpg,D,D,0.9993
+D/D_Baju_iPhone_XR.jpeg,D,D,0.9976
+D/D_Bebas_Iph_Iph15.jpg,D,D,0.9599
+D/D_Bebas_Oppo_A53.jpg,D,D,0.9897
+D/D_Bebas_Realme_7i.jpg,D,D,0.9997
+D/D_Bebas_Samsung_A51.jpg,D,D,0.8666
+D/D_Bebas_Vivo_V23 5G.jpg,D,D,0.98
+D/D_Bebas_iPhone_XR.jpeg,D,D,0.6738
+D/D_Gelap_Iph_Iph15.jpg,D,D,0.7455
+D/D_Polos Gelap_Realme_7i.jpg,D,D,0.9992
+D/D_Polos Gelap_Samsung_A51.jpg,D,P,0.8768
+D/D_Polos Gelap_Vivo_V23 5G.jpg,D,D,0.9924
+D/D_Polos Terang_Realme_7i.jpg,D,D,0.9747
+D/D_Polos Terang_Samsung_A51.jpg,D,D,0.7667
+D/D_Polos Terang_Vivo_V23 5G.jpg,D,D,0.9535
+D/D_Polos Terang_iPhone_XR.jpeg,D,D,0.9602
+D/D_Polos gelap_Oppo_A53.jpg,D,D,0.9985
+D/D_Polos terang_Oppo_A53.jpg,D,D,0.9093
+D/D_baju_Iph_Iph15.jpg,D,P,0.6097
+D/D_terang_Iph_Iph15.jpg,D,D,0.9483
+E/E_Baju_Oppo_A53.jpg,E,E,0.9721
+E/E_Baju_Realme_7i.jpg,E,E,0.9941
+E/E_Baju_Samsung_A51.jpg,E,B,0.9691
+E/E_Baju_Vivo_V23 5G.jpg,E,E,0.9999
+E/E_Baju_iPhone_XR.jpeg,E,E,0.5755
+E/E_Bebas_Oppo_A53.jpg,E,V,0.928
+E/E_Bebas_Realme_7i.jpg,E,E,0.9739
+E/E_Bebas_Samsung_A51.jpg,E,E,0.9943
+E/E_Bebas_Vivo_V23 5G.jpg,E,E,0.9258
+E/E_Bebas_iPhone_XR.jpeg,E,R,0.9288
+E/E_Polos Gelap_Realme_7i.jpg,E,E,0.9907
+E/E_Polos Gelap_Samsung_A51.jpg,E,E,0.9991
+E/E_Polos Gelap_Vivo_V23 5G.jpg,E,V,0.4005
+E/E_Polos Gelap_iPhone_XR.jpeg,E,E,0.9628
+E/E_Polos Terang_Realme_7i.jpg,E,E,0.9187
+E/E_Polos Terang_Samsung_A51.jpg,E,E,0.4735
+E/E_Polos Terang_Vivo_V23 5G.jpg,E,E,0.4178
+E/E_Polos Terang_iPhone_XR.jpeg,E,R,0.9943
+E/E_Polos gelap_Oppo_A53.jpg,E,E,0.9973
+E/E_Polos terang_Oppo_A53.jpg,E,E,0.7789
+E/E_baju_Iph_Iph15.jpg,E,E,0.6286
+E/E_bebas_Iph_Iph15.jpg,E,E,0.8358
+E/E_gelap_Iph_Iph15.jpg,E,E,0.495
+E/E_terang_Iph_Iph15.jpg,E,E,0.9844
+F/F_Background Bebas_Apple_Iphone 15.jpg,F,F,0.541
+F/F_Baju_Apple_Iphone 15.jpg,F,F,0.9334
+F/F_Baju_Oppo_A53.jpg,F,F,0.9547
+F/F_Baju_Realme_7i.jpg,F,F,0.6628
+F/F_Baju_Samsung_A51.jpg,F,F,0.9998
+F/F_Baju_Vivo_V23 5G.jpg,F,F,0.9888
+F/F_Baju_iPhone_XR.jpeg,F,F,1.0
+F/F_Bebas_Oppo_A53.jpg,F,F,0.9781
+F/F_Bebas_Realme_7i.jpg,F,F,0.9208
+F/F_Bebas_Samsung_A51.jpg,F,F,0.9991
+F/F_Bebas_Vivo_V23 5G.jpg,F,F,0.4754
+F/F_Bebas_iPhone_XR.jpeg,F,F,0.999
+F/F_Polos Gelap_Apple_Iphone 15.jpg,F,F,0.9895
+F/F_Polos Gelap_Realme_7i.jpg,F,F,0.951
+F/F_Polos Gelap_Samsung_A51.jpg,F,F,0.996
+F/F_Polos Gelap_Vivo_V23 5G.jpg,F,F,0.6572
+F/F_Polos Gelap_iPhone_XR.jpeg,F,R,0.5676
+F/F_Polos Terang_Apple_Iphone 15.jpg,F,F,1.0
+F/F_Polos Terang_Realme_7i.jpg,F,F,0.9986
+F/F_Polos Terang_Samsung_A51.jpg,F,F,0.9988
+F/F_Polos Terang_Vivo_V23 5G.jpg,F,T,0.9283
+F/F_Polos Terang_iPhone_XR.jpeg,F,F,0.9956
+F/F_Polos gelap_Oppo_A53.jpg,F,F,0.9987
+F/F_Polos terang_Oppo_A53.jpg,F,F,0.997
+F/F_baju_Iph_Iph15.jpg,F,T,0.7073
+F/F_bebas_Iph_Iph15.jpg,F,F,0.6479
+F/F_gelap_Iph_Iph15.jpg,F,F,0.8845
+F/F_terang_Iph_Iph15.jpg,F,F,0.6455
+G/G_Background Bebas_Apple_Iphone 15.jpg,G,G,0.8676
+G/G_Baju_Apple_Iphone 15.jpg,G,G,0.9767
+G/G_Baju_Oppo_A53.jpg,G,G,0.9975
+G/G_Baju_Realme_7i.jpg,G,G,0.9968
+G/G_Baju_Samsung_A51.jpg,G,G,0.8376
+G/G_Baju_Vivo_V23 5G.jpg,G,G,0.8737
+G/G_Baju_iPhone_XR.jpeg,G,G,0.9997
+G/G_Bebas_Oppo_A53.jpg,G,G,0.9992
+G/G_Bebas_Realme_7i.jpg,G,G,0.9966
+G/G_Bebas_Samsung_A51.jpg,G,G,0.9887
+G/G_Bebas_Vivo_V23 5G.jpg,G,G,0.9739
+G/G_Bebas_iPhone_XR.jpeg,G,G,0.8983
+G/G_Polos Gelap_Apple_Iphone 15.jpg,G,G,0.9996
+G/G_Polos Gelap_Realme_7i.jpg,G,G,0.7307
+G/G_Polos Gelap_Samsung_A51.jpg,G,G,0.8531
+G/G_Polos Gelap_Vivo_V23 5G.jpg,G,G,0.824
+G/G_Polos Gelap_iPhone_XR.jpeg,G,G,0.9723
+G/G_Polos Terang_Apple_Iphone 15.jpg,G,G,0.9999
+G/G_Polos Terang_Realme_7i.jpg,G,G,0.9896
+G/G_Polos Terang_Samsung_A51.jpg,G,G,0.9985
+G/G_Polos Terang_Vivo_V23 5G.jpg,G,Q,0.9925
+G/G_Polos Terang_iPhone_XR.jpeg,G,G,0.9999
+G/G_Polos gelap_Oppo_A53.jpg,G,G,0.9996
+G/G_Polos terang_Oppo_A53.jpg,G,G,0.9991
+G/G_baju_Iph_Iph15.jpg,G,G,0.9987
+G/G_bebas_Iph_Iph15.jpg,G,G,0.7085
+G/G_gelap_Iph_Iph15.jpg,G,Q,0.9004
+G/G_terang_Iph_Iph15.jpg,G,G,0.9989
+H/H_Background Bebas_Apple_Iphone 15.jpg,H,H,0.9857
+H/H_Baju_Apple_Iphone 15.jpg,H,H,0.7262
+H/H_Baju_Oppo_A53.jpg,H,R,0.652
+H/H_Baju_Realme_7i.jpg,H,H,0.9964
+H/H_Baju_Samsung_A51.jpg,H,H,0.8501
+H/H_Baju_Vivo_V23 5G.jpg,H,H,0.943
+H/H_Baju_iPhone_XR.jpeg,H,H,0.985
+H/H_Bebas_Oppo_A53.jpg,H,R,0.6351
+H/H_Bebas_Realme_7i.jpg,H,H,0.9998
+H/H_Bebas_Samsung_A51.jpg,H,H,0.9995
+H/H_Bebas_Vivo_V23 5G.jpg,H,H,1.0
+H/H_Bebas_iPhone_XR.jpeg,H,H,0.8971
+H/H_Polos Gelap_Apple_Iphone 15.jpg,H,H,0.9994
+H/H_Polos Gelap_Realme_7i.jpg,H,H,0.9993
+H/H_Polos Gelap_Samsung_A51.jpg,H,H,0.9999
+H/H_Polos Gelap_Vivo_V23 5G.jpg,H,H,0.9999
+H/H_Polos Gelap_iPhone_XR.jpeg,H,H,0.7379
+H/H_Polos Terang_Apple_Iphone 15.jpg,H,H,0.9999
+H/H_Polos Terang_Realme_7i.jpg,H,H,0.9988
+H/H_Polos Terang_Samsung_A51.jpg,H,H,0.9993
+H/H_Polos Terang_Vivo_V23 5G.jpg,H,H,1.0
+H/H_Polos Terang_iPhone_XR.jpeg,H,H,0.9958
+H/H_Polos gelap_Oppo_A53.jpg,H,H,0.6129
+H/H_Polos terang_Oppo_A53.jpg,H,H,0.9967
+H/H_Terang_Iph_Iph15.jpg,H,H,0.9994
+H/H_baju_Iph_Iph15.jpg,H,H,0.9992
+H/H_bebas_Iph_Iph15.jpg,H,F,0.5117
+H/H_gelap_Iph_Iph15.jpg,H,H,0.9757
+I/I_Background Bebas_Apple_Iphone 15.jpg,I,I,0.9998
+I/I_Baju_Apple_Iphone 15.jpg,I,Q,0.4949
+I/I_Baju_Oppo_A53.jpg,I,I,0.9912
+I/I_Baju_Realme_7i.jpg,I,I,0.469
+I/I_Baju_Samsung_A51.jpg,I,I,0.8901
+I/I_Baju_Vivo_V23 5G.jpg,I,I,0.9949
+I/I_Baju_iPhone_XR.jpeg,I,I,0.9789
+I/I_Bebas_Oppo_A53.jpg,I,I,0.9034
+I/I_Bebas_Realme_7i.jpg,I,I,0.8951
+I/I_Bebas_Samsung_A51.jpg,I,J,0.7321
+I/I_Bebas_Vivo_V23 5G.jpg,I,I,0.563
+I/I_Bebas_iPhone_XR.jpeg,I,I,0.9327
+I/I_Polos Gelap_Apple_Iphone 15.jpg,I,I,0.9876
+I/I_Polos Gelap_Realme_7i.jpg,I,I,0.5574
+I/I_Polos Gelap_Samsung_A51.jpg,I,I,0.9958
+I/I_Polos Gelap_Vivo_V23 5G.jpg,I,I,0.9914
+I/I_Polos Gelap_iPhone_XR.jpeg,I,R,0.6132
+I/I_Polos Terang_Apple_Iphone 15.jpg,I,I,0.9998
+I/I_Polos Terang_Realme_7i.jpg,I,I,0.29
+I/I_Polos Terang_Samsung_A51.jpg,I,I,0.769
+I/I_Polos Terang_Vivo_V23 5G.jpg,I,I,0.9673
+I/I_Polos Terang_iPhone_XR.jpeg,I,U,0.8146
+I/I_Polos gelap_Oppo_A53.jpg,I,I,0.847
+I/I_Polos terang_Oppo_A53.jpg,I,I,0.9848
+I/I_baju_Iph_Iph15.jpg,I,U,0.6596
+I/I_bebas_Iph_Iph15.jpg,I,I,0.9904
+I/I_gelap_Iph_Iph15.jpg,I,U,0.4519
+I/I_terang_Iph_Iph15.jpg,I,I,0.6833
+J/J_Baju_Oppo_A53.jpg,J,J,0.9486
+J/J_Baju_Realme_7i.jpg,J,J,0.975
+J/J_Baju_Samsung_A51.jpg,J,G,0.9448
+J/J_Baju_Vivo_V23 5G.jpg,J,J,1.0
+J/J_Baju_iPhone_XR.jpeg,J,J,0.9808
+J/J_Bebas_Oppo_A53.jpg,J,J,0.7889
+J/J_Bebas_Realme_7i.jpg,J,G,0.6847
+J/J_Bebas_Samsung_A51.jpg,J,J,0.9878
+J/J_Bebas_Vivo_V23 5G.jpg,J,J,0.9848
+J/J_Bebas_iPhone_XR.jpeg,J,R,0.9841
+J/J_Polos Gelap_Realme_7i.jpg,J,J,0.4752
+J/J_Polos Gelap_Samsung_A51.jpg,J,J,0.5951
+J/J_Polos Gelap_Vivo_V23 5G.jpg,J,J,0.9979
+J/J_Polos Gelap_iPhone_XR.jpeg,J,J,0.7924
+J/J_Polos Terang_Realme_7i.jpg,J,J,0.9997
+J/J_Polos Terang_Samsung_A51.jpg,J,J,0.9951
+J/J_Polos Terang_Vivo_V23 5G.jpg,J,J,0.9855
+J/J_Polos Terang_iPhone_XR.jpeg,J,G,0.8996
+J/J_Polos gelap_Oppo_A53.jpg,J,J,0.9918
+J/J_Polos terang_Oppo_A53.jpg,J,J,0.9878
+J/J_baju_Iph_Iph15.jpg,J,J,0.9048
+J/J_bebas_Iph_Iph15.jpg,J,J,0.7952
+J/J_gelap_Iph_Iph15.jpg,J,J,0.5102
+J/J_terang_Iph_Iph15.jpg,J,J,0.9837
+K/K_Background Bebas_Apple_Iphone 15.jpg,K,Y,0.9966
+K/K_Baju_Apple_Iphone 15.jpg,K,K,0.8885
+K/K_Baju_Oppo_A53.jpg,K,G,0.4992
+K/K_Baju_Realme_7i.jpg,K,K,0.9186
+K/K_Baju_Samsung_A51.jpg,K,K,0.9583
+K/K_Baju_Vivo_V23 5G.jpg,K,K,0.9846
+K/K_Baju_iPhone_XR.jpeg,K,K,0.9988
+K/K_Bebas_Oppo_A53.jpg,K,K,0.6288
+K/K_Bebas_Realme_7i.jpg,K,K,0.9812
+K/K_Bebas_Samsung_A51.jpg,K,R,0.6084
+K/K_Bebas_Vivo_V23 5G.jpg,K,K,0.9824
+K/K_Bebas_iPhone_XR.jpeg,K,K,0.9985
+K/K_Polos Gelap_Apple_Iphone 15.jpg,K,K,0.9951
+K/K_Polos Gelap_Realme_7i.jpg,K,K,0.9987
+K/K_Polos Gelap_Samsung_A51.jpg,K,K,0.9974
+K/K_Polos Gelap_Vivo_V23 5G.jpg,K,K,0.9858
+K/K_Polos Gelap_iPhone_XR.jpeg,K,K,0.7839
+K/K_Polos Terang_Apple_Iphone 15.jpg,K,K,0.9999
+K/K_Polos Terang_Realme_7i.jpg,K,K,0.955
+K/K_Polos Terang_Samsung_A51.jpg,K,K,0.8151
+K/K_Polos Terang_Vivo_V23 5G.jpg,K,K,0.98
+K/K_Polos Terang_iPhone_XR.jpeg,K,K,0.9711
+K/K_Polos gelap_Oppo_A53.jpg,K,K,0.9398
+K/K_Polos terang_Oppo_A53.jpg,K,K,0.552
+K/K_baju_Iph_Iph15.jpg,K,K,0.9822
+K/K_bebas_Iph_Iph15.jpg,K,K,0.9788
+K/K_gelap_Iph_Iph15.jpg,K,K,0.7986
+K/K_terang_Iph_Iph15.jpg,K,K,0.9211
+L/L_Background Bebas_Apple_Iphone 15.jpg,L,L,0.9989
+L/L_Baju_Apple_Iphone 15.jpg,L,L,0.4883
+L/L_Baju_Oppo_A53.jpg,L,L,0.9893
+L/L_Baju_Realme_7i.jpg,L,L,0.9937
+L/L_Baju_Samsung_A51.jpg,L,L,0.9925
+L/L_Baju_Vivo_V23 5G.jpg,L,L,1.0
+L/L_Baju_iPhone_XR.jpeg,L,L,0.9898
+L/L_Bebas_Oppo_A53.jpg,L,J,0.4912
+L/L_Bebas_Realme_7i.jpg,L,L,0.7432
+L/L_Bebas_Samsung_A51.jpg,L,L,1.0
+L/L_Bebas_Vivo_V23 5G.jpg,L,L,0.9991
+L/L_Bebas_iPhone_XR.jpeg,L,R,0.9515
+L/L_Polos Gelap_Apple_Iphone 15.jpg,L,L,1.0
+L/L_Polos Gelap_Realme_7i.jpg,L,L,0.9921
+L/L_Polos Gelap_Samsung_A51.jpg,L,L,0.9991
+L/L_Polos Gelap_Vivo_V23 5G.jpg,L,L,0.9997
+L/L_Polos Gelap_iPhone_XR.jpeg,L,L,0.78
+L/L_Polos Terang_Apple_Iphone 15.jpg,L,L,1.0
+L/L_Polos Terang_Realme_7i.jpg,L,R,0.3685
+L/L_Polos Terang_Samsung_A51.jpg,L,L,0.9991
+L/L_Polos Terang_Vivo_V23 5G.jpg,L,L,0.9937
+L/L_Polos Terang_iPhone_XR.jpeg,L,L,0.6011
+L/L_Polos gelap_Oppo_A53.jpg,L,L,0.9941
+L/L_Polos terang_Oppo_A53.jpg,L,R,0.6076
+L/L_baju_Iph_Iph15.jpg,L,L,0.9993
+L/L_bebas_Iph_Iph15.jpg,L,L,0.999
+L/L_gelap_Iph_Iph15.jpg,L,L,0.5109
+L/L_terang_Iph_Iph15.jpg,L,L,0.8837
+M/M_Background Bebas_Apple_Iphone 15.jpg,M,N,0.7532
+M/M_Baju_Apple_Iphone 15.jpg,M,M,0.8431
+M/M_Baju_Oppo_A53.jpg,M,M,0.934
+M/M_Baju_Realme_7i.jpg,M,M,0.9148
+M/M_Baju_Samsung_A51.jpg,M,M,0.9796
+M/M_Baju_Vivo_V23 5G.jpg,M,N,0.8148
+M/M_Baju_iPhone_XR.jpeg,M,N,0.9198
+M/M_Bebas_Oppo_A53.jpg,M,N,0.5241
+M/M_Bebas_Realme_7i.jpg,M,M,0.6489
+M/M_Bebas_Samsung_A51.jpg,M,N,0.8141
+M/M_Bebas_Vivo_V23 5G.jpg,M,M,0.5864
+M/M_Bebas_iPhone_XR.jpeg,M,M,0.9723
+M/M_Polos Gelap_Apple_Iphone 15.jpg,M,M,0.8591
+M/M_Polos Gelap_Realme_7i.jpg,M,M,0.8091
+M/M_Polos Gelap_Samsung_A51.jpg,M,M,0.9484
+M/M_Polos Gelap_Vivo_V23 5G.jpg,M,M,0.6171
+M/M_Polos Gelap_iPhone_XR.jpeg,M,M,0.945
+M/M_Polos Terang_Apple_Iphone 15.jpg,M,M,0.967
+M/M_Polos Terang_Realme_7i.jpg,M,M,0.9732
+M/M_Polos Terang_Samsung_A51.jpg,M,M,0.9359
+M/M_Polos Terang_Vivo_V23 5G.jpg,M,N,0.8102
+M/M_Polos Terang_iPhone_XR.jpeg,M,N,0.79
+M/M_Polos gelap_Oppo_A53.jpg,M,M,0.932
+M/M_Polos terang_Oppo_A53.jpg,M,M,0.8838
+M/M_baju_Iph_Iph15.jpg,M,N,0.9946
+M/M_bebas_Iph_Iph15.jpg,M,N,0.9699
+M/M_gelap_Iph_Iph15.jpg,M,N,0.8425
+M/M_terang_Iph_Iph15.jpg,M,N,0.9536
+N/N_Background Bebas_Apple_Iphone 15.jpg,N,N,0.9711
+N/N_Baju_Apple_Iphone 15.jpg,N,N,0.9383
+N/N_Baju_Oppo_A53.jpg,N,N,0.6218
+N/N_Baju_Realme_7i.jpg,N,N,0.996
+N/N_Baju_Samsung_A51.jpg,N,N,0.8064
+N/N_Baju_Vivo_V23 5G.jpg,N,N,0.6478
+N/N_Baju_iPhone_XR.jpeg,N,N,0.9982
+N/N_Bebas_Oppo_A53.jpg,N,N,0.9612
+N/N_Bebas_Realme_7i.jpg,N,N,0.9873
+N/N_Bebas_Samsung_A51.jpg,N,N,0.9908
+N/N_Bebas_Vivo_V23 5G.jpg,N,N,0.9839
+N/N_Bebas_iPhone_XR.jpeg,N,M,0.9508
+N/N_Polos Gelap_Apple_Iphone 15.jpg,N,M,0.8079
+N/N_Polos Gelap_Realme_7i.jpg,N,N,0.652
+N/N_Polos Gelap_Samsung_A51.jpg,N,N,0.9901
+N/N_Polos Gelap_Vivo_V23 5G.jpg,N,N,0.9837
+N/N_Polos Gelap_iPhone_XR.jpeg,N,N,0.5507
+N/N_Polos Terang_Apple_Iphone 15.jpg,N,N,0.6644
+N/N_Polos Terang_Realme_7i.jpg,N,N,0.7574
+N/N_Polos Terang_Samsung_A51.jpg,N,N,0.8352
+N/N_Polos Terang_Vivo_V23 5G.jpg,N,N,0.9985
+N/N_Polos Terang_iPhone_XR.jpeg,N,N,0.9982
+N/N_Polos gelap_Oppo_A53.jpg,N,N,0.891
+N/N_Polos terang_Oppo_A53.jpg,N,N,0.895
+N/N_baju_Iph_Iph15.jpg,N,N,0.6836
+N/N_bebas_Iph_Iph15.jpg,N,N,0.9893
+N/N_gelap_Iph_Iph15.jpg,N,N,0.8913
+N/N_terang_Iph_Iph15.jpg,N,N,0.9777
+O/O_Background Bebas_Apple_Iphone 15.jpg,O,O,0.9974
+O/O_Baju_Apple_Iphone 15.jpg,O,N,0.9237
+O/O_Baju_Oppo_A53.jpg,O,O,0.9998
+O/O_Baju_Realme_7i.jpg,O,O,0.9992
+O/O_Baju_Samsung_A51.jpg,O,O,0.9971
+O/O_Baju_Vivo_V23 5G.jpg,O,O,1.0
+O/O_Baju_iPhone_XR.jpeg,O,O,0.9401
+O/O_Bebas_Oppo_A53.jpg,O,O,0.9409
+O/O_Bebas_Realme_7i.jpg,O,Q,0.5829
+O/O_Bebas_Samsung_A51.jpg,O,O,0.9994
+O/O_Bebas_Vivo_V23 5G.jpg,O,O,0.9997
+O/O_Bebas_iPhone_XR.jpeg,O,O,0.9343
+O/O_Polos Gelap_Apple_Iphone 15.jpg,O,O,0.9998
+O/O_Polos Gelap_Realme_7i.jpg,O,O,0.9919
+O/O_Polos Gelap_Samsung_A51.jpg,O,O,0.8345
+O/O_Polos Gelap_Vivo_V23 5G.jpg,O,O,0.9958
+O/O_Polos Gelap_iPhone_XR.jpeg,O,L,0.7246
+O/O_Polos Terang_Apple_Iphone 15.jpg,O,O,0.9999
+O/O_Polos Terang_Realme_7i.jpg,O,O,0.9989
+O/O_Polos Terang_Samsung_A51.jpg,O,O,0.8666
+O/O_Polos Terang_Vivo_V23 5G.jpg,O,O,0.9951
+O/O_Polos Terang_iPhone_XR.jpeg,O,O,0.9616
+O/O_Polos gelap_Oppo_A53.jpg,O,O,0.9963
+O/O_Polos terang_Oppo_A53.jpg,O,O,0.9546
+O/O_baju_Iph_Iph15.jpg,O,Q,0.9958
+O/O_bebas_Iph_Iph15.jpg,O,O,0.5716
+O/O_gelap_Iph_Iph15.jpg,O,O,0.9907
+O/O_terang_Iph_Iph15.jpg,O,O,0.9526
+P/P_Background Bebas_Apple_Iphone 15.jpg,P,P,0.5557
+P/P_Baju_Apple_Iphone 15.jpg,P,Q,0.8095
+P/P_Baju_Oppo_A53.jpg,P,P,0.773
+P/P_Baju_Realme_7i.jpg,P,K,0.4439
+P/P_Baju_Samsung_A51.jpg,P,P,0.9993
+P/P_Baju_Vivo_V23 5G.jpg,P,D,0.888
+P/P_Baju_iPhone_XR.jpeg,P,P,0.8258
+P/P_Bebas_Oppo_A53.jpg,P,D,0.5162
+P/P_Bebas_Realme_7i.jpg,P,D,0.927
+P/P_Bebas_Samsung_A51.jpg,P,P,0.5905
+P/P_Bebas_Vivo_V23 5G.jpg,P,P,0.9999
+P/P_Bebas_iPhone_XR.jpeg,P,P,0.701
+P/P_Polos Gelap_Apple_Iphone 15.jpg,P,D,0.9984
+P/P_Polos Gelap_Realme_7i.jpg,P,D,0.8386
+P/P_Polos Gelap_Samsung_A51.jpg,P,P,0.9835
+P/P_Polos Gelap_Vivo_V23 5G.jpg,P,P,0.9989
+P/P_Polos Terang_Apple_Iphone 15.jpg,P,D,0.9801
+P/P_Polos Terang_Realme_7i.jpg,P,D,0.9789
+P/P_Polos Terang_Samsung_A51.jpg,P,P,0.6088
+P/P_Polos Terang_Vivo_V23 5G.jpg,P,P,0.9978
+P/P_Polos Terang_iPhone_XR.jpeg,P,P,0.9954
+P/P_Polos gelap_Oppo_A53.jpg,P,P,0.6484
+P/P_Polos terang_Oppo_A53.jpg,P,P,0.6073
+Q/Q_Background Bebas_Apple_Iphone 15.jpg,Q,Q,0.5874
+Q/Q_Baju_Apple_Iphone 15.jpg,Q,Q,0.9901
+Q/Q_Baju_Oppo_A53.jpg,Q,Q,0.9927
+Q/Q_Baju_Realme_7i.jpg,Q,W,0.5521
+Q/Q_Baju_Samsung_A51.jpg,Q,Q,0.9995
+Q/Q_Baju_Vivo_V23 5G.jpg,Q,Q,0.9983
+Q/Q_Baju_iPhone_XR.jpeg,Q,Q,0.9995
+Q/Q_Bebas_Oppo_A53.jpg,Q,Q,0.9989
+Q/Q_Bebas_Realme_7i.jpg,Q,Q,0.7438
+Q/Q_Bebas_Samsung_A51.jpg,Q,Q,1.0
+Q/Q_Bebas_Vivo_V23 5G.jpg,Q,Q,0.9985
+Q/Q_Bebas_iPhone_XR.jpeg,Q,Q,0.9525
+Q/Q_Polos Gelap_Apple_Iphone 15.jpg,Q,Q,1.0
+Q/Q_Polos Gelap_Realme_7i.jpg,Q,Q,0.8302
+Q/Q_Polos Gelap_Samsung_A51.jpg,Q,Q,0.9818
+Q/Q_Polos Gelap_Vivo_V23 5G.jpg,Q,Q,0.9431
+Q/Q_Polos Gelap_iPhone_XR.jpeg,Q,O,0.8726
+Q/Q_Polos Terang_Apple_Iphone 15.jpg,Q,Q,0.9977
+Q/Q_Polos Terang_Realme_7i.jpg,Q,Q,0.943
+Q/Q_Polos Terang_Samsung_A51.jpg,Q,Q,0.9884
+Q/Q_Polos Terang_Vivo_V23 5G.jpg,Q,Q,0.938
+Q/Q_Polos Terang_iPhone_XR.jpeg,Q,Q,0.9916
+Q/Q_Polos gelap_Oppo_A53.jpg,Q,Q,0.6124
+Q/Q_Polos terang_Oppo_A53.jpg,Q,R,0.5423
+R/R_Background Bebas_Apple_Iphone 15.jpg,R,R,0.9981
+R/R_Baju_Apple_Iphone 15.jpg,R,R,0.9672
+R/R_Baju_Oppo_A53.jpg,R,R,0.9756
+R/R_Baju_Realme_7i.jpg,R,R,1.0
+R/R_Baju_Samsung_A51.jpg,R,R,0.9999
+R/R_Baju_Vivo_V23 5G.jpg,R,R,0.9964
+R/R_Baju_iPhone_XR.jpeg,R,R,0.9903
+R/R_Bebas_Oppo_A53.jpg,R,R,0.9991
+R/R_Bebas_Realme_7i.jpg,R,R,0.4972
+R/R_Bebas_Samsung_A51.jpg,R,R,0.9999
+R/R_Bebas_Vivo_V23 5G.jpg,R,R,0.9947
+R/R_Bebas_iPhone_XR.jpeg,R,R,1.0
+R/R_Polos Gelap_Apple_Iphone 15.jpg,R,R,1.0
+R/R_Polos Gelap_Realme_7i.jpg,R,R,0.9817
+R/R_Polos Gelap_Samsung_A51.jpg,R,R,0.9779
+R/R_Polos Gelap_Vivo_V23 5G.jpg,R,R,0.9981
+R/R_Polos Gelap_iPhone_XR.jpeg,R,R,0.999
+R/R_Polos Terang_Apple_Iphone 15.jpg,R,R,0.9994
+R/R_Polos Terang_Realme_7i.jpg,R,R,0.9983
+R/R_Polos Terang_Samsung_A51.jpg,R,R,1.0
+R/R_Polos Terang_Vivo_V23 5G.jpg,R,R,0.9574
+R/R_Polos Terang_iPhone_XR.jpeg,R,R,0.9993
+R/R_Polos gelap_Oppo_A53.jpg,R,R,1.0
+R/R_Polos terang_Oppo_A53.jpg,R,R,0.9981
+R/R_baju_Iph_Iph15.jpg,R,R,0.991
+R/R_bebas_Iph_Iph15.jpg,R,U,0.6504
+R/R_gelap_Iph_Iph15.jpg,R,R,0.9998
+R/R_terang_Iph_Iph15.jpg,R,R,0.999
+S/S_Background Bebas_Apple_Iphone 15.jpg,S,S,0.5684
+S/S_Baju_Apple_Iphone 15.jpg,S,Q,0.8803
+S/S_Baju_Oppo_A53.jpg,S,S,0.9721
+S/S_Baju_Realme_7i.jpg,S,Q,0.5215
+S/S_Baju_Samsung_A51.jpg,S,P,0.4531
+S/S_Baju_Vivo_V23 5G.jpg,S,S,0.9989
+S/S_Baju_iPhone_XR.jpeg,S,S,0.9985
+S/S_Bebas_Oppo_A53.jpg,S,S,0.9966
+S/S_Bebas_Realme_7i.jpg,S,S,0.9043
+S/S_Bebas_Samsung_A51.jpg,S,S,0.9996
+S/S_Bebas_Vivo_V23 5G.jpg,S,S,0.9994
+S/S_Bebas_iPhone_XR.jpeg,S,D,0.7373
+S/S_Polos Gelap_Apple_Iphone 15.jpg,S,S,0.9999
+S/S_Polos Gelap_Realme_7i.jpg,S,S,0.9936
+S/S_Polos Gelap_Samsung_A51.jpg,S,S,0.9176
+S/S_Polos Gelap_Vivo_V23 5G.jpg,S,S,0.9999
+S/S_Polos Gelap_iPhone_XR.jpeg,S,S,0.8974
+S/S_Polos Terang_Apple_Iphone 15.jpg,S,S,1.0
+S/S_Polos Terang_Realme_7i.jpg,S,S,0.8929
+S/S_Polos Terang_Samsung_A51.jpg,S,S,0.9954
+S/S_Polos Terang_Vivo_V23 5G.jpg,S,S,0.9972
+S/S_Polos Terang_iPhone_XR.jpeg,S,S,0.9991
+S/S_Polos gelap_Oppo_A53.jpg,S,S,0.9971
+S/S_Polos terang_Oppo_A53.jpg,S,S,0.9111
+S/S_baju_Iph_Iph15.jpg,S,S,0.9636
+S/S_bebas_Iph_Iph15.jpg,S,S,0.6605
+S/S_gelap_Iph_Iph15.jpg,S,S,0.9163
+S/S_terang_Iph_Iph15.jpg,S,S,0.9888
+T/T_Background Bebas_Apple_Iphone 15.jpg,T,T,0.9723
+T/T_Baju_Apple_Iphone 15.jpg,T,F,0.6422
+T/T_Baju_Oppo_A53.jpg,T,T,0.9583
+T/T_Baju_Realme_7i.jpg,T,T,0.8604
+T/T_Baju_Samsung_A51.jpg,T,T,0.9942
+T/T_Baju_Vivo_V23 5G.jpg,T,T,0.9999
+T/T_Baju_iPhone_XR.jpeg,T,T,1.0
+T/T_Bebas_Oppo_A53.jpg,T,T,0.6597
+T/T_Bebas_Realme_7i.jpg,T,T,0.9993
+T/T_Bebas_Samsung_A51.jpg,T,T,0.9979
+T/T_Bebas_Vivo_V23 5G.jpg,T,T,1.0
+T/T_Bebas_iPhone_XR.jpeg,T,T,0.6264
+T/T_Polos Gelap_Apple_Iphone 15.jpg,T,T,0.9818
+T/T_Polos Gelap_Realme_7i.jpg,T,T,1.0
+T/T_Polos Gelap_Samsung_A51.jpg,T,T,0.6203
+T/T_Polos Gelap_Vivo_V23 5G.jpg,T,T,1.0
+T/T_Polos Gelap_iPhone_XR.jpeg,T,T,0.9984
+T/T_Polos Terang_Apple_Iphone 15.jpg,T,T,0.9998
+T/T_Polos Terang_Realme_7i.jpg,T,T,0.9999
+T/T_Polos Terang_Samsung_A51.jpg,T,F,0.3676
+T/T_Polos Terang_Vivo_V23 5G.jpg,T,T,1.0
+T/T_Polos Terang_iPhone_XR.jpeg,T,T,0.9995
+T/T_Polos gelap_Oppo_A53.jpg,T,T,0.995
+T/T_Polos terang_Oppo_A53.jpg,T,T,0.9418
+T/T_baju_Iph_Iph15.jpg,T,T,1.0
+T/T_bebas_Iph_Iph15.jpg,T,T,0.9993
+T/T_gelap_Iph_Iph15.jpg,T,T,0.9998
+T/T_terang_Iph_Iph15.jpg,T,T,0.9708
+U/U_Background Bebas_Apple_Iphone 15.jpg,U,U,0.999
+U/U_Baju_Apple_Iphone 15.jpg,U,U,0.9672
+U/U_Baju_Oppo_A53.jpg,U,L,0.5445
+U/U_Baju_Realme_7i.jpg,U,U,0.968
+U/U_Baju_Samsung_A51.jpg,U,U,0.8996
+U/U_Baju_Vivo_V23 5G.jpg,U,U,0.963
+U/U_Baju_iPhone_XR.jpeg,U,U,0.9987
+U/U_Bebas_Oppo_A53.jpg,U,U,0.7645
+U/U_Bebas_Realme_7i.jpg,U,U,0.9984
+U/U_Bebas_Samsung_A51.jpg,U,U,0.9998
+U/U_Bebas_Vivo_V23 5G.jpg,U,U,0.9193
+U/U_Bebas_iPhone_XR.jpeg,U,U,0.9942
+U/U_Polos Gelap_Apple_Iphone 15.jpg,U,U,0.9976
+U/U_Polos Gelap_Realme_7i.jpg,U,U,0.9999
+U/U_Polos Gelap_Samsung_A51.jpg,U,U,0.9905
+U/U_Polos Gelap_Vivo_V23 5G.jpg,U,U,0.5634
+U/U_Polos Gelap_iPhone_XR.jpeg,U,U,0.9459
+U/U_Polos Terang_Apple_Iphone 15.jpg,U,U,0.9927
+U/U_Polos Terang_Realme_7i.jpg,U,U,0.9997
+U/U_Polos Terang_Samsung_A51.jpg,U,U,0.9847
+U/U_Polos Terang_Vivo_V23 5G.jpg,U,R,0.5063
+U/U_Polos Terang_iPhone_XR.jpeg,U,U,0.955
+U/U_Polos gelap_Oppo_A53.jpg,U,U,0.8273
+U/U_Polos terang_Oppo_A53.jpg,U,U,0.8994
+U/U_baju_Iph_Iph15.jpg,U,U,0.5314
+U/U_bebas_Iph_Iph15.jpg,U,C,0.9934
+U/U_gelap_Iph_Iph15.jpg,U,U,0.9859
+U/U_terang_Iph_Iph15.jpg,U,U,0.6334
+V/V_Background Bebas_Apple_Iphone 15.jpg,V,V,0.9987
+V/V_Baju_Apple_Iphone 15.jpg,V,U,0.7775
+V/V_Baju_Oppo_A53.jpg,V,V,0.4692
+V/V_Baju_Realme_7i.jpg,V,V,0.9195
+V/V_Baju_Samsung_A51.jpg,V,V,1.0
+V/V_Baju_Vivo_V23 5G.jpg,V,V,0.9999
+V/V_Baju_iPhone_XR.jpeg,V,U,0.6369
+V/V_Bebas_Oppo_A53.jpg,V,V,0.4209
+V/V_Bebas_Realme_7i.jpg,V,V,0.9814
+V/V_Bebas_Samsung_A51.jpg,V,V,0.985
+V/V_Bebas_Vivo_V23 5G.jpg,V,V,0.995
+V/V_Bebas_iPhone_XR.jpeg,V,V,0.4201
+V/V_Polos Gelap_Apple_Iphone 15.jpg,V,V,0.9999
+V/V_Polos Gelap_Realme_7i.jpg,V,V,0.9904
+V/V_Polos Gelap_Samsung_A51.jpg,V,V,0.9921
+V/V_Polos Gelap_Vivo_V23 5G.jpg,V,V,0.9935
+V/V_Polos Gelap_iPhone_XR.jpeg,V,V,0.8363
+V/V_Polos Terang_Apple_Iphone 15.jpg,V,V,0.9998
+V/V_Polos Terang_Realme_7i.jpg,V,Y,0.6584
+V/V_Polos Terang_Samsung_A51.jpg,V,V,0.9992
+V/V_Polos Terang_Vivo_V23 5G.jpg,V,V,0.9967
+V/V_Polos Terang_iPhone_XR.jpeg,V,V,0.9842
+V/V_Polos gelap_Oppo_A53.jpg,V,V,0.9876
+V/V_Polos terang_Oppo_A53.jpg,V,V,0.6081
+V/V_baju_Iph_Iph15.jpg,V,L,0.967
+V/V_bebas_Iph_Iph15.jpg,V,V,0.9894
+V/V_gelap_Iph_Iph15.jpg,V,V,0.4092
+V/V_terang_Iph_Iph15.jpg,V,V,0.9631
+W/W_Background Bebas_Apple_Iphone 15.jpg,W,W,0.8847
+W/W_Baju_Apple_Iphone 15.jpg,W,N,0.2437
+W/W_Baju_Oppo_A53.jpg,W,W,0.9801
+W/W_Baju_Realme_7i.jpg,W,H,0.5619
+W/W_Baju_Samsung_A51.jpg,W,W,0.9915
+W/W_Baju_Vivo_V23 5G.jpg,W,W,0.9998
+W/W_Baju_iPhone_XR.jpeg,W,W,0.9993
+W/W_Bebas_Oppo_A53.jpg,W,W,0.8811
+W/W_Bebas_Realme_7i.jpg,W,H,0.6662
+W/W_Bebas_Samsung_A51.jpg,W,W,0.9993
+W/W_Bebas_Vivo_V23 5G.jpg,W,W,0.9996
+W/W_Bebas_iPhone_XR.jpeg,W,Y,0.9913
+W/W_Polos Gelap_Apple_Iphone 15.jpg,W,W,0.9996
+W/W_Polos Gelap_Realme_7i.jpg,W,W,0.957
+W/W_Polos Gelap_Samsung_A51.jpg,W,W,0.9999
+W/W_Polos Gelap_Vivo_V23 5G.jpg,W,W,0.9998
+W/W_Polos Gelap_iPhone_XR.jpeg,W,U,0.3561
+W/W_Polos Terang_Apple_Iphone 15.jpg,W,W,0.9999
+W/W_Polos Terang_Realme_7i.jpg,W,W,0.9209
+W/W_Polos Terang_Samsung_A51.jpg,W,W,0.9983
+W/W_Polos Terang_Vivo_V23 5G.jpg,W,W,0.9997
+W/W_Polos Terang_iPhone_XR.jpeg,W,W,0.9396
+W/W_Polos gelap_Oppo_A53.jpg,W,E,0.5633
+W/W_Polos terang_Oppo_A53.jpg,W,W,0.9537
+X/X_Background Bebas_Apple_Iphone 15.jpg,X,X,0.9998
+X/X_Baju_Apple_Iphone 15.jpg,X,W,0.5463
+X/X_Baju_Oppo_A53.jpg,X,X,0.9997
+X/X_Baju_Realme_7i.jpg,X,X,1.0
+X/X_Baju_Samsung_A51.jpg,X,X,0.9942
+X/X_Baju_Vivo_V23 5G.jpg,X,X,1.0
+X/X_Baju_iPhone_XR.jpeg,X,X,1.0
+X/X_Bebas_Oppo_A53.jpg,X,X,0.9415
+X/X_Bebas_Realme_7i.jpg,X,X,0.9598
+X/X_Bebas_Samsung_A51.jpg,X,X,0.9998
+X/X_Bebas_Vivo_V23 5G.jpg,X,X,1.0
+X/X_Bebas_iPhone_XR.jpeg,X,X,0.5142
+X/X_Polos Gelap_Apple_Iphone 15.jpg,X,X,0.9987
+X/X_Polos Gelap_Realme_7i.jpg,X,X,0.9997
+X/X_Polos Gelap_Samsung_A51.jpg,X,X,0.9999
+X/X_Polos Gelap_Vivo_V23 5G.jpg,X,X,1.0
+X/X_Polos Gelap_iPhone_XR.jpeg,X,X,0.9981
+X/X_Polos Terang_Apple_Iphone 15.jpg,X,X,1.0
+X/X_Polos Terang_Realme_7i.jpg,X,X,0.9997
+X/X_Polos Terang_Samsung_A51.jpg,X,X,0.9999
+X/X_Polos Terang_Vivo_V23 5G.jpg,X,X,1.0
+X/X_Polos Terang_iPhone_XR.jpeg,X,X,0.5626
+X/X_Polos gelap_Oppo_A53.jpg,X,X,1.0
+X/X_Polos terang_Oppo_A53.jpg,X,X,0.9949
+X/X_baju_Iph_Iph15.jpg,X,X,0.9993
+X/X_bebas_Iph_Iph15.jpg,X,K,0.4509
+X/X_gelap_Iph_Iph15.jpg,X,X,0.9795
+X/X_terang_Iph_Iph15.jpg,X,X,0.735
+Y/Y_Background Bebas_Apple_Iphone 15.jpg,Y,Y,0.9797
+Y/Y_Baju_Apple_Iphone 15.jpg,Y,Y,0.9505
+Y/Y_Baju_Oppo_A53.jpg,Y,Y,0.9603
+Y/Y_Baju_Realme_7i.jpg,Y,Y,0.996
+Y/Y_Baju_Samsung_A51.jpg,Y,Y,0.998
+Y/Y_Baju_Vivo_V23 5G.jpg,Y,Y,0.9999
+Y/Y_Baju_iPhone_XR.jpeg,Y,L,0.723
+Y/Y_Bebas_Oppo_A53.jpg,Y,Y,0.9998
+Y/Y_Bebas_Realme_7i.jpg,Y,Y,0.9882
+Y/Y_Bebas_Samsung_A51.jpg,Y,Y,0.9996
+Y/Y_Bebas_Vivo_V23 5G.jpg,Y,Y,0.9992
+Y/Y_Bebas_iPhone_XR.jpeg,Y,Y,0.922
+Y/Y_Polos Gelap_Apple_Iphone 15.jpg,Y,Y,0.9993
+Y/Y_Polos Gelap_Realme_7i.jpg,Y,Y,0.9982
+Y/Y_Polos Gelap_Samsung_A51.jpg,Y,Y,0.7463
+Y/Y_Polos Gelap_Vivo_V23 5G.jpg,Y,Y,0.9709
+Y/Y_Polos Gelap_iPhone_XR.jpeg,Y,Y,0.998
+Y/Y_Polos Terang_Apple_Iphone 15.jpg,Y,Y,0.9773
+Y/Y_Polos Terang_Realme_7i.jpg,Y,Y,0.963
+Y/Y_Polos Terang_Samsung_A51.jpg,Y,Y,0.9998
+Y/Y_Polos Terang_Vivo_V23 5G.jpg,Y,Y,0.9967
+Y/Y_Polos Terang_iPhone_XR.jpeg,Y,Y,0.9998
+Y/Y_Polos gelap_Oppo_A53.jpg,Y,Y,0.9999
+Y/Y_Polos terang_Oppo_A53.jpg,Y,Y,0.9914
+Y/Y_baju_Iph_Iph15.jpg,Y,Y,0.6742
+Y/Y_bebas_Iph_Iph15.jpg,Y,Y,0.9994
+Y/Y_gelap_Iph_Iph15.jpg,Y,Y,0.9494
+Y/Y_terang_Iph_Iph15.jpg,Y,Y,0.9944
+Z/Z_Background Bebas_Apple_Iphone 15.jpg,Z,Z,0.9337
+Z/Z_Baju_Apple_Iphone 15.jpg,Z,R,0.9293
+Z/Z_Baju_Oppo_A53.jpg,Z,Z,0.9996
+Z/Z_Baju_Realme_7i.jpg,Z,Z,0.9999
+Z/Z_Baju_Samsung_A51.jpg,Z,Z,0.911
+Z/Z_Baju_Vivo_V23 5G.jpg,Z,Z,0.998
+Z/Z_Baju_iPhone_XR.jpeg,Z,I,0.3865
+Z/Z_Bebas_Oppo_A53.jpg,Z,Z,0.9828
+Z/Z_Bebas_Realme_7i.jpg,Z,R,0.6663
+Z/Z_Bebas_Samsung_A51.jpg,Z,Z,1.0
+Z/Z_Bebas_Vivo_V23 5G.jpg,Z,Z,1.0
+Z/Z_Bebas_iPhone_XR.jpeg,Z,R,0.7639
+Z/Z_Polos Gelap_Apple_Iphone 15.jpg,Z,Z,0.9265
+Z/Z_Polos Gelap_Realme_7i.jpg,Z,Z,0.9944
+Z/Z_Polos Gelap_Samsung_A51.jpg,Z,Z,0.9926
+Z/Z_Polos Gelap_Vivo_V23 5G.jpg,Z,Z,0.9998
+Z/Z_Polos Gelap_iPhone_XR.jpeg,Z,R,0.5714
+Z/Z_Polos Terang_Apple_Iphone 15.jpg,Z,Z,0.9966
+Z/Z_Polos Terang_Realme_7i.jpg,Z,Z,0.6127
+Z/Z_Polos Terang_Samsung_A51.jpg,Z,R,0.881
+Z/Z_Polos Terang_Vivo_V23 5G.jpg,Z,Z,1.0
+Z/Z_Polos Terang_iPhone_XR.jpeg,Z,Z,0.9696
+Z/Z_Polos gelap_Oppo_A53.jpg,Z,U,0.4876
+Z/Z_Polos terang_Oppo_A53.jpg,Z,Z,0.8652
+Z/Z_baju_Iph_Iph15.jpg,Z,Z,0.9999
+Z/Z_bebas_Iph_Iph15.jpg,Z,Z,0.9929
+Z/Z_gelap_Iph_Iph15.jpg,Z,Z,0.9737
+Z/Z_terang_Iph_Iph15.jpg,Z,Z,0.9021

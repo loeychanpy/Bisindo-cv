@@ -7,9 +7,9 @@
   "best_val_accuracy": 0.49583333333333335,
   "report_split": "test",
   "test": {
-    "accuracy": 0.5376811594202898,
-    "macro_f1": 0.5346463826403118,
-    "weighted_f1": 0.5379330133574016
+    "accuracy": 0.5347826086956522,
+    "macro_f1": 0.5300534600982421,
+    "weighted_f1": 0.5332159049375743
   },
   "val": null,
   "latency_ms": {
